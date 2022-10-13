@@ -12,7 +12,7 @@ const uploadDocument = async (document) => {
 
   const id = uuid();
   await s3Put({
-    Bucket: process.env.AWS_BUCKET_NAME,
+    Bucket: process.env.TT_AWS_BUCKET_NAME,
     Key: id,
     Body: JSON.stringify({ document: encryptedDocument }),
   });

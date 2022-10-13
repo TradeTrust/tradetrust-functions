@@ -7,7 +7,7 @@ const getQueueNumber = async () => {
   const encryptionKey = generateEncryptionKey();
 
   await s3Put({
-    Bucket: process.env.AWS_BUCKET_NAME,
+    Bucket: process.env.TT_AWS_BUCKET_NAME,
     Key: id,
     Body: JSON.stringify({
       key: encryptionKey,

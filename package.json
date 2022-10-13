@@ -37,7 +37,7 @@
     "local:s3": "s3rver -d ./tmp --configure-bucket test-bucket",
     "test": "jest",
     "test:api": "wait-on tcp:9999 tcp:4568 && npm run test",
-    "test:serve": "NODE_ENV=test AWS_BUCKET_NAME=test-bucket npm run serve",
+    "test:serve": "NODE_ENV=test TT_AWS_BUCKET_NAME=test-bucket npm run serve",
     "test:ci": "concurrently -k -s first \"npm:test:serve\" \"npm:local:s3\" \"npm:test:api\"",
     "serve": "netlify functions:serve",
     "start": "npm run local:clean && concurrently \"npm:test:serve\" \"npm:local:s3\""
