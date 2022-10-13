@@ -2,10 +2,7 @@
   "name": "tradetrust-functions",
   "version": "1.0.0",
   "description": "API endpoints to use.",
-  "main": "jest.config.js",
-  "directories": {
-    "test": "tests"
-  },
+  "main": "index.js",
   "dependencies": {
     "@govtechsg/oa-encryption": "^1.3.5",
     "@govtechsg/oa-verify": "^7.11.0",
