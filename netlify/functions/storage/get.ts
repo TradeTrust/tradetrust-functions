@@ -2,7 +2,7 @@ import { s3Get } from "../../services/s3";
 
 export const getDocument = async (id: string) => {
   const document = await s3Get({
-    Bucket: process.env.AWS_BUCKET_NAME,
+    Bucket: process.env.TT_AWS_BUCKET_NAME,
     Key: id,
   });
 
