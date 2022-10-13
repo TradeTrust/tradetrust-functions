@@ -1,5 +1,6 @@
 import AWS, { S3 } from "aws-sdk";
 import createError from "http-errors";
+import { ERROR_MESSAGE } from "../../constants";
 
 const option =
   process.env.NODE_ENV === "test"
@@ -28,7 +29,7 @@ export const s3Get = (params: S3.Types.GetObjectRequest) =>
       if (results && results.Body) {
         return JSON.parse(results.Body.toString());
       }
-      throw new createError(400, "No Document Found");
+      throw new createError(400, ERROR_MESSAGE.DOCUMENT_NOT_FOUND);
     })
     .catch((err) => {
       throw new createError(400, err.message);
