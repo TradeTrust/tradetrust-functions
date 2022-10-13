@@ -11,11 +11,12 @@ import { queue } from "./queue";
 const app = express();
 export const router = express.Router();
 
-router.post("/", checkApiKey, create);
-router.get("/queue", checkApiKey, queue);
-router.get("/:id", checkApiKey, get);
-router.post("/:id", checkApiKey, createAtId);
+router.post("/", create);
+router.get("/queue", queue);
+router.get("/:id", get);
+router.post("/:id", createAtId);
 
+app.use(checkApiKey);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(FUNCTIONS_PATH, router);

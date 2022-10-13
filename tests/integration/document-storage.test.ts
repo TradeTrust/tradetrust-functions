@@ -1,15 +1,13 @@
-import request from "supertest";
+import supertest from "supertest";
 import * as postData from "../fixtures/post-data.json";
 import { ERROR_MESSAGE, S3_ERROR_MESSAGE } from "../../netlify/constants";
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
+const request = supertest(API_ENDPOINT);
 
 describe("POST /", () => {
   it("should store encrypted document", async () => {
-    const response = await request(API_ENDPOINT)
-      .post("/")
-      .send(postData)
-      .expect(200);
+    const response = await request.post("/").send(postData).expect(200);
 
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("key");
@@ -18,7 +16,7 @@ describe("POST /", () => {
   });
 
   it("should throw error when document verification failed", async () => {
-    const response = await request(API_ENDPOINT)
+    const response = await request
       .post("/")
       .send({
         document: { foo: "bar" },
@@ -31,9 +29,7 @@ describe("POST /", () => {
 
 describe("GET /queue", () => {
   it("should retrieve s3 object id + oa encryption key", async () => {
-    const response = await request(`${API_ENDPOINT}/queue`)
-      .get("/")
-      .expect(200);
+    const response = await request.get("/queue").expect(200);
 
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("key");
@@ -43,13 +39,10 @@ describe("GET /queue", () => {
 
 describe("GET /:id", () => {
   it("should retrieve encrypted document without key", async () => {
-    const postResponse = await request(API_ENDPOINT)
-      .post("/")
-      .send(postData)
-      .expect(200);
+    const postResponse = await request.post("/").send(postData).expect(200);
 
-    const getResponse = await request(`${API_ENDPOINT}/${postResponse.body.id}`)
-      .get("/")
+    const getResponse = await request
+      .get(`/${postResponse.body.id}`)
       .expect(200);
 
     expect(getResponse.body).toHaveProperty("cipherText");
@@ -61,7 +54,7 @@ describe("GET /:id", () => {
   });
 
   it("should fail if id is not found in s3 objects", async () => {
-    const response = await request(`${API_ENDPOINT}/abc`).get("/").expect(400);
+    const response = await request.get("/abc").expect(400);
 
     expect(response.body.message).toBe(S3_ERROR_MESSAGE.KEY_NOT_EXISTS);
   });
@@ -69,12 +62,10 @@ describe("GET /:id", () => {
 
 describe("POST /:id", () => {
   it("store a new encrypted document, using retrieved key from specified id of previous queue", async () => {
-    const queueResponse = await request(`${API_ENDPOINT}/queue`)
-      .get("/")
-      .expect(200);
+    const queueResponse = await request.get("/queue").expect(200);
 
-    const response = await request(`${API_ENDPOINT}/${queueResponse.body.id}`)
-      .post("/")
+    const response = await request
+      .post(`/${queueResponse.body.id}`)
       .send(postData)
       .expect(200);
 
