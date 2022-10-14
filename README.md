@@ -6,13 +6,13 @@ API endpoints to use.
 
 POST
 
-- `/storage` creates a new s3 object
-- `/storage/:id` creates a new s3 object with decrypt key from `/storage/queue`
+- `/storage` uploads an encrypted oa document
+- `/storage/:id` uploads an encrypted oa document with decrypt key previously from `/storage/queue`
 
 GET
 
-- `/storage/:id` returns exact s3 object
-- `/storage/queue` returns s3 object id and generated decrypt key
+- `/storage/:id` returns an encrypted oa document
+- `/storage/queue` returns id and generated decrypt key
 
 ### Development
 
