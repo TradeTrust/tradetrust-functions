@@ -6,7 +6,23 @@ import {
 } from "@govtechsg/oa-verify";
 import { encryptString } from "@govtechsg/oa-encryption";
 import createError from "http-errors";
-import { ERROR_MESSAGE } from "./constants";
+import { ALLOWED_ORIGINS, ERROR_MESSAGE } from "./constants";
+
+// https://github.com/expressjs/cors#configuring-cors-w-dynamic-origin
+export const corsOrigin = (origin, callback) => {
+  if (!origin) return callback(null, true); // allow requests with no origin, like mobile apps or curl requests
+
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    return callback(null, true);
+  } else {
+    return callback(
+      new Error(
+        "The CORS policy for this site does not allow access from the specified Origin.",
+      ),
+      false,
+    );
+  }
+};
 
 export const checkApiKey = (req, res, next) => {
   const apiKey = req.headers["x-api-key"];

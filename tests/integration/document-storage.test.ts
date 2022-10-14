@@ -75,3 +75,14 @@ describe("POST /:id", () => {
     expect(Object.keys(response.body).length).toBe(3);
   });
 });
+
+describe("cors", () => {
+  it("should fail with 500 when origin is unallowed", async () => {
+    const response = await request
+      .post("/")
+      .set("Origin", "http://foobar.com")
+      .send(postData)
+      .expect(500);
+    console.log(response.body);
+  });
+});
