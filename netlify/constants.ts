@@ -10,6 +10,7 @@ export const ALLOWED_ORIGINS = [
 ];
 
 export enum ERROR_MESSAGE {
+  CORS_UNALLOWED = "The CORS policy for this site does not allow access from the specified Origin.",
   API_KEY_INVALID = "API key invalid.",
   DOCUMENT_INVALID = "Document invalid.",
   DOCUMENT_NOT_FOUND = "Document not found",

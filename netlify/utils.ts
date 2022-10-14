@@ -15,12 +15,7 @@ export const corsOrigin = (origin, callback) => {
   if (ALLOWED_ORIGINS.includes(origin)) {
     return callback(null, true);
   } else {
-    return callback(
-      new Error(
-        "The CORS policy for this site does not allow access from the specified Origin.",
-      ),
-      false,
-    );
+    return callback(new Error(ERROR_MESSAGE.CORS_UNALLOWED), false);
   }
 };
 
