@@ -6,12 +6,12 @@ API endpoints to use.
 
 POST
 
-- `/storage` uploads an encrypted oa document
-- `/storage/:id` uploads an encrypted oa document with decrypt key previously from `/storage/queue`
+- `/storage` uploads an encrypted OpenAttestation document
+- `/storage/:id` uploads an encrypted OpenAttestation document with decrypt key from `/storage/queue`
 
 GET
 
-- `/storage/:id` returns an encrypted oa document
+- `/storage/:id` returns an encrypted OpenAttestation document
 - `/storage/queue` returns id and generated decrypt key
 
 ### Development
