@@ -75,3 +75,21 @@ describe("POST /:id", () => {
     expect(Object.keys(response.body).length).toBe(3);
   });
 });
+
+describe("cors", () => {
+  it("should fail with 500 when origin is unallowed", async () => {
+    await request
+      .post("/")
+      .set("Origin", "http://foobar.com")
+      .send(postData)
+      .expect(500);
+  });
+
+  it("should pass with 200 when origin is TradeTrust creator", async () => {
+    await request
+      .post("/")
+      .set("Origin", "https://creator.tradetrust.io")
+      .send(postData)
+      .expect(200);
+  });
+});
