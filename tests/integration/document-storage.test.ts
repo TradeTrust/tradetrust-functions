@@ -84,4 +84,12 @@ describe("cors", () => {
       .send(postData)
       .expect(500);
   });
+
+  it("should pass with 200 when origin is TradeTrust creator", async () => {
+    await request
+      .post("/")
+      .set("Origin", "https://creator.tradetrust.io")
+      .send(postData)
+      .expect(200);
+  });
 });

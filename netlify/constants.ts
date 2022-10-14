@@ -4,9 +4,6 @@ export const ALLOWED_ORIGINS = [
   "http://127.0.0.1:3000",
   "http://localhost:3000",
   "https://creator.tradetrust.io",
-  "https://dev.tradetrust.io",
-  "https://www.tradetrust.io",
-  "https://tradetrust.io",
 ];
 
 export enum ERROR_MESSAGE {

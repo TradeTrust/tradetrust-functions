@@ -1,4 +1,4 @@
-# Tradetrust functions
+# TradeTrust functions
 
 API endpoints to use.
 
