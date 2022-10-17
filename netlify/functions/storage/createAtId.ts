@@ -1,4 +1,3 @@
-import { v4 as uuid } from "uuid";
 import { validateUpload, getEncryptedDocument } from "../../utils";
 import { getDocument } from "./get";
 import { s3Put } from "../../services/s3";
@@ -13,15 +12,14 @@ const uploadDocumentAtId = async (document, documentId: string) => {
       existingKey,
     });
 
-  const id = uuid();
   await s3Put({
     Bucket: process.env.TT_AWS_BUCKET_NAME,
-    Key: id,
+    Key: documentId,
     Body: JSON.stringify({ document: encryptedDocument }),
   });
 
   return {
-    id,
+    id: documentId,
     key: encryptedDocumentKey,
     type: encryptedDocument.type,
   };
