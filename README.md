@@ -16,6 +16,4 @@ GET
 
 ### Development
 
-Copy `.env.example`, save and rename as `.env` file. This dummy `API_KEY` should work for local development purposes. For production `API_KEY`, refer to netlify env variables at dashboard.
-
 `npm run start`

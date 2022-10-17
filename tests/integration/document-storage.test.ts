@@ -1,9 +1,6 @@
-import * as dotenv from "dotenv";
 import supertest from "supertest";
 import * as postData from "../fixtures/post-data.json";
 import { ERROR_MESSAGE, S3_ERROR_MESSAGE } from "../../netlify/constants";
-
-dotenv.config();
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
