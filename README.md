@@ -17,3 +17,7 @@ GET
 ### Development
 
 `npm run start`
+
+#### Notes
+
+The dummy value in `API_KEY` should work for local development purposes. For production `API_KEY` value, refer to netlify env variables at dashboard.
