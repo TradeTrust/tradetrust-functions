@@ -1,13 +1,36 @@
+import * as dotenv from "dotenv";
 import supertest from "supertest";
 import * as postData from "../fixtures/post-data.json";
 import { ERROR_MESSAGE, S3_ERROR_MESSAGE } from "../../netlify/constants";
 
+dotenv.config();
+
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
 
+describe("API key check", () => {
+  it("should fail with 400 when API key is not provided", async () => {
+    const response = await request.post("/").send(postData).expect(400);
+    expect(response.text).toBe(ERROR_MESSAGE.API_KEY_INVALID);
+  });
+
+  it("should fail with 400 when incorrect API key is provided", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", "incorrectKey")
+      .send(postData)
+      .expect(400);
+    expect(response.text).toBe(ERROR_MESSAGE.API_KEY_INVALID);
+  });
+});
+
 describe("POST /", () => {
   it("should store encrypted document", async () => {
-    const response = await request.post("/").send(postData).expect(200);
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send(postData)
+      .expect(200);
 
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("key");
@@ -18,6 +41,7 @@ describe("POST /", () => {
   it("should throw error when document verification failed", async () => {
     const response = await request
       .post("/")
+      .set("x-api-key", process.env.API_KEY)
       .send({
         document: { foo: "bar" },
       })
@@ -29,7 +53,10 @@ describe("POST /", () => {
 
 describe("GET /queue", () => {
   it("should retrieve s3 object id + oa encryption key", async () => {
-    const response = await request.get("/queue").expect(200);
+    const response = await request
+      .get("/queue")
+      .set("x-api-key", process.env.API_KEY)
+      .expect(200);
 
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("key");
@@ -39,7 +66,11 @@ describe("GET /queue", () => {
 
 describe("GET /:id", () => {
   it("should retrieve encrypted document without key", async () => {
-    const postResponse = await request.post("/").send(postData).expect(200);
+    const postResponse = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send(postData)
+      .expect(200);
 
     const getResponse = await request
       .get(`/${postResponse.body.id}`)
@@ -62,10 +93,14 @@ describe("GET /:id", () => {
 
 describe("POST /:id", () => {
   it("store a new encrypted document, replacing specified id from previous queue while using the retrieved decrypt key", async () => {
-    const queueResponse = await request.get("/queue").expect(200);
+    const queueResponse = await request
+      .get("/queue")
+      .set("x-api-key", process.env.API_KEY)
+      .expect(200);
 
     const response = await request
       .post(`/${queueResponse.body.id}`)
+      .set("x-api-key", process.env.API_KEY)
       .send(postData)
       .expect(200);
 
@@ -80,6 +115,7 @@ describe("cors", () => {
   it("should fail with 500 when origin is unallowed", async () => {
     await request
       .post("/")
+      .set("x-api-key", process.env.API_KEY)
       .set("Origin", "http://foobar.com")
       .send(postData)
       .expect(500);
@@ -88,6 +124,7 @@ describe("cors", () => {
   it("should pass with 200 when origin is TradeTrust creator", async () => {
     await request
       .post("/")
+      .set("x-api-key", process.env.API_KEY)
       .set("Origin", "https://creator.tradetrust.io")
       .send(postData)
       .expect(200);
@@ -96,6 +133,7 @@ describe("cors", () => {
   it("should pass with 200 when origin is TradeTrust testnets website", async () => {
     await request
       .post("/")
+      .set("x-api-key", process.env.API_KEY)
       .set("Origin", "https://dev.tradetrust.io")
       .send(postData)
       .expect(200);
@@ -104,6 +142,7 @@ describe("cors", () => {
   it("should pass with 200 when origin is TradeTrust production website", async () => {
     await request
       .post("/")
+      .set("x-api-key", process.env.API_KEY)
       .set("Origin", "https://tradetrust.io")
       .send(postData)
       .expect(200);
