@@ -12,13 +12,12 @@ import { queue } from "./queue";
 const app = express();
 export const router = express.Router();
 
-router.post("/", create);
-router.get("/queue", queue);
-router.get("/:id", get);
-router.post("/:id", createAtId);
+router.post("/", checkApiKey, create);
+router.get("/queue", checkApiKey, queue);
+router.get("/:id", get); // lets omit checkApiKey for tradetrust web to retrieve document easily
+router.post("/:id", checkApiKey, createAtId);
 
 app.use(cors({ origin: corsOrigin }));
-app.use(checkApiKey);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(FUNCTIONS_PATH, router);
