@@ -92,4 +92,20 @@ describe("cors", () => {
       .send(postData)
       .expect(200);
   });
+
+  it("should pass with 200 when origin is TradeTrust testnets website", async () => {
+    await request
+      .post("/")
+      .set("Origin", "https://dev.tradetrust.io")
+      .send(postData)
+      .expect(200);
+  });
+
+  it("should pass with 200 when origin is TradeTrust production website", async () => {
+    await request
+      .post("/")
+      .set("Origin", "https://tradetrust.io")
+      .send(postData)
+      .expect(200);
+  });
 });
