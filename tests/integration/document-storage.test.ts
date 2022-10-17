@@ -61,7 +61,7 @@ describe("GET /:id", () => {
 });
 
 describe("POST /:id", () => {
-  it("store a new encrypted document, using retrieved key from specified id of previous queue", async () => {
+  it("store a new encrypted document, replacing specified id from previous queue while using the retrieved decrypt key", async () => {
     const queueResponse = await request.get("/queue").expect(200);
 
     const response = await request
@@ -69,8 +69,8 @@ describe("POST /:id", () => {
       .send(postData)
       .expect(200);
 
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("key", queueResponse.body.key);
+    expect(response.body).toHaveProperty("id", queueResponse.body.id); // important to check!
+    expect(response.body).toHaveProperty("key", queueResponse.body.key); // important to check!
     expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
     expect(Object.keys(response.body).length).toBe(3);
   });
