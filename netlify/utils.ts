@@ -6,18 +6,17 @@ import {
 } from "@govtechsg/oa-verify";
 import { encryptString } from "@govtechsg/oa-encryption";
 import createError from "http-errors";
-import { ERROR_MESSAGE } from "./constants";
+import { ALLOWED_ORIGINS, ERROR_MESSAGE } from "./constants";
 
 // https://github.com/expressjs/cors#configuring-cors-w-dynamic-origin
 export const corsOrigin = (origin, callback) => {
-  return callback(null, true);
-  // if (!origin) return callback(null, true); // allow requests with no origin, like mobile apps or curl requests
+  if (!origin) return callback(null, true); // allow requests with no origin, like mobile apps or curl requests
 
-  // if (ALLOWED_ORIGINS.includes(origin)) {
-  //   return callback(null, true);
-  // } else {
-  //   return callback(new Error(ERROR_MESSAGE.CORS_UNALLOWED), false);
-  // }
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    return callback(null, true);
+  } else {
+    return callback(new Error(ERROR_MESSAGE.CORS_UNALLOWED), false);
+  }
 };
 
 export const checkApiKey = (req, res, next) => {
