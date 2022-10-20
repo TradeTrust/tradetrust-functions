@@ -1,5 +1,3 @@
-export const FUNCTIONS_PATH = "/.netlify/functions/storage";
-
 export const ALLOWED_ORIGINS = [
   "http://127.0.0.1:3000",
   "http://localhost:3000",
@@ -12,7 +10,8 @@ export enum ERROR_MESSAGE {
   CORS_UNALLOWED = "The CORS policy for this site does not allow access from the specified Origin.",
   API_KEY_INVALID = "API key invalid.",
   DOCUMENT_INVALID = "Document invalid.",
-  DOCUMENT_NOT_FOUND = "Document not found",
+  DOCUMENT_NOT_FOUND = "Document not found.",
+  NETWORK_UNSUPPORTED = "Network is unsupported.",
 }
 
 export enum S3_ERROR_MESSAGE {

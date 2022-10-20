@@ -14,6 +14,13 @@ GET
 - `/storage/:id` returns an encrypted OpenAttestation document
 - `/storage/queue` returns id and generated decrypt key
 
+## Verify
+
+POST
+
+- `/verify` verifies an OpenAttestation document on mainnet network
+- `/verify?network="goerli"` verifies an OpenAttestation document on goerli network
+
 ### Development
 
 `npm run start`
