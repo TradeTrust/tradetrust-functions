@@ -40,7 +40,7 @@ describe("POST /", () => {
     );
   });
 
-  it("should verify a goerli document with unsupported network query", async () => {
+  it("should not verify a goerli document with unsupported network query", async () => {
     const response = await request
       .post("/")
       .query({ network: "foo" })
