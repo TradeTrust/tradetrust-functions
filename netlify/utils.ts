@@ -27,19 +27,21 @@ export const checkApiKey = (req, res, next) => {
   next();
 };
 
-export const verify = verificationBuilder(
-  [...openAttestationVerifiers, openAttestationDidIdentityProof],
-  {
-    network: process.env.NETWORK || "goerli",
-  },
-);
+export const validateDocument = async ({ document, network }) => {
+  const verify = verificationBuilder(
+    [...openAttestationVerifiers, openAttestationDidIdentityProof],
+    {
+      network,
+    },
+  );
 
-export const validateUpload = async (document) => {
   const fragments = await verify(document);
 
   if (!isValid(fragments)) {
     throw new createError(400, ERROR_MESSAGE.DOCUMENT_INVALID);
   }
+
+  return fragments;
 };
 
 export const getEncryptedDocument = async ({
