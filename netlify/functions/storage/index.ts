@@ -17,8 +17,8 @@ router.get("/:id", get); // lets omit checkApiKey for tradetrust web to retrieve
 router.post("/:id", checkApiKey, createAtId);
 
 app.use(cors({ origin: corsOrigin }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "2mb" }));
+app.use(bodyParser.urlencoded({ limit: "2mb", extended: true }));
 app.use("/.netlify/functions/storage", router);
 
 export const handler = serverless(app);

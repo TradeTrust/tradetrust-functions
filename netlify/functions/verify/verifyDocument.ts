@@ -1,14 +1,12 @@
 import { isValid } from "@govtechsg/oa-verify";
 import createError from "http-errors";
 import { validateDocument } from "../../utils";
-import { ERROR_MESSAGE } from "../../constants";
+import { ERROR_MESSAGE, NETWORK } from "../../constants";
 
-const networkProduction = ["mainnet", "matic"];
-const networkTestnet = ["local", "goerli", "sepolia", "maticmum"];
-const networks = [...networkProduction, ...networkTestnet];
+const supportedNetworks = Object.values(NETWORK);
 
 const getFragments = async ({ document, network }) => {
-  if (!networks.includes(network)) {
+  if (!supportedNetworks.includes(network)) {
     throw new createError(400, ERROR_MESSAGE.NETWORK_UNSUPPORTED);
   }
 
