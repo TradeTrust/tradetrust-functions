@@ -24,6 +24,8 @@ GET
 - `/storage/:id` returns an encrypted OpenAttestation document
 - `/storage/queue` returns id and generated decrypt key
 
+> Storage endpoint currently supports only `goerli` network.
+
 ### Verify
 
 Endpoint: https://tradetrust-functions.netlify.app/.netlify/functions/verify
@@ -34,6 +36,8 @@ POST
 - `/verify?network="goerli"` verifies an OpenAttestation document on goerli network
 - `/verify?network="maticmum"` verifies an OpenAttestation document on maticmum network
 - `/verify?network="sepolia"` verifies an OpenAttestation document on sepolia network
+
+---
 
 #### Development
 
