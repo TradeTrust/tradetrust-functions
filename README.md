@@ -4,7 +4,7 @@ API endpoints to use.
 
 ## ⚠️ Reminder
 
-The following API endpoints are references on how you would implement such microservices for your own business requirements. They are NOT to be relied on, for any of your production related needs as these API can change anytime.
+The following API endpoints are references on how you would implement such microservices for your own business requirements. They are NOT to be relied on, for any of your production related needs, as we reserves the right to change or shutdown the API anytime.
 
 > There is a limit of `2mb` on maximum request body size. Revising your OpenAttestation document file size might help if you encounter 413 `Payload Too Large` errors.
 
@@ -24,7 +24,9 @@ GET
 - `/storage/:id` returns an encrypted OpenAttestation document
 - `/storage/queue` returns id and generated decrypt key
 
-> Storage endpoint currently supports only `goerli` network.
+> Document storage endpoint currently supports only `goerli` network.
+
+> The uploaded encrypted OpenAttestation documents will not be stored long term. They will be auto deleted after 31 days.
 
 ### Verify
 
