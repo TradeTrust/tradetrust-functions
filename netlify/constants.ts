@@ -20,6 +20,8 @@ export enum S3_ERROR_MESSAGE {
   KEY_NOT_EXISTS = "The specified key does not exist.",
 }
 
+export const MAX_REQUEST_BODY_SIZE = "6mb";
+
 const infuraProvider =
   (networkName: string): (() => providers.Provider) =>
   () =>

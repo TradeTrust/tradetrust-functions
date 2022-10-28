@@ -7,6 +7,7 @@ import { create } from "./create";
 import { createAtId } from "./createAtId";
 import { get } from "./get";
 import { queue } from "./queue";
+import { MAX_REQUEST_BODY_SIZE } from "../../constants";
 
 const app = express();
 const router = express.Router();
@@ -17,8 +18,10 @@ router.get("/:id", get); // lets omit checkApiKey for tradetrust web to retrieve
 router.post("/:id", checkApiKey, createAtId);
 
 app.use(cors({ origin: corsOrigin }));
-app.use(bodyParser.json({ limit: "2mb" }));
-app.use(bodyParser.urlencoded({ limit: "2mb", extended: true }));
+app.use(bodyParser.json({ limit: MAX_REQUEST_BODY_SIZE }));
+app.use(
+  bodyParser.urlencoded({ limit: MAX_REQUEST_BODY_SIZE, extended: true }),
+);
 app.use("/.netlify/functions/storage", router);
 
 export const handler = serverless(app);
