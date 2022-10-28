@@ -6,7 +6,7 @@ API endpoints to use.
 
 The following API endpoints are references on how you would implement such microservices for your own business requirements. They are NOT to be relied on, for any of your production related needs. We reserve the right to change or shutdown the API anytime.
 
-> There is a limit of `2mb` on maximum request body size. Revising your OpenAttestation document file size might help if you encounter 413 `Payload Too Large` errors.
+> There is a limit of `6mb` on maximum request body size. Revising your OpenAttestation document file size might help if you encounter 413 `Payload Too Large` errors.
 
 ---
 
