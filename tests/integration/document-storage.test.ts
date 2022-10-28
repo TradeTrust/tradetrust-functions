@@ -1,9 +1,10 @@
 import supertest from "supertest";
-import postData from "../fixtures/post-data-goerli.json";
+import documentGoerli from "../fixtures/document-goerli.json";
 import { ERROR_MESSAGE, S3_ERROR_MESSAGE } from "../../netlify/constants";
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
+const postData = { document: documentGoerli };
 
 describe("API key check", () => {
   it("should fail with 400 when API key is not provided", async () => {

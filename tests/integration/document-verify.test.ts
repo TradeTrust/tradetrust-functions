@@ -1,6 +1,8 @@
 import supertest from "supertest";
-import goerliDocument from "../fixtures/post-data-goerli.json";
-import mainnetDocument from "../fixtures/post-data-mainnet.json";
+import documentGoerli from "../fixtures/document-goerli.json";
+import documentMainnet from "../fixtures/document-mainnet.json";
+import documentMaticmum from "../fixtures/document-maticmum.json";
+import documentSepolia from "../fixtures/document-sepolia.json";
 import { ERROR_MESSAGE } from "../../netlify/constants";
 
 const RESPONSE_VERIFY_SUCCESS_SUMMARY = {
@@ -12,10 +14,14 @@ const RESPONSE_VERIFY_SUCCESS_SUMMARY = {
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/verify";
 const request = supertest(API_ENDPOINT);
+const postDataGoerli = { document: documentGoerli };
+const postDataMainnnet = { document: documentMainnet };
+const postDataMaticmum = { document: documentMaticmum };
+const postDataSepolia = { document: documentSepolia };
 
 describe("POST /", () => {
   it("should verify a mainnet document by default", async () => {
-    const response = await request.post("/").send(mainnetDocument).expect(200);
+    const response = await request.post("/").send(postDataMainnnet).expect(200);
 
     expect(response.body.summary).toStrictEqual(
       RESPONSE_VERIFY_SUCCESS_SUMMARY,
@@ -23,7 +29,7 @@ describe("POST /", () => {
   });
 
   it("should not verify a goerli document by default", async () => {
-    const response = await request.post("/").send(goerliDocument).expect(400);
+    const response = await request.post("/").send(postDataGoerli).expect(400);
 
     expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_INVALID);
   });
@@ -32,7 +38,7 @@ describe("POST /", () => {
     const response = await request
       .post("/")
       .query({ network: "goerli" })
-      .send(goerliDocument)
+      .send(postDataGoerli)
       .expect(200);
 
     expect(response.body.summary).toStrictEqual(
@@ -44,11 +50,35 @@ describe("POST /", () => {
     const response = await request
       .post("/")
       .query({ network: "foo" })
-      .send(goerliDocument)
+      .send(postDataGoerli)
       .expect(400);
 
     expect(response.body.message).toStrictEqual(
       ERROR_MESSAGE.NETWORK_UNSUPPORTED,
+    );
+  });
+
+  it("should verify a maticmum document", async () => {
+    const response = await request
+      .post("/")
+      .query({ network: "maticmum" })
+      .send(postDataMaticmum)
+      .expect(200);
+
+    expect(response.body.summary).toStrictEqual(
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+    );
+  });
+
+  it("should verify a sepolia document", async () => {
+    const response = await request
+      .post("/")
+      .query({ network: "sepolia" })
+      .send(postDataSepolia)
+      .expect(200);
+
+    expect(response.body.summary).toStrictEqual(
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
     );
   });
 });

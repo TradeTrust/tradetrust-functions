@@ -6,7 +6,12 @@ import {
 } from "@govtechsg/oa-verify";
 import { encryptString } from "@govtechsg/oa-encryption";
 import createError from "http-errors";
-import { ALLOWED_ORIGINS, ERROR_MESSAGE } from "./constants";
+import {
+  ALLOWED_ORIGINS,
+  ERROR_MESSAGE,
+  SUPPORTED_NETWORKS,
+  NETWORK,
+} from "./constants";
 
 // https://github.com/expressjs/cors#configuring-cors-w-dynamic-origin
 export const corsOrigin = (origin, callback) => {
@@ -27,11 +32,18 @@ export const checkApiKey = (req, res, next) => {
   next();
 };
 
-export const validateDocument = async ({ document, network }) => {
+export const validateDocument = async ({
+  document,
+  network,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  document: any;
+  network: NETWORK;
+}) => {
   const verify = verificationBuilder(
     [...openAttestationVerifiers, openAttestationDidIdentityProof],
     {
-      network,
+      provider: SUPPORTED_NETWORKS[network].provider(),
     },
   );
 
