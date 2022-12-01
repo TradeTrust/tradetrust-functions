@@ -10,7 +10,8 @@ import {
   ALLOWED_ORIGINS,
   ERROR_MESSAGE,
   SUPPORTED_NETWORKS,
-  NETWORK,
+  supportedNetworks,
+  network,
 } from "./constants";
 
 // https://github.com/expressjs/cors#configuring-cors-w-dynamic-origin
@@ -32,18 +33,28 @@ export const checkApiKey = (req, res, next) => {
   next();
 };
 
+const getSupportedProvider = (network: network) => {
+  return Object.values(SUPPORTED_NETWORKS)
+    .find((item) => item.network === network)
+    .provider();
+};
+
 export const validateDocument = async ({
   document,
   network,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   document: any;
-  network: NETWORK;
+  network: network;
 }) => {
+  if (!supportedNetworks.includes(network)) {
+    throw new createError(400, ERROR_MESSAGE.NETWORK_UNSUPPORTED);
+  }
+
   const verify = verificationBuilder(
     [...openAttestationVerifiers, openAttestationDidIdentityProof],
     {
-      provider: SUPPORTED_NETWORKS[network].provider(),
+      provider: getSupportedProvider(network),
     },
   );
 

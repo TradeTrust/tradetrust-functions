@@ -32,45 +32,60 @@ const jsonRpcProvider =
   () =>
     new providers.JsonRpcProvider(url);
 
-export enum NETWORK {
-  MAINNET = "mainnet",
-  MATIC = "matic",
-  MATICMUM = "maticmum",
-  GOERLI = "goerli",
-  SEPOLIA = "sepolia",
+export enum CHAIN_ID {
+  MAINNET = 1,
+  MATIC = 137,
+  MATICMUM = 80001,
+  GOERLI = 5,
+  SEPOLIA = 11155111,
 }
 
+export const supportedNetworks = [
+  "mainnet",
+  "matic",
+  "maticmum",
+  "goerli",
+  "sepolia",
+] as const;
+export type network = typeof supportedNetworks[number];
+
 type SupportedNetworks = {
-  [index in NETWORK]: {
+  [index in CHAIN_ID]: {
     label: string;
+    network: network;
     type: "production" | "test";
     provider: () => providers.Provider;
   };
 };
 
 export const SUPPORTED_NETWORKS: SupportedNetworks = {
-  [NETWORK.MAINNET]: {
+  [CHAIN_ID.MAINNET]: {
     label: "Mainnet",
+    network: "mainnet",
     type: "production",
     provider: infuraProvider("homestead"),
   },
-  [NETWORK.MATIC]: {
+  [CHAIN_ID.MATIC]: {
     label: "Polygon",
+    network: "matic",
     type: "production",
     provider: infuraProvider("matic"),
   },
-  [NETWORK.MATICMUM]: {
+  [CHAIN_ID.MATICMUM]: {
     label: "Polygon Mumbai",
+    network: "maticmum",
     type: "test",
     provider: infuraProvider("maticmum"),
   },
-  [NETWORK.GOERLI]: {
+  [CHAIN_ID.GOERLI]: {
     label: "Goerli",
+    network: "goerli",
     type: "test",
     provider: infuraProvider("goerli"),
   },
-  [NETWORK.SEPOLIA]: {
+  [CHAIN_ID.SEPOLIA]: {
     label: "Sepolia",
+    network: "sepolia",
     type: "test",
     provider: jsonRpcProvider("https://rpc.sepolia.org"),
   },

@@ -1,20 +1,5 @@
 import { isValid } from "@govtechsg/oa-verify";
-import createError from "http-errors";
 import { validateDocument } from "../../utils";
-import { ERROR_MESSAGE, NETWORK } from "../../constants";
-
-const supportedNetworks = Object.values(NETWORK);
-
-const getFragments = async ({ document, network }) => {
-  if (!supportedNetworks.includes(network)) {
-    throw new createError(400, ERROR_MESSAGE.NETWORK_UNSUPPORTED);
-  }
-
-  return await validateDocument({
-    document,
-    network,
-  });
-};
 
 export const verifyDocument = async (req, res) => {
   const {
@@ -23,7 +8,7 @@ export const verifyDocument = async (req, res) => {
   } = req;
 
   try {
-    const fragments = await getFragments({
+    const fragments = await validateDocument({
       document,
       network,
     });
