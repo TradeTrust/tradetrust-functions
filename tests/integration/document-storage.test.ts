@@ -1,5 +1,7 @@
 import supertest from "supertest";
-import documentGoerli from "../fixtures/v2/document-goerli.json";
+import documentGoerliV2 from "../fixtures/v2/document-goerli.json";
+import documentGoerliV3 from "../fixtures/v3/document-goerli.json";
+import documentGoerliNoNetwork from "../fixtures/v2/document-goerli-no-network.json";
 import {
   ERROR_MESSAGE,
   DOCUMENT_STORAGE_ERROR_MESSAGE,
@@ -7,14 +9,15 @@ import {
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
-const postData = { document: documentGoerli };
+const postDataV2 = { document: documentGoerliV2 };
+const postDataV3 = { document: documentGoerliV3 };
 
 describe("POST /", () => {
-  it("should store encrypted document", async () => {
+  it("should store encrypted v2 document", async () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
-      .send(postData)
+      .send(postDataV2)
       .expect(200);
 
     expect(response.body).toHaveProperty("id");
@@ -23,7 +26,20 @@ describe("POST /", () => {
     expect(Object.keys(response.body).length).toBe(3);
   });
 
-  it("should throw error when document verification failed", async () => {
+  it("should store encrypted v3 document", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send(postDataV3)
+      .expect(200);
+
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("key");
+    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
+    expect(Object.keys(response.body).length).toBe(3);
+  });
+
+  it("should throw error when document is not compliant to OA schema", async () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
@@ -32,7 +48,21 @@ describe("POST /", () => {
       })
       .expect(400);
 
-    expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_INVALID);
+    expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_SCHEMA_INVALID);
+  });
+
+  it("should throw error when document network field does not exists", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send({
+        document: documentGoerliNoNetwork,
+      })
+      .expect(400);
+
+    expect(response.body.message).toBe(
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND,
+    );
   });
 });
 
@@ -54,7 +84,7 @@ describe("GET /:id", () => {
     const postResponse = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
-      .send(postData)
+      .send(postDataV2)
       .expect(200);
 
     const getResponse = await request
@@ -88,7 +118,7 @@ describe("POST /:id", () => {
     const response = await request
       .post(`/${queueResponse.body.id}`)
       .set("x-api-key", process.env.API_KEY)
-      .send(postData)
+      .send(postDataV2)
       .expect(200);
 
     expect(response.body).toHaveProperty("id", queueResponse.body.id); // important to check!
