@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import documentGoerli from "../fixtures/document-goerli.json";
+import documentGoerli from "../fixtures/v2/document-goerli.json";
 import { ERROR_MESSAGE, S3_ERROR_MESSAGE } from "../../netlify/constants";
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";

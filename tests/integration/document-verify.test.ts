@@ -1,8 +1,8 @@
 import supertest from "supertest";
-import documentGoerli from "../fixtures/document-goerli.json";
-import documentMainnet from "../fixtures/document-mainnet.json";
-import documentMaticmum from "../fixtures/document-maticmum.json";
-import documentSepolia from "../fixtures/document-sepolia.json";
+import documentGoerli from "../fixtures/v2/document-goerli.json";
+import documentMainnet from "../fixtures/v2/document-mainnet.json";
+import documentMaticmum from "../fixtures/v2/document-maticmum.json";
+import documentSepolia from "../fixtures/v2/document-sepolia.json";
 import { ERROR_MESSAGE } from "../../netlify/constants";
 
 const RESPONSE_VERIFY_SUCCESS_SUMMARY = {
