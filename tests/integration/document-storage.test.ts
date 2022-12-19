@@ -1,6 +1,9 @@
 import supertest from "supertest";
 import documentGoerli from "../fixtures/v2/document-goerli.json";
-import { ERROR_MESSAGE, S3_ERROR_MESSAGE } from "../../netlify/constants";
+import {
+  ERROR_MESSAGE,
+  DOCUMENT_STORAGE_ERROR_MESSAGE,
+} from "../../netlify/constants";
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
@@ -69,7 +72,9 @@ describe("GET /:id", () => {
   it("should fail if id is not found in s3 objects", async () => {
     const response = await request.get("/abc").expect(400);
 
-    expect(response.body.message).toBe(S3_ERROR_MESSAGE.KEY_NOT_EXISTS);
+    expect(response.body.message).toBe(
+      DOCUMENT_STORAGE_ERROR_MESSAGE.KEY_NOT_EXISTS,
+    );
   });
 });
 
