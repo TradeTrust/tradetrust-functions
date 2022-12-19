@@ -16,7 +16,7 @@ export enum ERROR_MESSAGE {
   NETWORK_UNSUPPORTED = "Network is unsupported.",
 }
 
-export enum S3_ERROR_MESSAGE {
+export enum DOCUMENT_STORAGE_ERROR_MESSAGE {
   KEY_NOT_EXISTS = "The specified key does not exist.",
 }
 

@@ -12,8 +12,8 @@ const option =
         s3ForcePathStyle: true,
       }
     : {
-        accessKeyId: process.env.TT_AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.TT_AWS_SECRET_ACCESS_KEY,
+        accessKeyId: process.env.TT_STORAGE_AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.TT_STORAGE_AWS_SECRET_ACCESS_KEY,
       };
 
 const s3 = new AWS.S3(option);
