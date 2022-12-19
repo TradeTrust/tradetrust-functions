@@ -42,14 +42,7 @@ export enum CHAIN_ID {
   SEPOLIA = 11155111,
 }
 
-export const supportedNetworks = [
-  "mainnet",
-  "matic",
-  "maticmum",
-  "goerli",
-  "sepolia",
-] as const;
-export type network = typeof supportedNetworks[number];
+export type network = "mainnet" | "matic" | "maticmum" | "goerli" | "sepolia";
 
 type SupportedNetworks = {
   [index in CHAIN_ID]: {
