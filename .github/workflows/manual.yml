@@ -8,16 +8,24 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: "16.x"
+      - name: Start containers
+        run: docker-compose up -d --build
       - name: Install node dependancies
         run: npm ci
       - name: Check Prettier
         run: npx prettier --check .
+      - name: Init fake AWS credentials
+        run: npm run aws:configure
+      - name: Init local AWS dynamodb
+        run: npm run aws:dynamodb
       - name: Lint
         run: npm run lint
       - name: Integration test
         run: npm run test:ci
+      - name: Stop containers
+        if: always() # always stop containers regardless of test results
+        run: docker-compose down

@@ -107,3 +107,7 @@ export const getEncryptedDocument = async ({
 
   return { encryptedDocument, encryptedDocumentKey: key };
 };
+
+export const normalizeHash = (documentHash) => {
+  return documentHash.startsWith("0x") ? documentHash : `0x${documentHash}`;
+};

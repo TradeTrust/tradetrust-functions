@@ -1,0 +1,43 @@
+{
+  "version": "https://schema.openattestation.com/2.0/schema.json",
+  "data": {
+    "$template": {
+      "name": "0725729b-4336-4df9-b149-8d2a7b1369bd:string:main",
+      "type": "fdccb391-e413-4b30-9d36-c46f3960daf3:string:EMBEDDED_RENDERER",
+      "url": "bdc6ca6c-199a-4bf0-b79e-2126493d3697:string:https://tutorial-renderer.openattestation.com"
+    },
+    "issuers": [
+      {
+        "id": "74d3c96d-f3a6-44c4-9e16-a4b6470eccde:string:did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
+        "name": "dc4daeca-e2a3-4ca4-ad0a-b364ec5a4c08:string:Demo Issuer",
+        "identityProof": {
+          "type": "f00dfad9-d62e-4d54-9535-db551b6dcd66:string:DNS-DID",
+          "location": "3503c710-ee0e-4693-a635-0f0cd19d2aca:string:demo-tradetrust.openattestation.com",
+          "key": "350c346e-14dc-4a33-a117-012d71673c73:string:did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733#controller"
+        },
+        "revocation": {
+          "type": "83bffc90-9c1c-4b54-b596-81be7974a869:string:OCSP_RESPONDER",
+          "location": "3b9604b6-c684-4886-8a83-efdc0e2406e8:string:http://localhost:9999/.netlify/functions/ocsp-responder"
+        }
+      }
+    ],
+    "recipient": {
+      "name": "50586a93-f13f-4a3e-9372-1d01f323bcd1:string:John Doe"
+    }
+  },
+  "signature": {
+    "type": "SHA3MerkleProof",
+    "targetHash": "f344aaae87e68f7cb8ba8dfa3b1c514377c89a38f8372ddbe7d44444acf343ae",
+    "proof": [],
+    "merkleRoot": "f344aaae87e68f7cb8ba8dfa3b1c514377c89a38f8372ddbe7d44444acf343ae"
+  },
+  "proof": [
+    {
+      "type": "OpenAttestationSignature2018",
+      "created": "2022-12-19T02:53:42.710Z",
+      "proofPurpose": "assertionMethod",
+      "verificationMethod": "did:ethr:0x1245e5B64D785b25057f7438F715f4aA5D965733#controller",
+      "signature": "0x48d9ea7ad998bd752b7359c54950ed8054f1d014d5c121847cd657f37d8947053b2e90b4c9e319015231683a35046711013d2f45055bc2639fc89de20429f8491b"
+    }
+  ]
+}

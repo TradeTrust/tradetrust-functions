@@ -1,0 +1,53 @@
+{
+  "version": "https://schema.openattestation.com/3.0/schema.json",
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://schemata.openattestation.com/com/openattestation/1.0/DrivingLicenceCredential.json",
+    "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json"
+  ],
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  "recipient": {
+    "name": "Mary Jane"
+  },
+  "type": ["VerifiableCredential", "OpenAttestationCredential"],
+  "credentialSubject": {
+    "id": "id:example"
+  },
+  "issuer": {
+    "id": "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
+    "name": "Demo Store"
+  },
+  "openAttestationMetadata": {
+    "template": {
+      "name": "mainV3",
+      "type": "EMBEDDED_RENDERER",
+      "url": "https://tutorial-renderer.openattestation.com"
+    },
+    "proof": {
+      "type": "OpenAttestationProofMethod",
+      "method": "DID",
+      "value": "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733",
+      "revocation": {
+        "type": "OCSP_RESPONDER",
+        "location": "http://localhost:9999/.netlify/functions/ocsp-responder"
+      }
+    },
+    "identityProof": {
+      "type": "DNS-DID",
+      "identifier": "demo-tradetrust.openattestation.com"
+    }
+  },
+  "proof": {
+    "type": "OpenAttestationMerkleProofSignature2018",
+    "proofPurpose": "assertionMethod",
+    "targetHash": "5f35813d77ad0887b9d26a286a922cfcee4d3f4be02c75f75a0910e9c07357b0",
+    "proofs": [],
+    "merkleRoot": "5f35813d77ad0887b9d26a286a922cfcee4d3f4be02c75f75a0910e9c07357b0",
+    "salts": "W3sidmFsdWUiOiJiOWJlNjEyMzgzYzZiNjMxYTBkMjNmMDM3NDI3OWUzYmU1ZGM4ZmI0YzA1MzJkZTk3YzI4MzcwZjFlOWMyOTdlIiwicGF0aCI6InZlcnNpb24ifSx7InZhbHVlIjoiZDI4ZjhmNzBkMDQzYjQ3NmVkZGNkNmVmNzYzZjAyY2Q3ZjM0ZTJiNjQ2ZGVkYjYwMWZkZGU0Nzc0YzMyOTMzOCIsInBhdGgiOiJAY29udGV4dFswXSJ9LHsidmFsdWUiOiIxM2RhYjdlYTE5M2RjZjE0ODE3OTFlMjgwNDNkOGNlYzFjNzM3OGZmNmQ4NDMxY2EzYWU1OTBhZWYyYTIyNjAyIiwicGF0aCI6IkBjb250ZXh0WzFdIn0seyJ2YWx1ZSI6IjI4NWIzN2FmMjc2YzcyYWJiNmNiYjQ5NDI2ZjA2MjE4MWNiNjkwZjA2NTAyMWVmMTg2OTViZTE0ODQxYjhmN2IiLCJwYXRoIjoiQGNvbnRleHRbMl0ifSx7InZhbHVlIjoiZTI3N2QzYWM0NWE5Zjk5NzNhZDYxM2E0YWYxMWQ1ZmUzYmZjZGNiMzVhYmEzMDQ2YjA3MTAxOGI0ZDE4YzE4ZiIsInBhdGgiOiJpc3N1YW5jZURhdGUifSx7InZhbHVlIjoiYzc1ZmYwOTA0OTczMTIyZDU3ZjJlN2YxODNjOGY4ODNkNzc3NDAyYWVmYTllODM1ZmY3MjBjNjc2YjdmMjQxOSIsInBhdGgiOiJyZWNpcGllbnQubmFtZSJ9LHsidmFsdWUiOiJjZjQyZTJmMThiNDYxMWVmMGUxNWZjMGU0MTQxZThjY2FiOTE5MjMxMTk0YmVjNjI0MzU0OWEzMjhhNmU5ZjY1IiwicGF0aCI6InR5cGVbMF0ifSx7InZhbHVlIjoiMzIwOGFkOTliMzYzYzI3ZGYwOWYyNTdkYWMzM2I3ZGU3YWI0NDYyOWUwODFlMGI1MmZhZDQ4MzE0ZGE0ODRhYiIsInBhdGgiOiJ0eXBlWzFdIn0seyJ2YWx1ZSI6IjExZDkxZTA1ODFlZjYyZjIwZWJiYTQ4NWIzMDY3OGFjOTU0YWQwNzkyNThhZGIyMTJjZDExZjVjNjM2MGZjOTkiLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QuaWQifSx7InZhbHVlIjoiNjI3NDFlOTQyOGJlZDcyZTM5M2NhODUzNmRlNWRjNGI0OTUxYWE3MjBhMDMwZWMzNTUyODU5YjlhMTE1NGQzNyIsInBhdGgiOiJpc3N1ZXIuaWQifSx7InZhbHVlIjoiOTlhNGE5N2EwZmFkZGQ5MWY2NmIxN2JlZDkwODhmODNmZDcyNDliYzE3ZWQ3N2VjOTRkODFmMDRkNzQ1ZTQwYiIsInBhdGgiOiJpc3N1ZXIubmFtZSJ9LHsidmFsdWUiOiJmNWE4MjhkZDEzMjJmYjgyYTE2ZmVkZmI2MGZjZGFmOWEzYzc3ZjcyMjFlZGQ0MmJmMzU0MTg0ZDE2N2VhM2ZkIiwicGF0aCI6Im9wZW5BdHRlc3RhdGlvbk1ldGFkYXRhLnRlbXBsYXRlLm5hbWUifSx7InZhbHVlIjoiODM5ODA0OTgxNmJjMjJjODk3ODNlNjA4MmFlZjY1N2VhYWMwMjBmM2M5NWQwMzA1OGY0ZDA2OTAyOTc4YzdmMyIsInBhdGgiOiJvcGVuQXR0ZXN0YXRpb25NZXRhZGF0YS50ZW1wbGF0ZS50eXBlIn0seyJ2YWx1ZSI6ImZmNmVhZGM5MTk2NDE4ZDI2ZWQ5NzgyYTVhMDY1NWQ4OTExMjg3MWY3ZmY2MzkyOWQ2YmYyMzg1YTcyNmUwZDQiLCJwYXRoIjoib3BlbkF0dGVzdGF0aW9uTWV0YWRhdGEudGVtcGxhdGUudXJsIn0seyJ2YWx1ZSI6IjcyMmMxMDgyMjViZWIwMmZjM2E5NzI0MTMxMTBkNjk1N2FkYTVlMDY1ZTgxYWRjMTM3MDRkYTVkMzMyZjNlZTgiLCJwYXRoIjoib3BlbkF0dGVzdGF0aW9uTWV0YWRhdGEucHJvb2YudHlwZSJ9LHsidmFsdWUiOiJkYzBmMDFjYjU0NGVkOTBiMDlkY2M0MWI3YThkZDRhYmQyY2NjNmE5MWEwMzEwNGQxZTBjNDNjODRkNmFlOWEwIiwicGF0aCI6Im9wZW5BdHRlc3RhdGlvbk1ldGFkYXRhLnByb29mLm1ldGhvZCJ9LHsidmFsdWUiOiI0YTUxOGM0MWNkMTRkOTRjMTRmYWY3NDdhMDFiY2ZhMWE2NTM0Y2E0ZjkyM2M5MTk5NWIwNGUzNjhiMzJkZDMyIiwicGF0aCI6Im9wZW5BdHRlc3RhdGlvbk1ldGFkYXRhLnByb29mLnZhbHVlIn0seyJ2YWx1ZSI6IjkwNDlkMzgyODc1ZjFlZTdmZDU3ZjlmMmI4YjI0MmFiYjNhMGU5MzZmNjA1YTMwYTJkZTUxOGQxMDZiZWZjY2EiLCJwYXRoIjoib3BlbkF0dGVzdGF0aW9uTWV0YWRhdGEucHJvb2YucmV2b2NhdGlvbi50eXBlIn0seyJ2YWx1ZSI6IjRjYmY0MzM1Y2UxMDcyOTVlYWY3ZjE2MTk2ZmU0MjNiZWM0NTE3NGYzNDQ5NTg3ZTRkOWU1Y2Y1MzI0MmJmMDIiLCJwYXRoIjoib3BlbkF0dGVzdGF0aW9uTWV0YWRhdGEucHJvb2YucmV2b2NhdGlvbi5sb2NhdGlvbiJ9LHsidmFsdWUiOiI5N2ZhNGFlMmQ4ODJiNmE2ZjNmZDA1N2E1YWNhNzZlMGM5ZDk4NzM1N2JiZjc3YTg3YzU1M2FlM2I3ZjEyMzQwIiwicGF0aCI6Im9wZW5BdHRlc3RhdGlvbk1ldGFkYXRhLmlkZW50aXR5UHJvb2YudHlwZSJ9LHsidmFsdWUiOiI2MmI0OGU0Nzk2OTMzNmY0ODNhMTcwMDBhMTExNDg0NmM2N2I4MjJhOWQ5MjUxYThiMDdlYTk2YzJjYzE4ZTkwIiwicGF0aCI6Im9wZW5BdHRlc3RhdGlvbk1ldGFkYXRhLmlkZW50aXR5UHJvb2YuaWRlbnRpZmllciJ9XQ==",
+    "privacy": {
+      "obfuscated": []
+    },
+    "key": "did:ethr:0x1245e5b64d785b25057f7438f715f4aa5d965733#controller",
+    "signature": "0xdbdd17d50418184735a2d58f7838797dcefe6825bc3c992188a36b65502de4bd291a3ba449c18cb93808c721d3abb056b2c8d0b392a4f37af2ca939eaff6c0071c"
+  }
+}
