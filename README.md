@@ -67,6 +67,9 @@ POST
 
 #### Development
 
+Download [docker desktop](https://www.docker.com/products/docker-desktop) and start it.
+
+`npm i`
 `npm run start`
 
 #### Notes

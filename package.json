@@ -26,6 +26,7 @@
     "eslint": "^8.25.0",
     "jest": "^29.1.2",
     "s3rver": "^3.7.1",
+    "shelljs": "^0.8.5",
     "supertest": "^6.3.0",
     "ts-jest": "^29.0.3",
     "typescript": "^4.8.4",
@@ -33,13 +34,18 @@
   },
   "scripts": {
     "lint": "eslint ./netlify/**/*.ts",
-    "local:clean": "npx rimraf ./tmp/test-bucket",
+    "clean": "npx rimraf ./tmp/test-bucket",
+    "aws:configure": "node ./scripts/aws-configure.js",
+    "aws:dynamodb": "node ./scripts/aws-dynamodb.js",
+    "docker": "docker-compose up",
+    "seed": "wait-on tcp:8000 && npm run aws:dynamodb",
+    "local:dynamodb": "concurrently \"npm:docker\" \"npm:seed\"",
     "local:s3": "s3rver -d ./tmp --configure-bucket test-bucket",
     "test": "API_KEY=testkey jest",
     "test:api": "wait-on tcp:9999 tcp:4568 && npm run test",
-    "test:ci": "concurrently -k -s first \"npm:test:serve\" \"npm:local:s3\" \"npm:test:api\"",
+    "test:ci": "concurrently -k -s first \"npm:test:serve\" \"npm:local:*\" \"npm:test:api\"",
     "test:serve": "API_KEY=testkey NODE_ENV=test TT_AWS_BUCKET_NAME=test-bucket netlify functions:serve",
-    "start": "npm run local:clean && concurrently \"npm:test:serve\" \"npm:local:s3\""
+    "start": "npm run clean && concurrently \"npm:test:serve\" \"npm:local:*\""
   },
   "repository": {
     "type": "git",
