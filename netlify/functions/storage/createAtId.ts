@@ -1,12 +1,18 @@
-import { validateDocument, getEncryptedDocument } from "../../utils";
+import {
+  validateNetwork,
+  validateDocument,
+  getEncryptedDocument,
+} from "../../utils";
 import { getDocument } from "./get";
 import { s3Put } from "../../services/s3";
-import { SUPPORTED_NETWORKS, CHAIN_ID } from "../../constants";
+import { SUPPORTED_NETWORKS } from "../../constants";
 
 const uploadDocumentAtId = async (document, documentId: string) => {
+  const { chainId } = await validateNetwork(document);
+
   await validateDocument({
     document,
-    network: SUPPORTED_NETWORKS[CHAIN_ID.GOERLI].network,
+    network: SUPPORTED_NETWORKS[chainId].network,
   });
 
   const { key: existingKey } = await getDocument(documentId);

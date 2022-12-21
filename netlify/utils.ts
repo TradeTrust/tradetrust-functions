@@ -4,13 +4,17 @@ import {
   verificationBuilder,
   isValid,
 } from "@govtechsg/oa-verify";
+import {
+  WrappedDocument,
+  OpenAttestationDocument,
+  utils,
+} from "@govtechsg/open-attestation";
 import { encryptString } from "@govtechsg/oa-encryption";
 import createError from "http-errors";
 import {
   ALLOWED_ORIGINS,
   ERROR_MESSAGE,
   SUPPORTED_NETWORKS,
-  supportedNetworks,
   network,
 } from "./constants";
 
@@ -33,35 +37,60 @@ export const checkApiKey = (req, res, next) => {
   next();
 };
 
-const getSupportedProvider = (network: network) => {
-  return Object.values(SUPPORTED_NETWORKS)
-    .find((item) => item.network === network)
-    .provider();
+const getSupportedNetwork = (network: network) => {
+  return Object.values(SUPPORTED_NETWORKS).find(
+    (item) => item.network === network,
+  );
+};
+
+export const validateNetwork = async (
+  document: WrappedDocument<OpenAttestationDocument>,
+) => {
+  if (utils.isWrappedV2Document(document)) {
+    const { network } = utils.getData(document);
+
+    if (!network) {
+      throw new createError(400, ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND);
+    } else {
+      return network;
+    }
+  } else if (utils.isWrappedV3Document(document)) {
+    const { network } = document;
+
+    if (!network) {
+      throw new createError(400, ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND);
+    } else {
+      return network;
+    }
+  } else {
+    throw new createError(400, ERROR_MESSAGE.DOCUMENT_SCHEMA_INVALID);
+  }
 };
 
 export const validateDocument = async ({
   document,
   network,
 }: {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  document: any;
+  document: WrappedDocument<OpenAttestationDocument>;
   network: network;
 }) => {
-  if (!supportedNetworks.includes(network)) {
+  const supportedNetwork = getSupportedNetwork(network);
+
+  if (!supportedNetwork) {
     throw new createError(400, ERROR_MESSAGE.NETWORK_UNSUPPORTED);
   }
 
   const verify = verificationBuilder(
     [...openAttestationVerifiers, openAttestationDidIdentityProof],
     {
-      provider: getSupportedProvider(network),
+      provider: supportedNetwork.provider(),
     },
   );
 
   const fragments = await verify(document);
 
   if (!isValid(fragments)) {
-    throw new createError(400, ERROR_MESSAGE.DOCUMENT_INVALID);
+    throw new createError(400, ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR);
   }
 
   return fragments;

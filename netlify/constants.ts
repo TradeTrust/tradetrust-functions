@@ -11,8 +11,10 @@ export const ALLOWED_ORIGINS = [
 export enum ERROR_MESSAGE {
   CORS_UNALLOWED = "The CORS policy for this site does not allow access from the specified Origin.",
   API_KEY_INVALID = "API key invalid.",
-  DOCUMENT_INVALID = "Document invalid.",
   DOCUMENT_NOT_FOUND = "Document not found.",
+  DOCUMENT_GENERIC_ERROR = "Document invalid.",
+  DOCUMENT_SCHEMA_INVALID = "Document is not OA compliant.",
+  DOCUMENT_NETWORK_NOT_FOUND = "Document network not found.",
   NETWORK_UNSUPPORTED = "Network is unsupported.",
 }
 
@@ -40,14 +42,7 @@ export enum CHAIN_ID {
   SEPOLIA = 11155111,
 }
 
-export const supportedNetworks = [
-  "mainnet",
-  "matic",
-  "maticmum",
-  "goerli",
-  "sepolia",
-] as const;
-export type network = typeof supportedNetworks[number];
+export type network = "mainnet" | "matic" | "maticmum" | "goerli" | "sepolia";
 
 type SupportedNetworks = {
   [index in CHAIN_ID]: {

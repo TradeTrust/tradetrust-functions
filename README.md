@@ -24,19 +24,23 @@ POST
 {
   "document": {
     "version": "https://schema.openattestation.com/2.0/schema.json",
+    "network: {
+      "chain": "9a09ae01-f16a-466d-ad66-b42e6b07e225:string:ETH",
+      "chainId": "19ca73ed-e2cf-43ac-b104-3c43d2fc0680:string:5"
+    },
     ...rest
   }
 }
 ```
 
+> Document storage endpoint requires `network.chainId` field in OA document.
+
+> The uploaded encrypted OpenAttestation documents will not be stored long term. They will be auto deleted after 31 days.
+
 GET
 
 - `/storage/:id` returns an encrypted OpenAttestation document
 - `/storage/queue` returns id and generated decrypt key
-
-> Document storage endpoint currently supports only `goerli` network.
-
-> The uploaded encrypted OpenAttestation documents will not be stored long term. They will be auto deleted after 31 days.
 
 ### Verify
 
