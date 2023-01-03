@@ -1,4 +1,9 @@
 import { providers } from "ethers";
+import {
+  CHAIN_ID,
+  SUPPORTED_CHAINS,
+  chainInfo,
+} from "@govtechsg/tradetrust-utils/constants/supportedChains";
 
 export const ALLOWED_ORIGINS = [
   "http://127.0.0.1:3000",
@@ -34,54 +39,34 @@ const jsonRpcProvider =
   () =>
     new providers.JsonRpcProvider(url);
 
-export enum CHAIN_ID {
-  MAINNET = 1,
-  MATIC = 137,
-  MATICMUM = 80001,
-  GOERLI = 5,
-  SEPOLIA = 11155111,
-}
+type supportedNetworks = Record<
+  CHAIN_ID,
+  chainInfo & { provider: () => providers.Provider }
+>;
 
-export type network = "mainnet" | "matic" | "maticmum" | "goerli" | "sepolia";
-
-type SupportedNetworks = {
-  [index in CHAIN_ID]: {
-    label: string;
-    network: network;
-    type: "production" | "test";
-    provider: () => providers.Provider;
-  };
-};
-
-export const SUPPORTED_NETWORKS: SupportedNetworks = {
-  [CHAIN_ID.MAINNET]: {
-    label: "Mainnet",
-    network: "mainnet",
-    type: "production",
+export const SUPPORTED_NETWORKS: supportedNetworks = {
+  [CHAIN_ID.local]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.local],
+    provider: jsonRpcProvider("http://localhost:8545"),
+  },
+  [CHAIN_ID.mainnet]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.mainnet],
     provider: infuraProvider("homestead"),
   },
-  [CHAIN_ID.MATIC]: {
-    label: "Polygon",
-    network: "matic",
-    type: "production",
+  [CHAIN_ID.matic]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.matic],
     provider: infuraProvider("matic"),
   },
-  [CHAIN_ID.MATICMUM]: {
-    label: "Polygon Mumbai",
-    network: "maticmum",
-    type: "test",
+  [CHAIN_ID.maticmum]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.maticmum],
     provider: infuraProvider("maticmum"),
   },
-  [CHAIN_ID.GOERLI]: {
-    label: "Goerli",
-    network: "goerli",
-    type: "test",
+  [CHAIN_ID.goerli]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.goerli],
     provider: infuraProvider("goerli"),
   },
-  [CHAIN_ID.SEPOLIA]: {
-    label: "Sepolia",
-    network: "sepolia",
-    type: "test",
+  [CHAIN_ID.sepolia]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
     provider: jsonRpcProvider("https://rpc.sepolia.org"),
   },
 };
