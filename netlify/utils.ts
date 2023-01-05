@@ -10,12 +10,12 @@ import {
   utils,
 } from "@govtechsg/open-attestation";
 import { encryptString } from "@govtechsg/oa-encryption";
+import { networkName } from "@govtechsg/tradetrust-utils/constants/network";
 import createError from "http-errors";
 import {
   ALLOWED_ORIGINS,
   ERROR_MESSAGE,
   SUPPORTED_NETWORKS,
-  network,
 } from "./constants";
 
 // https://github.com/expressjs/cors#configuring-cors-w-dynamic-origin
@@ -37,9 +37,9 @@ export const checkApiKey = (req, res, next) => {
   next();
 };
 
-const getSupportedNetwork = (network: network) => {
+const getSupportedNetwork = (network: networkName) => {
   return Object.values(SUPPORTED_NETWORKS).find(
-    (item) => item.network === network,
+    (item) => item.name === network,
   );
 };
 
@@ -72,7 +72,7 @@ export const validateDocument = async ({
   network,
 }: {
   document: WrappedDocument<OpenAttestationDocument>;
-  network: network;
+  network: networkName;
 }) => {
   const supportedNetwork = getSupportedNetwork(network);
 

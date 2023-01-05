@@ -1,3 +1,4 @@
+import { CHAIN_ID } from "@govtechsg/tradetrust-utils/constants/supportedChains";
 import {
   validateNetwork,
   validateDocument,
@@ -12,7 +13,7 @@ const uploadDocumentAtId = async (document, documentId: string) => {
 
   await validateDocument({
     document,
-    network: SUPPORTED_NETWORKS[chainId].network,
+    network: SUPPORTED_NETWORKS[chainId as CHAIN_ID].name,
   });
 
   const { key: existingKey } = await getDocument(documentId);
