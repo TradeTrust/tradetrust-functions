@@ -47,7 +47,7 @@ type supportedNetworks = Record<
 export const SUPPORTED_NETWORKS: supportedNetworks = {
   [CHAIN_ID.local]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.local],
-    provider: jsonRpcProvider("http://localhost:8545"),
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.local].rpcUrl),
   },
   [CHAIN_ID.mainnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.mainnet],
@@ -67,6 +67,6 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
   },
   [CHAIN_ID.sepolia]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
-    provider: jsonRpcProvider("https://rpc.sepolia.org"),
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.sepolia].rpcUrl),
   },
 };
