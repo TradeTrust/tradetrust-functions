@@ -2,20 +2,11 @@ import express from "express";
 import cors from "cors";
 import serverless from "serverless-http";
 import bodyParser from "body-parser";
-import { checkApiKey, corsOrigin } from "../../utils";
-import { create } from "./create";
-import { createAtId } from "./createAtId";
-import { get } from "./get";
-import { queue } from "./queue";
+import { corsOrigin } from "../../utils";
 import { MAX_REQUEST_BODY_SIZE } from "../../constants";
+import { router } from "./router";
 
 const app = express();
-const router = express.Router();
-
-router.post("/", checkApiKey, create);
-router.get("/queue", checkApiKey, queue);
-router.get("/:id", get); // lets omit checkApiKey for tradetrust web to retrieve document easily
-router.post("/:id", checkApiKey, createAtId);
 
 app.use(cors({ origin: corsOrigin }));
 app.use(bodyParser.json({ limit: MAX_REQUEST_BODY_SIZE }));

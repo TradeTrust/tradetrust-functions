@@ -3,13 +3,10 @@ import cors from "cors";
 import serverless from "serverless-http";
 import bodyParser from "body-parser";
 import { corsOrigin } from "../../utils";
-import { verifyDocument } from "./verifyDocument";
 import { MAX_REQUEST_BODY_SIZE } from "../../constants";
+import { router } from "./router";
 
 const app = express();
-const router = express.Router();
-
-router.post("/", verifyDocument);
 
 app.use(cors({ origin: corsOrigin }));
 app.use(bodyParser.json({ limit: MAX_REQUEST_BODY_SIZE }));
