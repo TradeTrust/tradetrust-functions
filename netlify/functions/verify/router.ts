@@ -1,16 +1,15 @@
+import express, { Request, Response } from "express";
+import { networkName } from "@govtechsg/tradetrust-utils/constants/network";
 import { isValid } from "@govtechsg/oa-verify";
 import { validateDocument } from "../../utils";
 
-export const verifyDocument = async (req, res) => {
-  const {
-    body: { document },
-    query: { network = "mainnet" },
-  } = req;
+const router = express.Router();
 
+router.post("/", async (req: Request, res: Response) => {
   try {
     const fragments = await validateDocument({
-      document,
-      network,
+      document: req.body.document,
+      network: (req.query.network ?? "mainnet") as networkName,
     });
     res.status(200).json({
       summary: {
@@ -24,4 +23,6 @@ export const verifyDocument = async (req, res) => {
   } catch (err) {
     res.status(400).json(err);
   }
-};
+});
+
+export { router };
