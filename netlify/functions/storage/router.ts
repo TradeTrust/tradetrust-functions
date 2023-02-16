@@ -22,7 +22,7 @@ router.post("/", checkApiKey, async (req: Request, res: Response) => {
   }
 });
 
-router.post("/:id", checkApiKey, async (req, res) => {
+router.post("/:id", checkApiKey, async (req: Request, res: Response) => {
   const {
     body: { document },
     params: { id },
@@ -36,7 +36,7 @@ router.post("/:id", checkApiKey, async (req, res) => {
   }
 });
 
-router.get("/queue", checkApiKey, async (req, res) => {
+router.get("/queue", checkApiKey, async (req: Request, res: Response) => {
   try {
     const result = await getQueueNumber();
     res.status(200).json(result);
@@ -46,7 +46,7 @@ router.get("/queue", checkApiKey, async (req, res) => {
 });
 
 // lets omit checkApiKey for tradetrust web to retrieve document easily
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req: Request, res: Response) => {
   const {
     params: { id },
   } = req;

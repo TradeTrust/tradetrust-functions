@@ -6,10 +6,15 @@ import { validateDocument } from "../../utils";
 const router = express.Router();
 
 router.post("/", async (req: Request, res: Response) => {
+  const {
+    body: { document },
+    query: { network = "mainnet" },
+  } = req;
+
   try {
     const fragments = await validateDocument({
-      document: req.body.document,
-      network: (req.query.network ?? "mainnet") as networkName,
+      document,
+      network: network as networkName,
     });
     res.status(200).json({
       summary: {
