@@ -35,7 +35,7 @@ POST
 
 > Document storage endpoint requires `network.chainId` field in OA document.
 
-> The uploaded encrypted OpenAttestation documents will not be stored long term. They will be auto deleted after 31 days.
+> The uploaded encrypted OpenAttestation documents will not be stored long term. They will be auto deleted after 30 days.
 
 GET
 
