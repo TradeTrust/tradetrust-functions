@@ -92,7 +92,7 @@ describe("POST /", () => {
       .expect(400);
 
     expect(response.body.message).toBe(
-      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND,
     );
   });
 
@@ -106,7 +106,7 @@ describe("POST /", () => {
       .expect(400);
 
     expect(response.body.message).toBe(
-      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND,
     );
   });
 });
@@ -148,7 +148,7 @@ describe("GET /:id", () => {
     const response = await request.get("/abc").expect(400);
 
     expect(response.body.message).toBe(
-      DOCUMENT_STORAGE_ERROR_MESSAGE.KEY_NOT_EXISTS
+      DOCUMENT_STORAGE_ERROR_MESSAGE.KEY_NOT_EXISTS,
     );
   });
 });

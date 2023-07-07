@@ -27,7 +27,7 @@ describe("POST /", () => {
       .expect(200);
 
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
     );
   });
 
@@ -48,7 +48,7 @@ describe("POST /", () => {
       .expect(200);
 
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
     );
   });
 
@@ -60,7 +60,7 @@ describe("POST /", () => {
       .expect(200);
 
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
     );
   });
 
@@ -72,7 +72,7 @@ describe("POST /", () => {
       .expect(400);
 
     expect(response.body.message).toStrictEqual(
-      ERROR_MESSAGE.NETWORK_UNSUPPORTED
+      ERROR_MESSAGE.NETWORK_UNSUPPORTED,
     );
   });
 
@@ -84,7 +84,7 @@ describe("POST /", () => {
       .expect(200);
 
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
     );
   });
 
@@ -96,7 +96,7 @@ describe("POST /", () => {
       .expect(200);
 
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
     );
   });
 });
