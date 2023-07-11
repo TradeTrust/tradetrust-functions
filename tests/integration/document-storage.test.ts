@@ -3,8 +3,8 @@ import documentMaticmumV2 from "../fixtures/v2/document-maticmum.json";
 import documentMaticmumV3 from "../fixtures/v3/document-maticmum.json";
 import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
 import documentSepoliaV3 from "../fixtures/v3/document-sepolia.json";
-import documentNoNetworkV2 from "../fixtures/v2/document-sepolia-no-network.json";
-import documentNoNetworkV3 from "../fixtures/v3/document-sepolia-no-network.json";
+import documentSepoliaNoNetworkV2 from "../fixtures/v2/document-sepolia-no-network.json";
+import documentSepoliaNoNetworkV3 from "../fixtures/v3/document-sepolia-no-network.json";
 import {
   ERROR_MESSAGE,
   DOCUMENT_STORAGE_ERROR_MESSAGE,
@@ -87,7 +87,7 @@ describe("POST /", () => {
       .post("/")
       .set("x-api-key", process.env.API_KEY)
       .send({
-        document: documentNoNetworkV2,
+        document: documentSepoliaNoNetworkV2,
       })
       .expect(400);
 
@@ -101,7 +101,7 @@ describe("POST /", () => {
       .post("/")
       .set("x-api-key", process.env.API_KEY)
       .send({
-        document: documentNoNetworkV3,
+        document: documentSepoliaNoNetworkV3,
       })
       .expect(400);
 
