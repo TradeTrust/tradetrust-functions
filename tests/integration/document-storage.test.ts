@@ -1,9 +1,10 @@
 import supertest from "supertest";
-import documentGoerliV2 from "../fixtures/v2/document-goerli.json";
 import documentMaticmumV2 from "../fixtures/v2/document-maticmum.json";
+import documentMaticmumV3 from "../fixtures/v3/document-maticmum.json";
 import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
-import documentGoerliV3 from "../fixtures/v3/document-goerli.json";
-import documentGoerliNoNetwork from "../fixtures/v2/document-goerli-no-network.json";
+import documentSepoliaV3 from "../fixtures/v3/document-sepolia.json";
+import documentSepoliaNoNetworkV2 from "../fixtures/v2/document-sepolia-no-network.json";
+import documentSepoliaNoNetworkV3 from "../fixtures/v3/document-sepolia-no-network.json";
 import {
   ERROR_MESSAGE,
   DOCUMENT_STORAGE_ERROR_MESSAGE,
@@ -11,25 +12,12 @@ import {
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
-const postDataGoerliV2 = { document: documentGoerliV2 };
 const postDataMaticmumV2 = { document: documentMaticmumV2 };
+const postDataMaticmumV3 = { document: documentMaticmumV3 };
 const postDataSepoliaV2 = { document: documentSepoliaV2 };
-const postDataGoerliV3 = { document: documentGoerliV3 };
+const postDataSepoliaV3 = { document: documentSepoliaV3 };
 
 describe("POST /", () => {
-  it("should store encrypted v2 goerli document", async () => {
-    const response = await request
-      .post("/")
-      .set("x-api-key", process.env.API_KEY)
-      .send(postDataGoerliV2)
-      .expect(200);
-
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("key");
-    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
-    expect(Object.keys(response.body).length).toBe(3);
-  });
-
   it("should store encrypted v2 maticmum document", async () => {
     const response = await request
       .post("/")
@@ -56,11 +44,24 @@ describe("POST /", () => {
     expect(Object.keys(response.body).length).toBe(3);
   });
 
-  it("should store encrypted v3 goerli document", async () => {
+  it("should store encrypted v3 sepolia document", async () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
-      .send(postDataGoerliV3)
+      .send(postDataSepoliaV3)
+      .expect(200);
+
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("key");
+    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
+    expect(Object.keys(response.body).length).toBe(3);
+  });
+
+  it("should store encrypted v3 sepolia document", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send(postDataMaticmumV3)
       .expect(200);
 
     expect(response.body).toHaveProperty("id");
@@ -81,12 +82,26 @@ describe("POST /", () => {
     expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_SCHEMA_INVALID);
   });
 
-  it("should throw error when document network field does not exists", async () => {
+  it("should throw error when v2 document's network field does not exists", async () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
       .send({
-        document: documentGoerliNoNetwork,
+        document: documentSepoliaNoNetworkV2,
+      })
+      .expect(400);
+
+    expect(response.body.message).toBe(
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND,
+    );
+  });
+
+  it("should throw error when v3 document's network field does not exists", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send({
+        document: documentSepoliaNoNetworkV3,
       })
       .expect(400);
 
@@ -114,7 +129,7 @@ describe("GET /:id", () => {
     const postResponse = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
-      .send(postDataGoerliV2)
+      .send(postDataSepoliaV2)
       .expect(200);
 
     const getResponse = await request
@@ -148,7 +163,7 @@ describe("POST /:id", () => {
     const response = await request
       .post(`/${queueResponse.body.id}`)
       .set("x-api-key", process.env.API_KEY)
-      .send(postDataGoerliV2)
+      .send(postDataSepoliaV2)
       .expect(200);
 
     expect(response.body).toHaveProperty("id", queueResponse.body.id); // important to check!

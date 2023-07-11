@@ -1,0 +1,73 @@
+{
+  "version": "https://schema.openattestation.com/2.0/schema.json",
+  "data": {
+    "name": "732b723f-b4ee-4bfc-8caf-5f2b14d24985:string:TradeTrust Invoice v2",
+    "$template": {
+      "name": "d62897d3-63cf-4bed-9e65-5e551b35408c:string:INVOICE",
+      "type": "c10a5d1a-d30a-4d45-b924-4add853af1c3:string:EMBEDDED_RENDERER",
+      "url": "9553caeb-e9c3-4f64-bb74-4a2142103cf2:string:https://generic-templates.tradetrust.io"
+    },
+    "id": "851b482d-5bd4-46ba-895c-530a56f666c1:string:1111",
+    "date": "2086cf03-e008-4656-8fd6-0686e03930ea:string:2018-02-21",
+    "customerId": "5c62fd78-b664-40a6-b140-418a7ae1192a:string:564",
+    "terms": "04c940cd-685c-4e3d-a117-219ec12a2fae:string:Due Upon Receipt",
+    "billFrom": {
+      "name": "c3b92539-6b76-4c57-9a92-e89774213ad2:string:ABC Company",
+      "streetAddress": "b35f6e75-636d-4306-93f0-830f1ae5e458:string:Level 1, Industry Offices",
+      "city": "e0c1f848-2345-4864-ba66-fc9ad006ac1d:string:Singapore",
+      "postalCode": "c87608cc-72b8-4cf4-9baa-f0def5bb9fb8:string:123456",
+      "phoneNumber": "8302a25a-df91-4fa1-bb3d-a044790aea06:string:60305029"
+    },
+    "billTo": {
+      "company": {
+        "name": "11fd36b1-2297-4a55-82fd-9344cd6c6c4a:string:DEF Company",
+        "streetAddress": "8f0aed24-1c4f-40b6-8c56-a17ca7d03ae0:string:Level 2, Industry Offices",
+        "city": "df46438c-aa8d-44ef-aaa8-720fbfa4b802:string:Singapore",
+        "postalCode": "8fb5beb2-ef3c-4863-9cdf-d21999a653f7:string:612345",
+        "phoneNumber": "5529831a-17f1-4fa4-81c3-ea6a50d39f68:string:61204028"
+      },
+      "name": "5f695973-f0f8-4eb4-b95e-1c6ab81cb5f2:string:James Lee",
+      "email": "733d3193-f28f-4be7-bc36-95eaef64d15f:string:def@company.com"
+    },
+    "billableItems": [
+      {
+        "description": "7a2b08d8-1c90-4b7f-99a0-660f7f80425d:string:Service Fee",
+        "quantity": "980468eb-af01-4c66-8744-b00840fa8125:number:1",
+        "unitPrice": "11f35fc2-c1a2-4580-9b87-cb107c49404a:number:200",
+        "amount": "d6eb26a3-47ef-4319-8b8e-6b458d595d25:number:200"
+      },
+      {
+        "description": "e62ab458-7112-4a2a-9866-8954b6650778:string:Labor: 5 hours at $75/hr",
+        "quantity": "7204050d-6336-42f3-bc88-28e6922b2338:number:5",
+        "unitPrice": "fc9ee740-3fba-4be7-ac70-993e1c5690e7:number:75",
+        "amount": "634cb755-ceb5-45c2-85f7-5241319541b2:number:375"
+      },
+      {
+        "description": "86f5065b-8cbc-49ba-b4a8-43997f0c6d4c:string:New client discount",
+        "quantity": "d5d90e63-4a26-470a-ad12-a71a0228577d:number:1",
+        "unitPrice": "c9d82c70-ba9f-4d34-93aa-a2979e6206c6:number:50",
+        "amount": "1332058a-1459-426d-b5fa-f427760f3c58:number:50"
+      }
+    ],
+    "subtotal": "dbd71fca-2c08-47f8-b108-5cbc756f5108:number:625",
+    "tax": "c0089b1c-5323-4821-ab20-a5c29e591692:number:0",
+    "taxTotal": "875d2b81-dacf-407a-b47e-1c325e4080f1:number:0",
+    "total": "ea17de2d-a5fd-4e8f-8f83-7f8557010378:number:625",
+    "issuers": [
+      {
+        "name": "a6bdd0d8-fa38-43f2-aca7-ab0c9de47cf3:string:GovTech",
+        "documentStore": "943b9033-14aa-4d1b-a395-4cde4bdbec45:string:0x93092C2B449712281008112870063fF439367C00",
+        "identityProof": {
+          "type": "528f7729-86ea-4769-876f-bf02c0bcd769:string:DNS-TXT",
+          "location": "7339e9d2-8b8c-41e5-b245-1c265bfddc04:string:example.tradetrust.io"
+        }
+      }
+    ]
+  },
+  "signature": {
+    "type": "SHA3MerkleProof",
+    "targetHash": "472a89e12762459afb6b281a1b1706a05e1d1ec8d1eb1853233dc19a40efd103",
+    "proof": [],
+    "merkleRoot": "472a89e12762459afb6b281a1b1706a05e1d1ec8d1eb1853233dc19a40efd103"
+  }
+}
