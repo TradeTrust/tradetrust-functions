@@ -67,6 +67,6 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
   },
   [CHAIN_ID.sepolia]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.sepolia].rpcUrl),
+    provider: infuraProvider("sepolia"),
   },
 };
