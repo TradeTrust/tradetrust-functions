@@ -13,6 +13,29 @@ export const ALLOWED_ORIGINS = [
   "https://tradetrust.io",
 ];
 
+export enum DYNAMODB_TABLE {
+  REVOCATION = "tradetrust-dev-ocsp-responder",
+}
+
+// https://datatracker.ietf.org/doc/html/rfc5280#page-69
+export enum OCSP_RESPONDER_REVOCATION_REASON {
+  UNSPECIFIED = 0,
+  KEY_COMPROMISE = 1,
+  CA_COMPROMISE = 2,
+  AFFILIATION_CHANGED = 3,
+  SUPERSEDED = 4,
+  CESSATION_OF_OPERATION = 5,
+  CERTIFICATE_HOLD = 6,
+  REMOVE_FROM_CRL = 8,
+  PRIVILEGE_WITHDRAWN = 9,
+  A_A_COMPROMISE = 10,
+}
+
+export enum OCSP_RESPONDER_SUCCESS_MESSAGE {
+  ADDED = "documentHash added into revocation table.",
+  REMOVED = "documentHash removed from revocation table.",
+}
+
 export enum ERROR_MESSAGE {
   CORS_UNALLOWED = "The CORS policy for this site does not allow access from the specified Origin.",
   API_KEY_INVALID = "API key invalid.",
