@@ -14,7 +14,7 @@
     "ethers": "^5.7.2",
     "express": "^4.18.2",
     "http-errors": "^2.0.0",
-    "netlify-cli": "^12.0.8",
+    "netlify-cli": "^12.14.0",
     "serverless-http": "^3.0.3",
     "uuid": "^9.0.0"
   },
