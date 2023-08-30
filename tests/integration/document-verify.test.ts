@@ -107,7 +107,6 @@ describe("POST /", () => {
       .query({ network: "xdcapothem" })
       .send(postDataXDCApothemV2)
       // .expect(200);
-    console.log(response.body.summary,'responseresponse')
     expect(response.body.summary).toStrictEqual(
       RESPONSE_VERIFY_SUCCESS_SUMMARY,
     );
