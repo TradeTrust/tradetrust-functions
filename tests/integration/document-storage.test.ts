@@ -1,6 +1,8 @@
 import supertest from "supertest";
 import documentMaticmumV2 from "../fixtures/v2/document-maticmum.json";
 import documentMaticmumV3 from "../fixtures/v3/document-maticmum.json";
+import documentXDCApothemV2 from "../fixtures/v2/document-xdcapothem.json";
+import documentXDCApothemV3 from "../fixtures/v3/document-xdcapothem.json";
 import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
 import documentSepoliaV3 from "../fixtures/v3/document-sepolia.json";
 import documentSepoliaNoNetworkV2 from "../fixtures/v2/document-sepolia-no-network.json";
@@ -14,6 +16,8 @@ const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
 const postDataMaticmumV2 = { document: documentMaticmumV2 };
 const postDataMaticmumV3 = { document: documentMaticmumV3 };
+const postDataXDCApothemV2 = { document: documentXDCApothemV2 };
+const postDataXDCApothemV3 = { document: documentXDCApothemV3 };
 const postDataSepoliaV2 = { document: documentSepoliaV2 };
 const postDataSepoliaV3 = { document: documentSepoliaV3 };
 
@@ -43,7 +47,18 @@ describe("POST /", () => {
     expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
     expect(Object.keys(response.body).length).toBe(3);
   });
+  it("should store encrypted v2 xdcapothem document", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send(postDataXDCApothemV2)
+      .expect(200);
 
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("key");
+    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
+    expect(Object.keys(response.body).length).toBe(3);
+  });
   it("should store encrypted v3 sepolia document", async () => {
     const response = await request
       .post("/")
@@ -69,7 +84,18 @@ describe("POST /", () => {
     expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
     expect(Object.keys(response.body).length).toBe(3);
   });
+  it("should store encrypted v3 xdcapothem document", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send(postDataXDCApothemV3)
+      .expect(200);
 
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("key");
+    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
+    expect(Object.keys(response.body).length).toBe(3);
+  });
   it("should throw error when document is not compliant to OA schema", async () => {
     const response = await request
       .post("/")
