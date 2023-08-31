@@ -105,8 +105,8 @@ describe("POST /", () => {
     const response = await request
       .post("/")
       .query({ network: "xdcapothem" })
-      .send(postDataXDCApothemV2)
-      // .expect(200);
+      .send(postDataXDCApothemV2);
+    // .expect(200);
     expect(response.body.summary).toStrictEqual(
       RESPONSE_VERIFY_SUCCESS_SUMMARY,
     );
