@@ -53,7 +53,6 @@ POST
 - `/verify?network="sepolia"` verifies an OpenAttestation document on sepolia network
 - `/verify?network="xdcapothem"` verifies an OpenAttestation document on xdcapothem network
 
-
 ```
 // POST data example
 {
