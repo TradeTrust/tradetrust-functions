@@ -14,5 +14,6 @@ app.use(
   bodyParser.urlencoded({ limit: MAX_REQUEST_BODY_SIZE, extended: true }),
 );
 app.use("/.netlify/functions/storage", router);
+app.disable("x-powered-by");
 
 export const handler = serverless(app);
