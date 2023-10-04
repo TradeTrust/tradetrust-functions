@@ -68,10 +68,6 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
     ...SUPPORTED_CHAINS[CHAIN_ID.maticmum],
     provider: infuraProvider("maticmum"),
   },
-  [CHAIN_ID.goerli]: {
-    ...SUPPORTED_CHAINS[CHAIN_ID.goerli],
-    provider: infuraProvider("goerli"),
-  },
   [CHAIN_ID.sepolia]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
     provider: infuraProvider("sepolia"),
