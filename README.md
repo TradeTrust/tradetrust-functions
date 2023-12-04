@@ -52,6 +52,7 @@ POST
 - `/verify?network="maticmum"` verifies an OpenAttestation document on maticmum network
 - `/verify?network="sepolia"` verifies an OpenAttestation document on sepolia network
 - `/verify?network="xdcapothem"` verifies an OpenAttestation document on xdcapothem network
+- `/verify?network="hedera"` verifies an OpenAttestation document on hedera network
 
 ```
 // POST data example
