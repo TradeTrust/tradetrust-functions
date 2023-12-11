@@ -1,6 +1,6 @@
 import express, { Request, Response } from "express";
-import { networkName } from "@govtechsg/tradetrust-utils/constants/network";
-import { isValid } from "@govtechsg/oa-verify";
+import { networkName } from "@tradetrust-tt/tradetrust-utils/constants/network";
+import { isValid } from "@tradetrust-tt/tt-verify";
 import { validateDocument } from "../../utils";
 
 const router = express.Router();

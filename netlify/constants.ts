@@ -3,7 +3,7 @@ import {
   CHAIN_ID,
   SUPPORTED_CHAINS,
   chainInfo,
-} from "@govtechsg/tradetrust-utils/constants/supportedChains";
+} from "@tradetrust-tt/tradetrust-utils/constants/supportedChains";
 
 export const ALLOWED_ORIGINS =
   process.env.NODE_ENV === "test"
