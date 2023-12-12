@@ -3,14 +3,14 @@ import {
   openAttestationDidIdentityProof,
   verificationBuilder,
   isValid,
-} from "@govtechsg/oa-verify";
+} from "@tradetrust-tt/tt-verify";
 import {
   WrappedDocument,
   OpenAttestationDocument,
   utils,
-} from "@govtechsg/open-attestation";
+} from "@tradetrust-tt/tradetrust";
 import { encryptString } from "@govtechsg/oa-encryption";
-import { networkName } from "@govtechsg/tradetrust-utils/constants/network";
+import { networkName } from "@tradetrust-tt/tradetrust-utils/constants/network";
 import createError from "http-errors";
 import {
   ALLOWED_ORIGINS,
@@ -39,12 +39,12 @@ export const checkApiKey = (req, res, next) => {
 
 const getSupportedNetwork = (network: networkName) => {
   return Object.values(SUPPORTED_NETWORKS).find(
-    (item) => item.name === network,
+    (item) => item.name === network
   );
 };
 
 export const validateNetwork = async (
-  document: WrappedDocument<OpenAttestationDocument>,
+  document: WrappedDocument<OpenAttestationDocument>
 ) => {
   if (utils.isWrappedV2Document(document)) {
     const { network } = utils.getData(document);
@@ -84,7 +84,7 @@ export const validateDocument = async ({
     [...openAttestationVerifiers, openAttestationDidIdentityProof],
     {
       provider: supportedNetwork.provider(),
-    },
+    }
   );
 
   const fragments = await verify(document);
