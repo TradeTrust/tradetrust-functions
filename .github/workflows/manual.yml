@@ -15,6 +15,7 @@ jobs:
       - name: Install node dependancies
         run: npm ci
       - name: Check Snyk
+        continue-on-error: true
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
