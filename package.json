@@ -8,7 +8,7 @@
     "@tradetrust-tt/tt-verify": "^8.2.0",
     "@tradetrust-tt/tradetrust-utils": "^1.6.1",
     "@netlify/functions": "^2.0.2",
-    "aws-sdk": "^2.1463.0",
+    "aws-sdk": "^2.1513.0",
     "body-parser": "^1.20.1",
     "cors": "^2.8.5",
     "ethers": "^5.7.2",
