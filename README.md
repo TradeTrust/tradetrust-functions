@@ -1,5 +1,7 @@
 # TradeTrust functions
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d1d7e5ae-2010-4f42-bcf0-9e9b6b6f7b33/deploy-status)](https://app.netlify.com/sites/tradetrust-functions/deploys)
+
 API endpoints to use.
 
 ## ⚠️ Reminder
