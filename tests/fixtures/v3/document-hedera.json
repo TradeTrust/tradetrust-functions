@@ -1,0 +1,29 @@
+{
+    "version": "https://schema.openattestation.com/2.0/schema.json",
+    "data": {
+      "$template": {
+        "name": "e5a60804-e7d1-4a5b-aee6-acec39906e20:string:main",
+        "type": "d0edac0b-dc8f-4f88-ba35-1dd768b8a758:string:EMBEDDED_RENDERER",
+        "url": "922c1295-9826-4fa1-99e1-5faa41e59db9:string:https://tutorial-renderer.openattestation.com"
+      },
+      "recipient": {
+        "name": "f7ca97ee-af7c-40a2-886a-df1311428ce8:string:KrypC - Piruthivi"
+      },
+      "issuers": [
+        {
+          "name": "0b7facd6-d192-43f4-8d0d-bae22b3ec43d:string:KrypC Issuer",
+          "tokenRegistry": "daafd0da-521b-4961-a92d-88328b9c7790:string:0x3DE43bfd3D771931E46CbBd4EDE0D3d95C85f81A",
+          "identityProof": {
+            "type": "6aa61d75-48e8-47da-bf51-b6fba7d38c79:string:DNS-TXT",
+            "location": "629548d0-0c42-46ca-b3b8-b2265097f901:string:trustlv.org"
+          }
+        }
+      ]
+    },
+    "signature": {
+      "type": "SHA3MerkleProof",
+      "targetHash": "1fdea9b542ec22f7d87f23d86f1cf3e526e2edec1b9baaa9aedff904efea78a9",
+      "proof": [],
+      "merkleRoot": "1fdea9b542ec22f7d87f23d86f1cf3e526e2edec1b9baaa9aedff904efea78a9"
+    }
+  }

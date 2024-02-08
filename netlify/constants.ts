@@ -73,12 +73,12 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
     ...SUPPORTED_CHAINS[CHAIN_ID.xdcapothem],
     provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.xdcapothem].rpcUrl),
   },
-  [CHAIN_ID.HederaMainnet]: {
-    ...SUPPORTED_CHAINS[CHAIN_ID.HederaMainnet],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.HederaMainnet].rpcUrl),
+  [CHAIN_ID.hederamainnet]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.hederamainnet],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.hederamainnet].rpcUrl),
   },
-  [CHAIN_ID.HederaTestnet]: {
-    ...SUPPORTED_CHAINS[CHAIN_ID.HederaTestnet],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.HederaTestnet].rpcUrl),
+  [CHAIN_ID.hederatestnet]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.hederatestnet],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.hederatestnet].rpcUrl),
   },
 };
