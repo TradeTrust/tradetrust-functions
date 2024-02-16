@@ -27,7 +27,6 @@ const postDataXDCApothemV3 = { document: documentXDCApothemV3 };
 const postDataHederaV2 = { document: documentHederaV2 };
 const postDataHederaV3 = { document: documentHederaV3 };
 
-
 describe("POST /", () => {
   it("should verify a mainnet document by default", async () => {
     const response = await request
