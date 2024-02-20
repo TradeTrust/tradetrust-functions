@@ -5,7 +5,7 @@
   "main": "index.js",
   "dependencies": {
     "@govtechsg/oa-encryption": "^1.3.5",
-    "@tradetrust-tt/tt-verify": "^8.2.0",
+    "@tradetrust-tt/tt-verify": "^8.7.0",
     "@tradetrust-tt/tradetrust-utils": "^1.6.1",
     "@netlify/functions": "^2.0.2",
     "aws-sdk": "^2.1463.0",
