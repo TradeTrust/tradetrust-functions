@@ -1,77 +1,91 @@
 {
-  "version": "https://schema.openattestation.com/2.0/schema.json",
-  "data": {
-    "name": "49330e57-5fe4-4604-8ce4-1bb96d79aae7:string:TradeTrust Invoice v2",
-    "$template": {
-      "name": "b1f75d1f-f828-4d49-b54c-15c7374b8a8a:string:INVOICE",
-      "type": "c4c3b992-01b3-4e22-876c-efc22187cc29:string:EMBEDDED_RENDERER",
-      "url": "b8291574-8abc-4257-8663-459eb9c20a44:string:https://generic-templates.tradetrust.io"
+  "version": "https://schema.openattestation.com/3.0/schema.json",
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://schemata.openattestation.com/io/tradetrust/Invoice/1.0/invoice-context.json",
+    "https://schemata.openattestation.com/com/openattestation/1.0/OpenAttestation.v3.json"
+  ],
+  "type": ["VerifiableCredential", "OpenAttestationCredential"],
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  "issuer": {
+    "id": "https://example.com",
+    "name": "DEMO STORE",
+    "type": "OpenAttestationIssuer"
+  },
+  "openAttestationMetadata": {
+    "template": {
+      "type": "EMBEDDED_RENDERER",
+      "name": "INVOICE",
+      "url": "https://generic-templates.tradetrust.io"
     },
-    "id": "352cee06-38a9-4e2f-bbcd-d656dfc6bcde:string:1111",
-    "date": "fe252099-59a5-4a8f-a7ad-a38262d92099:string:2018-02-21",
-    "customerId": "9378dd68-cfab-4420-9565-c6de94d76a0c:string:564",
-    "terms": "d490c2e8-f3ac-4302-97d0-b5f082965b56:string:Due Upon Receipt",
+    "proof": {
+      "type": "OpenAttestationProofMethod",
+      "method": "DOCUMENT_STORE",
+      "value": "0x71D28767662cB233F887aD2Bb65d048d760bA694"
+    },
+    "identityProof": {
+      "type": "DNS-TXT",
+      "identifier": "example.tradetrust.io"
+    }
+  },
+  "credentialSubject": {
+    "name": "TradeTrust Invoice v3",
+    "id": "1111",
+    "date": "2018-02-21",
+    "customerId": "564",
+    "terms": "Due Upon Receipt",
     "billFrom": {
-      "name": "8c69940e-c464-491f-abde-a3f3f983214d:string:ABC Company",
-      "streetAddress": "2a466cdc-ddad-4b19-9e18-bcbbab67b7d6:string:Level 1, Industry Offices",
-      "city": "a1675df0-adae-47c1-9c93-53bcb0a01355:string:Singapore",
-      "postalCode": "025029af-1198-4e88-9f65-247a76058e42:string:123456",
-      "phoneNumber": "ae8d8c1d-193e-4440-a115-f4eb823998ea:string:60305029"
+      "name": "ABC Company",
+      "streetAddress": "Level 1, Industry Offices",
+      "city": "Singapore",
+      "postalCode": "123456",
+      "phoneNumber": "60305029"
     },
     "billTo": {
       "company": {
-        "name": "5b246af3-36c0-4318-b7cd-a44968b51927:string:DEF Company",
-        "streetAddress": "adda5ba5-8ea2-45c5-90fa-38f103fb37cc:string:Level 2, Industry Offices",
-        "city": "b2ff270a-a26c-44ea-a2a8-5eb17e018ec3:string:Singapore",
-        "postalCode": "0ee3fb9a-7fb6-4394-960b-f92237e4f7c8:string:612345",
-        "phoneNumber": "4e37ead7-24c7-4608-bee4-a1d53afc815b:string:61204028"
+        "name": "DEF Company",
+        "streetAddress": "Level 2, Industry Offices",
+        "city": "Singapore",
+        "postalCode": "612345",
+        "phoneNumber": "61204028"
       },
-      "name": "8e63f377-88ee-4d17-b26a-e0a8a79705ab:string:James Lee",
-      "email": "6bc6e41e-4b2b-4a00-9b9d-876d3cd8b022:string:def@company.com"
+      "name": "James Lee",
+      "email": "def@company.com"
     },
     "billableItems": [
       {
-        "description": "5937212c-5f0a-4437-87d9-fb5e5e86c4aa:string:Service Fee",
-        "quantity": "3abb1d7c-18ea-4337-9e11-74c1c1648e23:number:1",
-        "unitPrice": "a9413ad6-6789-4d9a-b3ad-bab391fad671:number:200",
-        "amount": "0419a19d-8166-4be5-a962-7b06405ee6a5:number:200"
+        "description": "Service Fee",
+        "quantity": "1",
+        "unitPrice": "200",
+        "amount": "200"
       },
       {
-        "description": "b09ead97-956e-45b6-850e-e00de79f90f8:string:Labor: 5 hours at $75/hr",
-        "quantity": "8321f6f8-272f-4dee-a32e-5eb2909afced:number:5",
-        "unitPrice": "771ce5f3-7b8a-4f39-a2ec-374704c8c415:number:75",
-        "amount": "74482695-9dd2-4bbe-bd03-362c38c9b62a:number:375"
+        "description": "Labor: 5 hours at $75/hr",
+        "quantity": "5",
+        "unitPrice": "75",
+        "amount": "375"
       },
       {
-        "description": "5fcde7fe-8ff6-46e4-bb5c-7b94834858e0:string:New client discount",
-        "quantity": "c7be6027-68f5-4fce-a06c-7e082fff3b7a:number:1",
-        "unitPrice": "fd6683c7-db86-4609-a7dc-801119d81afe:number:50",
-        "amount": "365db096-503c-4d7f-b53e-556815d5a6b4:number:50"
+        "description": "New client discount",
+        "quantity": "1",
+        "unitPrice": "50",
+        "amount": "50"
       }
     ],
-    "subtotal": "0b8a7c28-111d-4fde-8801-ed0ac52caea9:number:625",
-    "tax": "39af9eae-91aa-40da-935d-b0d753ee86bb:number:0",
-    "taxTotal": "4e4c11d3-066c-4185-9f2f-8886e5cf708f:number:0",
-    "total": "a3d6477a-e99e-49d6-9b00-b5679c363836:number:625",
-    "issuers": [
-      {
-        "name": "8b6aa901-b6f2-4b9b-8b24-95423d30a832:string:GovTech",
-        "documentStore": "db23e89d-4d54-4b61-a76a-b4291810a3aa:string:0x51de4F7F47DB190dba3482f94Ace3AdF9872c6dB",
-        "identityProof": {
-          "type": "9195dff9-276f-4bbb-a6b2-669eb37835ca:string:DNS-TXT",
-          "location": "aeccd468-c22a-4499-8da9-286a62ba8934:string:demo-tradetrust.openattestation.com"
-        }
-      }
-    ],
-    "network": {
-      "chain": "5b92c482-2b45-462a-a988-fa385a8eff48:string:SEP",
-      "chainId": "98d80768-8ff2-4ef8-afb6-6ec378dbd109:string:11155111"
-    }
+    "subtotal": "625",
+    "tax": "0",
+    "taxTotal": "0",
+    "total": "625"
   },
-  "signature": {
-    "type": "SHA3MerkleProof",
-    "targetHash": "9ecd69313f34f5f1306c2690039c299a094415f993da8e925d44b63c533fdb69",
-    "proof": [],
-    "merkleRoot": "9ecd69313f34f5f1306c2690039c299a094415f993da8e925d44b63c533fdb69"
+  "proof": {
+    "type": "OpenAttestationMerkleProofSignature2018",
+    "proofPurpose": "assertionMethod",
+    "targetHash": "8fdb7911d8341748fdfc76652987266173f65981223343c86628c10d187c7d48",
+    "proofs": [],
+    "merkleRoot": "8fdb7911d8341748fdfc76652987266173f65981223343c86628c10d187c7d48",
+    "salts": "W3sidmFsdWUiOiI2MjlhYzA4NDgwMTk0M2JjYjRhMmI5NWVkNDhhNjZhZDIwYWIxNzQ2YTRkNDY4NzU1ZDE4NTdlN2UxMTMyNmExIiwicGF0aCI6InZlcnNpb24ifSx7InZhbHVlIjoiZGJjNDdiOTFhYTdlNzQ3MDYzNmQwY2YxZWRkYzQ4Njk0MmM1NTljYjUzMDAyZmFkOWI5MzlmYzc2MWQyM2MxZiIsInBhdGgiOiJAY29udGV4dFswXSJ9LHsidmFsdWUiOiI5YjlkMzFlZTdiZWZkMjRlMWViNDNiZjNlODUyMWNmZDZmY2I3MjZmNGM0ZjE5MzkwMzI1Mzk3NzgxMTBkZTlhIiwicGF0aCI6IkBjb250ZXh0WzFdIn0seyJ2YWx1ZSI6IjE1M2FkMDI2OTMzOTNkNTFjNWNiNzUwYzU3NDRmMDk3YWRmZWU1NjljZTI2ZTYwYjk1NDA4MTU4OGMxYzk2ZWMiLCJwYXRoIjoiQGNvbnRleHRbMl0ifSx7InZhbHVlIjoiODQyYWEwOTE4YTYzZmViZmFmYWViZDk5ZWJjYWZiOTYzZGFhMjE5ZDI0ZGY2YTA1NzYyNGY1N2JmMzNiZDBlNSIsInBhdGgiOiJ0eXBlWzBdIn0seyJ2YWx1ZSI6IjUwY2M4ZWU1NGJjNDY3NGQ4OGZmZGJjMTQ4MmRjZWIwNDgxYmUyZDBjZDk1MDUyNDEzYjM0OGI0ZWQzNzdjN2EiLCJwYXRoIjoidHlwZVsxXSJ9LHsidmFsdWUiOiI0MWYzYTBmODA4YzUzNDY5MWU0YzM4ZWNhOTIwNDkyYTI1NzliZmQ0YTNmZGUxYmRjZmIzNDdhOTQ2OTdlOTM4IiwicGF0aCI6Imlzc3VhbmNlRGF0ZSJ9LHsidmFsdWUiOiIxOWZlYTMyYTFjYTg0NDU4YWY4OTljYTQ2YTUwZTQ3MTVlNzU0ZWU0NzNkODI5YzM4ZDJlOTQ4OWMwZmViODEyIiwicGF0aCI6Imlzc3Vlci5pZCJ9LHsidmFsdWUiOiIwZDBlZTQwZGRkYmU3OTk0ZTM1YjVjYzdhZTc2ZDYwZjc4NjE4YzI2ZTI2ODlhOWIzNTZmODc5MjM4MTIyMjFkIiwicGF0aCI6Imlzc3Vlci5uYW1lIn0seyJ2YWx1ZSI6ImE1Y2IzN2NlZmFlZmFkOGZhNGE0YzMxYmIyYzhlNWQwMTI4NzYwMTQyMjZhZmViNGFkMmYzZDEwNWQ4NWI3N2QiLCJwYXRoIjoiaXNzdWVyLnR5cGUifSx7InZhbHVlIjoiZWNlNzZlYjYyYTcxYTEyODU2ZGIzYTJmMTdmN2VlMjgwZGJlY2MwMWI2NzU0NjhlZTNjMWUzYTBkM2I0MGZlMiIsInBhdGgiOiJvcGVuQXR0ZXN0YXRpb25NZXRhZGF0YS50ZW1wbGF0ZS50eXBlIn0seyJ2YWx1ZSI6ImE0NDA3MzZjNmI0NzljZjNlYzBiOTY4NjM3MmIwYWI1ZmIwMTFjM2RjMTA1MmQ5ZjkxODU1NTA3MTdmYmEwNDEiLCJwYXRoIjoib3BlbkF0dGVzdGF0aW9uTWV0YWRhdGEudGVtcGxhdGUubmFtZSJ9LHsidmFsdWUiOiJlOTgwYmRkZmMwOTA4ZjI4ZTYxNzdjMzBkNWQ2MjkzMDM3NTM1NWIxN2RjOWI3ZDBiOTQ4MmYwNjQzODdjZjI3IiwicGF0aCI6Im9wZW5BdHRlc3RhdGlvbk1ldGFkYXRhLnRlbXBsYXRlLnVybCJ9LHsidmFsdWUiOiI1NzM0Y2ExNzE2ODJlZTY3YzhkNjhhMGQwNTA5MTUzMjdjZjIxMmUzNWQ1OTlhMDJkYzA1YjU1YjYyZWU4ZGIyIiwicGF0aCI6Im9wZW5BdHRlc3RhdGlvbk1ldGFkYXRhLnByb29mLnR5cGUifSx7InZhbHVlIjoiMDBjZDJkZDJkNTNjMzdjZGE0NDAwNTBmYTdlMjQ4YzUxZTU3ZjZhMzQzZmEzY2Y0YTBjODgxMGU1Mzg1NTQyZiIsInBhdGgiOiJvcGVuQXR0ZXN0YXRpb25NZXRhZGF0YS5wcm9vZi5tZXRob2QifSx7InZhbHVlIjoiMTBkMjQ4MDU0ZWFmYjAxMjRlMWE0MzVhNjEwY2ZlYTRkMmE1MDM3MzY5NjI1YmI3M2Y3ODliYzFmNTZhMDllYyIsInBhdGgiOiJvcGVuQXR0ZXN0YXRpb25NZXRhZGF0YS5wcm9vZi52YWx1ZSJ9LHsidmFsdWUiOiIyZDUzZTQ4NzY4MjdjY2ZkMjhkZGI5ODZhMzI2NjExOTRlMTIwYTE4ODgxYWRmODQzYjJlMTE3NjhiMmUyN2NlIiwicGF0aCI6Im9wZW5BdHRlc3RhdGlvbk1ldGFkYXRhLmlkZW50aXR5UHJvb2YudHlwZSJ9LHsidmFsdWUiOiJjYTYyM2EwZTM0MzhkY2RiYWY2YjcwZTViNjRiZmYxZTBhN2ZhNWQyOWVjNDI4NzI3N2JlNmM5ZDdjZjEwNTFmIiwicGF0aCI6Im9wZW5BdHRlc3RhdGlvbk1ldGFkYXRhLmlkZW50aXR5UHJvb2YuaWRlbnRpZmllciJ9LHsidmFsdWUiOiI2YzM4NjIyYTUwODU0MzNkZjI4MTdiMjQ2ZjgwNzdmZmYwYWZiNDgwYmVjYzE1Mzc4ZDI4ZmZjZDE1ZmEwMjQ0IiwicGF0aCI6ImNyZWRlbnRpYWxTdWJqZWN0Lm5hbWUifSx7InZhbHVlIjoiYmJlYjBhYjcyMDIyNDk3NzU5NDRlM2NjMzcyZmQyOTk0ZDk2M2UwMTE4Y2M4ZDc5MDZlZGM0Y2I4MjRlOWJkYSIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5pZCJ9LHsidmFsdWUiOiJkOWVmZGE1NDY1Zjg1ZmMxYjAwZDZhZTBjNzQzODZmMGUyZWRiMzUzOWNlYzE4NTIzNDcyYmJmODUwMTRkYzhlIiwicGF0aCI6ImNyZWRlbnRpYWxTdWJqZWN0LmRhdGUifSx7InZhbHVlIjoiYzRhMzg2ZDM1OWNjZDE1ZWVkNTNjNjRkN2VhODc2NGYxZTJhMGYxZmQyN2NmMTE4MjYzMWQ4MTUxYmQxZmFmNSIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5jdXN0b21lcklkIn0seyJ2YWx1ZSI6IjJhZTc5OTNlMzFlZDBkNzhiYmYwZjc1NDllZjhhZTk3NDMwOGJkZjk5OWRlMzEwZTJlNDQ1N2ExNzU2MDVjNmIiLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QudGVybXMifSx7InZhbHVlIjoiOThjOTQ4MjhmMTlkODlmYWYzNTdkYzdhNzZiNTI5MjNjMmM5ZTE5OGIwOTA3MmRlZGQzMjZjMWE0NGU3OGVmNCIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsRnJvbS5uYW1lIn0seyJ2YWx1ZSI6IjljMjY4MWI5MDAzMjllNjAzNzFmYTk5OWY2Nzk2MzkyOTBmY2EyNDNmMjM4MzU3ZjdjNDQ5ODJiYjkwOTQ3OTAiLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QuYmlsbEZyb20uc3RyZWV0QWRkcmVzcyJ9LHsidmFsdWUiOiI5YjUxMWU5ZGVhNjY5ZDc5NWNjODY3ZmJmYmUzZDdlYTE0NDYwZjNkOWQ5NzljZjlhYThkMTVhYTdjMTA0ZjBhIiwicGF0aCI6ImNyZWRlbnRpYWxTdWJqZWN0LmJpbGxGcm9tLmNpdHkifSx7InZhbHVlIjoiMmY1OTIzMjBmZTUyNjVmNmNjOTY1NzllZTJmZjkyNzVlNzgzOTc1NjA0ZTNhNDg2MDc3MmVmMWE4ZjZmZjg1ZCIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsRnJvbS5wb3N0YWxDb2RlIn0seyJ2YWx1ZSI6ImMxMTZjYWRhYjRkOGMyNGE5Yjc3OGUxNjFkY2U0Y2E3OGM4MzI3M2ZjZWFlN2NjNWZkMzc0Njc5NmNlNDBmODAiLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QuYmlsbEZyb20ucGhvbmVOdW1iZXIifSx7InZhbHVlIjoiNDgzNjkwYThkNzY2NDBkYWM5N2ViOTBjZGFiODdjMDc3Nzc4OTlkMWQxM2JkMzRhZWFiMmExMWZiOWY5NzE2MSIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsVG8uY29tcGFueS5uYW1lIn0seyJ2YWx1ZSI6IjAzOTdiYjkwZDNkMTFmOTUzYmY3ZThjOWNmYjg1M2VjYmNmYjMwMGVmYWIxZmU3ODQ1NmZiZWE2ZjgzNmY2M2IiLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QuYmlsbFRvLmNvbXBhbnkuc3RyZWV0QWRkcmVzcyJ9LHsidmFsdWUiOiJhYjY5ZTA3MTZlNjQyYjlhNjQ0OTFkZDc2YmI2MTMyMDU1YTdkNTY0NjhjN2I4ODM5YmYzOTc3Y2M0YjE0ODUxIiwicGF0aCI6ImNyZWRlbnRpYWxTdWJqZWN0LmJpbGxUby5jb21wYW55LmNpdHkifSx7InZhbHVlIjoiMDJmN2NmYTU2OTMxYmZiYjBkMWZmZmZlNjI5YmQ4NWQxNWI0NzhjYmJlZGRjOWQ2YWY3NDk3ODllOWE4ODQ3MCIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsVG8uY29tcGFueS5wb3N0YWxDb2RlIn0seyJ2YWx1ZSI6IjRhYTczMjkyZDU5M2EwNTM3NmE3OWYzNWFmNzE2N2U5NGM1NDI5N2EyNDMxZWI5ODViMDYzOTNkOGRhZDliMTUiLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QuYmlsbFRvLmNvbXBhbnkucGhvbmVOdW1iZXIifSx7InZhbHVlIjoiNzhlYmY5ZWJkYWI2MjM5Zjg3MDJjMTY4ODgxM2JmZmMzN2ZmYzY2NGY2ZDkwMDQ5ZDRmMWE0NjYwZmMxZDJhZSIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsVG8ubmFtZSJ9LHsidmFsdWUiOiI3NzgzYzI0Y2ZjOGI5Y2ZlZDRhMGNiYWEzZGMwMWJkODYwN2MxYTA1ODBkMzc0YTY4ZjlhYzEzZTgyMDY4M2UyIiwicGF0aCI6ImNyZWRlbnRpYWxTdWJqZWN0LmJpbGxUby5lbWFpbCJ9LHsidmFsdWUiOiJhZDFkZjJmOGMwMzdmNTdjNWQ0MjkzM2EwZTM2YTMxMmJjZTEyZDE5YzQ5M2RkOTY1YjMyMjU0NGI4ZGVhMTdhIiwicGF0aCI6ImNyZWRlbnRpYWxTdWJqZWN0LmJpbGxhYmxlSXRlbXNbMF0uZGVzY3JpcHRpb24ifSx7InZhbHVlIjoiZDc0MzI4NTNhMTdiODY5ZWFkMThjYWI5YTI1NzE3YzZhZjA2OWEyZDIxMjBkMTkyNTI1MTNlOGRjMDBlODYxZiIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsYWJsZUl0ZW1zWzBdLnF1YW50aXR5In0seyJ2YWx1ZSI6ImQwOTk2YzBkOGM1NzY3NDUwNjM0MzA0YTBkYWE4M2ZmMzM5MDE3NmU1NjhkY2I5ZWRlNWU3ZjgwY2JiZDk5MDciLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QuYmlsbGFibGVJdGVtc1swXS51bml0UHJpY2UifSx7InZhbHVlIjoiZGFkYjI3YzViZWVkNTZmOTFmYzllZjQwMWVmNzQyZmQ2NGUxMDA2NWExYzMzNzZhZjFlNDMzOWFlZTRlODFkMiIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsYWJsZUl0ZW1zWzBdLmFtb3VudCJ9LHsidmFsdWUiOiJhMDgxNzE2YmE4MTk1MjA1NDRlM2YwMjI0OGIzMmExYTQ0NmE4ZWU2NjE4YjY2ZTVjYTg0NGY4ODMxNmViNTA3IiwicGF0aCI6ImNyZWRlbnRpYWxTdWJqZWN0LmJpbGxhYmxlSXRlbXNbMV0uZGVzY3JpcHRpb24ifSx7InZhbHVlIjoiMjM1ODc3MzY2MzQ4ZDljNTk3ODA3YmE3MDRkYWUwZGU5NzIyZDY1NzcwN2IxOTIxYzQzZDkyODZlY2I4ZjA1MSIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsYWJsZUl0ZW1zWzFdLnF1YW50aXR5In0seyJ2YWx1ZSI6IjdkODg4ZmJjMzZiOTc0MzMzZTcwN2UwNjBmODczYmVhYWRiODhkMDkzMGY0NjIxYmU5YjBkNzIwNDEyYjJkZGUiLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QuYmlsbGFibGVJdGVtc1sxXS51bml0UHJpY2UifSx7InZhbHVlIjoiZTI1Njk3M2M0ZDlhYzFkNmFlNTliNzg2OTc5YzU2NzBlZTBmMmU4MGQ5YmUxZjBhM2E5NGFjMGZiNjMzMzU4OSIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsYWJsZUl0ZW1zWzFdLmFtb3VudCJ9LHsidmFsdWUiOiIwMWRmNDA5ZThmNDM5ZDZlZWVmMWJlNGJiNjRkNzM3MTRhNmRlODhlZTZkYTJkMjAzYjFmMmJhMDIzMDA0YTJiIiwicGF0aCI6ImNyZWRlbnRpYWxTdWJqZWN0LmJpbGxhYmxlSXRlbXNbMl0uZGVzY3JpcHRpb24ifSx7InZhbHVlIjoiMTFlMTE4ZTdiNzMyMjY3YmE3MzYyNzdkNzk2MjNiYmRlODExMWMzNmQxZmRmMmRjMzQ3YzFjZmJhNWVjYmY0MSIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsYWJsZUl0ZW1zWzJdLnF1YW50aXR5In0seyJ2YWx1ZSI6Ijg1YzUxMWUzMDQ1NGZkZWEwNTliZWYzMTE4MWM4MTBiZDYyNWRmOGYyMjE2NGI5MzU5NTNiZTJhYjdkOGYwZDciLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QuYmlsbGFibGVJdGVtc1syXS51bml0UHJpY2UifSx7InZhbHVlIjoiNDU1M2EyMDUxYTdhZGE3NzQxNGE5ZTI5ODhkYTExYmQwMmMyNWJiMzZlMjEzNjdhMzM5YjU5MDBlYzE5Y2E4NSIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC5iaWxsYWJsZUl0ZW1zWzJdLmFtb3VudCJ9LHsidmFsdWUiOiI2MmI5MzAwZThmMjRlMjUzOWNlNjk4N2U5MDM0YTA5MTQ1OWM0YWRkOWQ3MWY2OWIyZDQ2NWE4MDUxZTg4MmU2IiwicGF0aCI6ImNyZWRlbnRpYWxTdWJqZWN0LnN1YnRvdGFsIn0seyJ2YWx1ZSI6IjU2YzhmM2UxMTlmZDFkZWY4NmEzZWZjODg5OTdkMGYzMjQxODFlNmZmMjE3MTY2YjFlZjVkYjNhYmNiMmEyMDYiLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QudGF4In0seyJ2YWx1ZSI6IjU0ODdjOWFiMzlmNWI0ZmI5ZjA0MmFjMTUxZDk3ZTRjYjExNTQxNGU1NmIwYzkyYTFiNmE4ZGQ1ZGYzMDQ0NWEiLCJwYXRoIjoiY3JlZGVudGlhbFN1YmplY3QudGF4VG90YWwifSx7InZhbHVlIjoiODI4MjY0YTZiMjcxNTM5ZjE3MDU4N2YwMjU4OWRjOTY2MDA2Mjk3MGI5OTUzMzZhNDU0ZGRhZDVlOTU4N2QwZiIsInBhdGgiOiJjcmVkZW50aWFsU3ViamVjdC50b3RhbCJ9XQ==",
+    "privacy": {
+      "obfuscated": []
+    }
   }
 }
