@@ -7,6 +7,10 @@ import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
 import documentSepoliaV3 from "../fixtures/v3/document-sepolia.json";
 import documentSepoliaNoNetworkV2 from "../fixtures/v2/document-sepolia-no-network.json";
 import documentSepoliaNoNetworkV3 from "../fixtures/v3/document-sepolia-no-network.json";
+import documentHederaV2 from "../fixtures/v2/document-hedera.json";
+import documentHederaV3 from "../fixtures/v3/document-hedera.json";
+import documentHederaNoNetworkV2 from "../fixtures/v2/document-hedera-no-network.json";
+import documentHederaNoNetworkV3 from "../fixtures/v3/document-hedera-no-network.json";
 import {
   ERROR_MESSAGE,
   DOCUMENT_STORAGE_ERROR_MESSAGE,
@@ -20,6 +24,8 @@ const postDataXDCApothemV2 = { document: documentXDCApothemV2 };
 const postDataXDCApothemV3 = { document: documentXDCApothemV3 };
 const postDataSepoliaV2 = { document: documentSepoliaV2 };
 const postDataSepoliaV3 = { document: documentSepoliaV3 };
+const postDataHederaV2 = { document: documentHederaV2 };
+const postDataHederaV3 = { document: documentHederaV3 };
 
 describe("POST /", () => {
   it("should store encrypted v2 maticmum document", async () => {
@@ -47,12 +53,36 @@ describe("POST /", () => {
     expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
     expect(Object.keys(response.body).length).toBe(3);
   });
+  it("should store encrypted v2 hedera document", async () => {
+    const response = await request
+        .post("/")
+        .set("x-api-key", process.env.API_KEY)
+        .send(postDataHederaV2)
+        .expect(200);
+
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("key");
+    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
+    expect(Object.keys(response.body).length).toBe(3);
+  });
   it("should store encrypted v2 xdcapothem document", async () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
       .send(postDataXDCApothemV2)
       .expect(200);
+
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("key");
+    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
+    expect(Object.keys(response.body).length).toBe(3);
+  });
+  it("should store encrypted v3 hedera document", async () => {
+    const response = await request
+        .post("/")
+        .set("x-api-key", process.env.API_KEY)
+        .send(postDataHederaV3)
+        .expect(200);
 
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("key");
@@ -121,7 +151,19 @@ describe("POST /", () => {
       ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
     );
   });
+  it("should throw error when v2 document's network field does not exists for hedera", async () => {
+    const response = await request
+        .post("/")
+        .set("x-api-key", process.env.API_KEY)
+        .send({
+          document: documentHederaNoNetworkV2,
+        })
+        .expect(400);
 
+    expect(response.body.message).toBe(
+        ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+    );
+  });
   it("should throw error when v3 document's network field does not exists", async () => {
     const response = await request
       .post("/")
@@ -133,6 +175,19 @@ describe("POST /", () => {
 
     expect(response.body.message).toBe(
       ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+    );
+  });
+  it("should throw error when v3 document's network field does not exists for hedera", async () => {
+    const response = await request
+        .post("/")
+        .set("x-api-key", process.env.API_KEY)
+        .send({
+          document: documentHederaNoNetworkV3,
+        })
+        .expect(400);
+
+    expect(response.body.message).toBe(
+        ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
     );
   });
 });
