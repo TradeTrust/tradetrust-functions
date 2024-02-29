@@ -61,13 +61,13 @@ describe("POST /", () => {
   });
   it("should verify a v3 sepolia document with hederatestnet network query", async () => {
     const response = await request
-        .post("/")
-        .query({ network: "hederatestnet" })
-        .send(postDataHederaV3)
-        .expect(200);
+      .post("/")
+      .query({ network: "hederatestnet" })
+      .send(postDataHederaV3)
+      .expect(200);
 
     expect(response.body.summary).toStrictEqual(
-        RESPONSE_VERIFY_SUCCESS_SUMMARY
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
   it("should verify a v3 sepolia document with xdcapothem network query", async () => {
@@ -139,12 +139,12 @@ describe("POST /", () => {
   });
   it("should verify a hedera document", async () => {
     const response = await request
-        .post("/")
-        .query({ network: "hederatestnet" })
-        .send(postDataHederaV2)
-        .expect(200);
+      .post("/")
+      .query({ network: "hederatestnet" })
+      .send(postDataHederaV2)
+      .expect(200);
     expect(response.body.summary).toStrictEqual(
-        RESPONSE_VERIFY_SUCCESS_SUMMARY
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
 });

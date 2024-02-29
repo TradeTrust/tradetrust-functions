@@ -55,10 +55,10 @@ describe("POST /", () => {
   });
   it("should store encrypted v2 hedera document", async () => {
     const response = await request
-        .post("/")
-        .set("x-api-key", process.env.API_KEY)
-        .send(postDataHederaV2)
-        .expect(200);
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send(postDataHederaV2)
+      .expect(200);
 
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("key");
@@ -79,10 +79,10 @@ describe("POST /", () => {
   });
   it("should store encrypted v3 hedera document", async () => {
     const response = await request
-        .post("/")
-        .set("x-api-key", process.env.API_KEY)
-        .send(postDataHederaV3)
-        .expect(200);
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send(postDataHederaV3)
+      .expect(200);
 
     expect(response.body).toHaveProperty("id");
     expect(response.body).toHaveProperty("key");
@@ -153,15 +153,15 @@ describe("POST /", () => {
   });
   it("should throw error when v2 document's network field does not exists for hedera", async () => {
     const response = await request
-        .post("/")
-        .set("x-api-key", process.env.API_KEY)
-        .send({
-          document: documentHederaNoNetworkV2,
-        })
-        .expect(400);
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send({
+        document: documentHederaNoNetworkV2,
+      })
+      .expect(400);
 
     expect(response.body.message).toBe(
-        ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
     );
   });
   it("should throw error when v3 document's network field does not exists", async () => {
@@ -179,15 +179,15 @@ describe("POST /", () => {
   });
   it("should throw error when v3 document's network field does not exists for hedera", async () => {
     const response = await request
-        .post("/")
-        .set("x-api-key", process.env.API_KEY)
-        .send({
-          document: documentHederaNoNetworkV3,
-        })
-        .expect(400);
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send({
+        document: documentHederaNoNetworkV3,
+      })
+      .expect(400);
 
     expect(response.body.message).toBe(
-        ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
     );
   });
 });
