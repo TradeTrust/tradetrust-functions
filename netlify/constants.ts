@@ -47,44 +47,44 @@ type supportedNetworks = Record<
 export const SUPPORTED_NETWORKS: supportedNetworks = {
   [CHAIN_ID.local]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.local],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.local].rpcUrl)
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.local].rpcUrl),
   },
   [CHAIN_ID.mainnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.mainnet],
-    provider: infuraProvider("homestead")
+    provider: infuraProvider("homestead"),
   },
   [CHAIN_ID.matic]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.matic],
-    provider: infuraProvider("matic")
+    provider: infuraProvider("matic"),
   },
   [CHAIN_ID.maticmum]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.maticmum],
-    provider: infuraProvider("maticmum")
+    provider: infuraProvider("maticmum"),
   },
   [CHAIN_ID.sepolia]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
-    provider: infuraProvider("sepolia")
+    provider: infuraProvider("sepolia"),
   },
   [CHAIN_ID.xdc]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.xdc],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.xdc].rpcUrl)
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.xdc].rpcUrl),
   },
   [CHAIN_ID.xdcapothem]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.xdcapothem],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.xdcapothem].rpcUrl)
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.xdcapothem].rpcUrl),
   },
   [CHAIN_ID.hederamainnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.hederamainnet],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.hederamainnet].rpcUrl)
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.hederamainnet].rpcUrl),
   },
   [CHAIN_ID.hederatestnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.hederatestnet],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.hederatestnet].rpcUrl)
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.hederatestnet].rpcUrl),
   },
   [CHAIN_ID.stabilitytestnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet],
     provider: jsonRpcProvider(
-        SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl
+      SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl
     ),
   },
 };
