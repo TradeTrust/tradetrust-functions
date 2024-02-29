@@ -62,11 +62,7 @@
           "location": "aeccd468-c22a-4499-8da9-286a62ba8934:string:demo-tradetrust.openattestation.com"
         }
       }
-    ],
-    "network": {
-      "chain": "5b92c482-2b45-462a-a988-fa385a8eff48:string:SEP",
-      "chainId": "98d80768-8ff2-4ef8-afb6-6ec378dbd109:string:11155111"
-    }
+    ]
   },
   "signature": {
     "type": "SHA3MerkleProof",
