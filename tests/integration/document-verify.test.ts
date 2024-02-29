@@ -5,6 +5,8 @@ import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
 import documentSepoliaV3 from "../fixtures/v3/document-sepolia.json";
 import documentXDCApothemV2 from "../fixtures/v2/document-xdcapothem.json";
 import documentXDCApothemV3 from "../fixtures/v3/document-xdcapothem.json";
+import documentHederaV2 from "../fixtures/v2/document-hedera.json";
+import documentHederaV3 from "../fixtures/v3/document-hedera.json";
 import { ERROR_MESSAGE } from "../../netlify/constants";
 
 const RESPONSE_VERIFY_SUCCESS_SUMMARY = {
@@ -22,6 +24,8 @@ const postDataSepoliaV2 = { document: documentSepoliaV2 };
 const postDataSepoliaV3 = { document: documentSepoliaV3 };
 const postDataXDCApothemV2 = { document: documentXDCApothemV2 };
 const postDataXDCApothemV3 = { document: documentXDCApothemV3 };
+const postDataHederaV2 = { document: documentHederaV2 };
+const postDataHederaV3 = { document: documentHederaV3 };
 
 describe("POST /", () => {
   it("should verify a mainnet document by default", async () => {
@@ -49,6 +53,17 @@ describe("POST /", () => {
       .post("/")
       .query({ network: "sepolia" })
       .send(postDataSepoliaV2)
+      .expect(200);
+
+    expect(response.body.summary).toStrictEqual(
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
+    );
+  });
+  it("should verify a v3 sepolia document with hederatestnet network query", async () => {
+    const response = await request
+      .post("/")
+      .query({ network: "hederatestnet" })
+      .send(postDataHederaV3)
       .expect(200);
 
     expect(response.body.summary).toStrictEqual(
@@ -118,6 +133,16 @@ describe("POST /", () => {
       .send(postDataSepoliaV2)
       .expect(200);
 
+    expect(response.body.summary).toStrictEqual(
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
+    );
+  });
+  it("should verify a hedera document", async () => {
+    const response = await request
+      .post("/")
+      .query({ network: "hederatestnet" })
+      .send(postDataHederaV2)
+      .expect(200);
     expect(response.body.summary).toStrictEqual(
       RESPONSE_VERIFY_SUCCESS_SUMMARY
     );

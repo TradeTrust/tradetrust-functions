@@ -5,8 +5,8 @@
   "main": "index.js",
   "dependencies": {
     "@govtechsg/oa-encryption": "^1.3.5",
-    "@tradetrust-tt/tt-verify": "^8.2.0",
-    "@tradetrust-tt/tradetrust-utils": "^1.6.1",
+    "@tradetrust-tt/tt-verify": "^8.5.0",
+    "@tradetrust-tt/tradetrust-utils": "^1.9.1",
     "@netlify/functions": "^2.0.2",
     "aws-sdk": "^2.1463.0",
     "body-parser": "^1.20.1",
@@ -53,7 +53,7 @@
   },
   "homepage": "https://github.com/TradeTrust/tradetrust-functions#readme",
   "engines": {
-    "npm": ">=8.0.0 <9.0.0",
-    "node": ">=16.0.0 <17.0.0"
+    "npm": ">=8.x",
+    "node": ">=18.x"
   }
 }
