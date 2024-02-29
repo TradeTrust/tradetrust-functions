@@ -14,10 +14,7 @@
     "id": "https://example.com",
     "name": "DEMO STORE"
   },
-  "type": [
-    "VerifiableCredential",
-    "OpenAttestationCredential"
-  ],
+  "type": ["VerifiableCredential", "OpenAttestationCredential"],
   "credentialSubject": {
     "name": "TradeTrust Invoice v3",
     "id": "1111",
