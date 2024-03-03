@@ -11,6 +11,8 @@ import documentHederaV2 from "../fixtures/v2/document-hedera.json";
 import documentHederaV3 from "../fixtures/v3/document-hedera.json";
 import documentHederaNoNetworkV2 from "../fixtures/v2/document-hedera-no-network.json";
 import documentHederaNoNetworkV3 from "../fixtures/v3/document-hedera-no-network.json";
+import documentStabilityV2 from "../fixtures/v2/document-stabilitytestnet.json";
+import documentStabilityNoNetworkV2 from "../fixtures/v2/document-stabilitytestnet.json";
 import {
   ERROR_MESSAGE,
   DOCUMENT_STORAGE_ERROR_MESSAGE,
@@ -26,6 +28,7 @@ const postDataSepoliaV2 = { document: documentSepoliaV2 };
 const postDataSepoliaV3 = { document: documentSepoliaV3 };
 const postDataHederaV2 = { document: documentHederaV2 };
 const postDataHederaV3 = { document: documentHederaV3 };
+const postDataStabilityV2 = { document: documentStabilityV2 };
 
 describe("POST /", () => {
   it("should store encrypted v2 maticmum document", async () => {
@@ -58,6 +61,18 @@ describe("POST /", () => {
       .post("/")
       .set("x-api-key", process.env.API_KEY)
       .send(postDataHederaV2)
+      .expect(200);
+
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("key");
+    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
+    expect(Object.keys(response.body).length).toBe(3);
+  });
+  it("should store encrypted v2 stability document", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send(postDataStabilityV2)
       .expect(200);
 
     expect(response.body).toHaveProperty("id");
@@ -157,6 +172,19 @@ describe("POST /", () => {
       .set("x-api-key", process.env.API_KEY)
       .send({
         document: documentHederaNoNetworkV2,
+      })
+      .expect(400);
+
+    expect(response.body.message).toBe(
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+    );
+  });
+  it("should throw error when v2 document's network field does not exists for stability", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send({
+        document: documentStabilityNoNetworkV2,
       })
       .expect(400);
 
