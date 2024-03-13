@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { providers } from "ethers";
 import {
   CHAIN_ID,
@@ -61,6 +62,10 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
     ...SUPPORTED_CHAINS[CHAIN_ID.maticmum],
     provider: infuraProvider("maticmum"),
   },
+  [CHAIN_ID.amoy]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.amoy],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.amoy].rpcUrl),
+  },
   [CHAIN_ID.sepolia]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
     provider: infuraProvider("sepolia"),
@@ -86,5 +91,9 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
     provider: jsonRpcProvider(
       SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl
     ),
+  },
+  [CHAIN_ID.stability]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.stability],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.stability].rpcUrl),
   },
 };

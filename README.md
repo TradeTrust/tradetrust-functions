@@ -55,6 +55,7 @@ POST
 - `/verify?network="sepolia"` verifies an OpenAttestation document on sepolia network
 - `/verify?network="xdcapothem"` verifies an OpenAttestation document on xdcapothem network
 - `/verify?network="hedera"` verifies an OpenAttestation document on hedera network
+- `/verify?network="stability"` verifies an OpenAttestation document on stability network
 
 ```
 // POST data example
@@ -75,3 +76,10 @@ POST
 #### Notes
 
 The dummy value in `API_KEY` should work for local development purposes. For production `API_KEY` value, refer to netlify env variables at dashboard.
+
+#### Network specific configurations
+
+The next environment variables are required for verifying documents on some of the networks. They are used through the `@tradetrust-tt/tradetrust-utils` package.
+
+- INFURA_API_KEY: [Infura API key](https://www.infura.io/), used for verifying Polygon Amoy network
+- STABILITY_API_KEY: [Stability API key](https://portal.stabilityprotocol.com), used for verifying documents on the Stability network
