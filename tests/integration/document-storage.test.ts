@@ -1,6 +1,6 @@
 import supertest from "supertest";
-import documentMaticmumV2 from "../fixtures/v2/document-maticmum.json";
-import documentMaticmumV3 from "../fixtures/v3/document-maticmum.json";
+import documentAmoyV2 from "../fixtures/v2/document-amoy.json";
+import documentAmoyV3 from "../fixtures/v3/document-amoy.json";
 import documentXDCApothemV2 from "../fixtures/v2/document-xdcapothem.json";
 import documentXDCApothemV3 from "../fixtures/v3/document-xdcapothem.json";
 import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
@@ -18,8 +18,8 @@ import {
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
-const postDataMaticmumV2 = { document: documentMaticmumV2 };
-const postDataMaticmumV3 = { document: documentMaticmumV3 };
+const postDataAmoyV2 = { document: documentAmoyV2 };
+const postDataAmoyV3 = { document: documentAmoyV3 };
 const postDataXDCApothemV2 = { document: documentXDCApothemV2 };
 const postDataXDCApothemV3 = { document: documentXDCApothemV3 };
 const postDataSepoliaV2 = { document: documentSepoliaV2 };
@@ -28,11 +28,11 @@ const postDataHederaV2 = { document: documentHederaV2 };
 const postDataHederaV3 = { document: documentHederaV3 };
 
 describe("POST /", () => {
-  it("should store encrypted v2 maticmum document", async () => {
+  it("should store encrypted v2 amoy document", async () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
-      .send(postDataMaticmumV2)
+      .send(postDataAmoyV2)
       .expect(200);
 
     expect(response.body).toHaveProperty("id");
@@ -102,11 +102,11 @@ describe("POST /", () => {
     expect(Object.keys(response.body).length).toBe(3);
   });
 
-  it("should store encrypted v3 sepolia document", async () => {
+  it("should store encrypted v3 amoy document", async () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
-      .send(postDataMaticmumV3)
+      .send(postDataAmoyV3)
       .expect(200);
 
     expect(response.body).toHaveProperty("id");
