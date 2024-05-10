@@ -1,13 +1,13 @@
-// import { CHAIN_ID } from "@tradetrust-tt/tradetrust-utils/constants/supportedChains";
+import { CHAIN_ID } from "@tradetrust-tt/tradetrust-utils/constants/supportedChains";
 import { v4 as uuid } from "uuid";
 import { generateEncryptionKey } from "@govtechsg/oa-encryption";
 import {
-  // validateNetwork,
-  // validateDocument,
+  validateNetwork,
+  validateDocument,
   getEncryptedDocument,
 } from "../../utils";
 import { s3Put } from "../../services/s3";
-// import { SUPPORTED_NETWORKS } from "../../constants";
+import { SUPPORTED_NETWORKS } from "../../constants";
 import { s3Get } from "../../services/s3";
 
 export const getDocument = async (id: string) => {
@@ -20,13 +20,12 @@ export const getDocument = async (id: string) => {
 };
 
 export const uploadDocument = async (document) => {
-  // Remove the validate checks to test out QR.
-  // const { chainId } = await validateNetwork(document);
+  const { chainId } = await validateNetwork(document);
 
-  // await validateDocument({
-  //   document,
-  //   network: SUPPORTED_NETWORKS[chainId as CHAIN_ID].name,
-  // });
+  await validateDocument({
+    document,
+    network: SUPPORTED_NETWORKS[chainId as CHAIN_ID].name,
+  });
 
   const { encryptedDocument, encryptedDocumentKey } =
     await getEncryptedDocument({
@@ -48,13 +47,12 @@ export const uploadDocument = async (document) => {
 };
 
 export const uploadDocumentAtId = async (document, documentId: string) => {
-  // Remove the validate checks to test out QR.
-  // const { chainId } = await validateNetwork(document);
+  const { chainId } = await validateNetwork(document);
 
-  // await validateDocument({
-  //   document,
-  //   network: SUPPORTED_NETWORKS[chainId as CHAIN_ID].name,
-  // });
+  await validateDocument({
+    document,
+    network: SUPPORTED_NETWORKS[chainId as CHAIN_ID].name,
+  });
 
   const { key: existingKey } = await getDocument(documentId);
   const { encryptedDocument, encryptedDocumentKey } =

@@ -126,70 +126,70 @@ describe("POST /", () => {
     expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
     expect(Object.keys(response.body).length).toBe(3);
   });
-  //   it("should throw error when document is not compliant to OA schema", async () => {
-  //     const response = await request
-  //       .post("/")
-  //       .set("x-api-key", process.env.API_KEY)
-  //       .send({
-  //         document: { foo: "bar" },
-  //       })
-  //       .expect(400);
+  it("should throw error when document is not compliant to OA schema", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send({
+        document: { foo: "bar" },
+      })
+      .expect(400);
 
-  //     expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_SCHEMA_INVALID);
-  //   });
+    expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_SCHEMA_INVALID);
+  });
 
-  //   it("should throw error when v2 document's network field does not exists", async () => {
-  //     const response = await request
-  //       .post("/")
-  //       .set("x-api-key", process.env.API_KEY)
-  //       .send({
-  //         document: documentSepoliaNoNetworkV2,
-  //       })
-  //       .expect(400);
+  it("should throw error when v2 document's network field does not exists", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send({
+        document: documentSepoliaNoNetworkV2,
+      })
+      .expect(400);
 
-  //     expect(response.body.message).toBe(
-  //       ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
-  //     );
-  //   });
-  //   it("should throw error when v2 document's network field does not exists for hedera", async () => {
-  //     const response = await request
-  //       .post("/")
-  //       .set("x-api-key", process.env.API_KEY)
-  //       .send({
-  //         document: documentHederaNoNetworkV2,
-  //       })
-  //       .expect(400);
+    expect(response.body.message).toBe(
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+    );
+  });
+  it("should throw error when v2 document's network field does not exists for hedera", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send({
+        document: documentHederaNoNetworkV2,
+      })
+      .expect(400);
 
-  //     expect(response.body.message).toBe(
-  //       ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
-  //     );
-  //   });
-  //   it("should throw error when v3 document's network field does not exists", async () => {
-  //     const response = await request
-  //       .post("/")
-  //       .set("x-api-key", process.env.API_KEY)
-  //       .send({
-  //         document: documentSepoliaNoNetworkV3,
-  //       })
-  //       .expect(400);
+    expect(response.body.message).toBe(
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+    );
+  });
+  it("should throw error when v3 document's network field does not exists", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send({
+        document: documentSepoliaNoNetworkV3,
+      })
+      .expect(400);
 
-  //     expect(response.body.message).toBe(
-  //       ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
-  //     );
-  //   });
-  //   it("should throw error when v3 document's network field does not exists for hedera", async () => {
-  //     const response = await request
-  //       .post("/")
-  //       .set("x-api-key", process.env.API_KEY)
-  //       .send({
-  //         document: documentHederaNoNetworkV3,
-  //       })
-  //       .expect(400);
+    expect(response.body.message).toBe(
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+    );
+  });
+  it("should throw error when v3 document's network field does not exists for hedera", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send({
+        document: documentHederaNoNetworkV3,
+      })
+      .expect(400);
 
-  //     expect(response.body.message).toBe(
-  //       ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
-  //     );
-  //   });
+    expect(response.body.message).toBe(
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
+    );
+  });
 });
 
 describe("GET /queue", () => {
