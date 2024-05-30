@@ -12,6 +12,7 @@ export const ALLOWED_ORIGINS = [
   "https://creator.tradetrust.io",
   "https://dev.tradetrust.io",
   "https://tradetrust.io",
+  "https://www.tradetrust.io",
 ];
 
 export enum ERROR_MESSAGE {
