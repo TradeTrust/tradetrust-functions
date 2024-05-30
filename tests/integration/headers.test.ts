@@ -58,4 +58,12 @@ describe("cors", () => {
       .send(postData)
       .expect(200);
   });
+  it("should pass with 200 when origin is TradeTrust production website", async () => {
+    await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .set("Origin", "https://www.tradetrust.io")
+      .send(postData)
+      .expect(200);
+  });
 });
