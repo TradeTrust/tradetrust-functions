@@ -23,6 +23,8 @@ jobs:
         run: npx prettier --check .
       - name: Lint
         run: npm run lint
+      - name: Extend Netlify Timeout
+        run: chmod +x ./update_netlify_timeout.sh && ./update_netlify_timeout.sh
       - name: Integration test
         run: npm run test:ci
         env:
