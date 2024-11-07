@@ -93,4 +93,8 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
     ...SUPPORTED_CHAINS[CHAIN_ID.stability],
     provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.stability].rpcUrl),
   },
+  [CHAIN_ID.astron]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.astron],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.astron].rpcUrl),
+  },
 };
