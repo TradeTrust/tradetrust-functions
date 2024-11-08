@@ -13,7 +13,7 @@ const RESPONSE_VERIFY_SUCCESS_SUMMARY = {
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/verify";
 const request = supertest(API_ENDPOINT);
-const postDataMainnnetV2 = { document: documentMainnetV2 };
+const postDataMainnetV2 = { document: documentMainnetV2 };
 const postDataAstronV2 = { document: documentAstronV2 };
 const postDataAstronV3 = { document: documentAstronV3 };
 
@@ -21,7 +21,7 @@ describe("POST /", () => {
   it("should verify a mainnet document by default", async () => {
     const response = await request
       .post("/")
-      .send(postDataMainnnetV2)
+      .send(postDataMainnetV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
       RESPONSE_VERIFY_SUCCESS_SUMMARY
