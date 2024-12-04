@@ -78,7 +78,7 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
   [CHAIN_ID.stabilitytestnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet],
     provider: jsonRpcProvider(
-      SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl
+      SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl,
     ),
   },
   [CHAIN_ID.stability]: {
