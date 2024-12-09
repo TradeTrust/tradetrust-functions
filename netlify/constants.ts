@@ -75,22 +75,18 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
     ...SUPPORTED_CHAINS[CHAIN_ID.xdcapothem],
     provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.xdcapothem].rpcUrl),
   },
-  [CHAIN_ID.hederamainnet]: {
-    ...SUPPORTED_CHAINS[CHAIN_ID.hederamainnet],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.hederamainnet].rpcUrl),
-  },
-  [CHAIN_ID.hederatestnet]: {
-    ...SUPPORTED_CHAINS[CHAIN_ID.hederatestnet],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.hederatestnet].rpcUrl),
-  },
   [CHAIN_ID.stabilitytestnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet],
     provider: jsonRpcProvider(
-      SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl
+      SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl,
     ),
   },
   [CHAIN_ID.stability]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.stability],
     provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.stability].rpcUrl),
+  },
+  [CHAIN_ID.astron]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.astron],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.astron].rpcUrl),
   },
 };
