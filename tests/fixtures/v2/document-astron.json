@@ -1,0 +1,34 @@
+{
+  "version": "https://schema.openattestation.com/2.0/schema.json",
+  "data": {
+    "id": "a6233ed1-d739-4893-a6b0-cb5251bd58a3:string:53b75bbe",
+    "$template": {
+      "name": "56c3e1f6-cb8e-4aa1-a0be-addfd83796df:string:GOVTECH_DEMO",
+      "type": "5aa9e4c4-e4ae-4232-b09c-eb246726818d:string:EMBEDDED_RENDERER",
+      "url": "f5bf9dd9-0a28-4d06-82de-d8369097b031:string:https://demo-renderer.opencerts.io"
+    },
+    "issuers": [
+      {
+        "name": "3d5c0ecb-c5e4-4f9a-b8c6-98f0e784c10d:string:caict astron",
+        "documentStore": "c069b9eb-1479-458b-acb4-ab40945bef68:string:0x94FD21A026E29E0686583b8be71Cb28a8ca1A8d4",
+        "identityProof": {
+          "type": "7e169aea-2dcb-4ee7-8c80-3f5cb0bb40a5:string:DNS-TXT",
+          "location": "3de7c297-7919-4606-af78-d0f12d0c51cd:string:astronlayer2.bitfactory.cn"
+        }
+      }
+    ],
+    "network": {
+      "chain": "465cb6ed-3cc2-45de-aa42-e8c8ddf048b0:string:ASTRON",
+      "chainId": "aaf2bc4f-d606-4584-a86f-198100d8da1d:string:1338"
+    },
+    "recipient": {
+      "name": "b905251a-04fc-4eb2-abe1-ca668a7822bd:string:caict"
+    }
+  },
+  "signature": {
+    "type": "SHA3MerkleProof",
+    "targetHash": "21303535c19053deffa5f2c7c457992d988c0dc736e4d77b5b1202255cbdb58b",
+    "proof": [],
+    "merkleRoot": "21303535c19053deffa5f2c7c457992d988c0dc736e4d77b5b1202255cbdb58b"
+  }
+}

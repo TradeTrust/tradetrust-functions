@@ -1,0 +1,35 @@
+{
+  "version": "https://schema.openattestation.com/2.0/schema.json",
+  "data": {
+    "$template": {
+      "type": "0e01f0b3-ef3f-47c1-a62a-549e846bf69c:string:EMBEDDED_RENDERER",
+      "name": "efdefb10-e2b3-4fdc-a395-1538d52c6d54:string:COVERING_LETTER",
+      "url": "e5c50524-9926-438e-8639-1dd319528152:string:https://generic-templates.tradetrust.io"
+    },
+    "issuers": [
+      {
+        "name": "424e0daa-bfcf-44ef-a915-01fa60bcb42f:string:Demo Issuer",
+        "documentStore": "f90d3587-0570-42fc-81b8-46128fa1c0fc:string:0x93092C2B449712281008112870063fF439367C00",
+        "identityProof": {
+          "type": "bffdcf50-209f-4451-8fc4-66416b875b95:string:DNS-TXT",
+          "location": "7ff7b2bc-119b-4c01-9108-33960115ef84:string:example.tradetrust.io"
+        },
+        "revocation": {
+          "type": "aed852bc-31db-4c5c-9b1e-45590373f5e5:string:NONE"
+        }
+      }
+    ],
+    "network": {
+      "chain": "7ba8b113-5124-4242-9c33-b259139d83f4:string:MATIC",
+      "chainId": "1c3b51f3-d9d4-4344-acc8-0115e54c3d56:string:80002"
+    },
+    "title": "a8b1fa38-9e41-4a39-ad30-3752b3767786:string:Cover Letter",
+    "remarks": "6fd6d80e-d41c-472a-ab8f-8ee1aec6eeb7:string:This is sample cover letter"
+  },
+  "signature": {
+    "type": "SHA3MerkleProof",
+    "targetHash": "87a31fc99745f9c5c837927217fd3688c7386158a45ee3fc888d3b679fb36d5f",
+    "proof": [],
+    "merkleRoot": "87a31fc99745f9c5c837927217fd3688c7386158a45ee3fc888d3b679fb36d5f"
+  }
+}

@@ -51,10 +51,9 @@ Endpoint: https://tradetrust-functions.netlify.app/.netlify/functions/verify
 POST
 
 - `/verify` verifies an OpenAttestation document on mainnet network
-- `/verify?network="maticmum"` verifies an OpenAttestation document on maticmum network
+- `/verify?network="amoy"` verifies an OpenAttestation document on amoy network
 - `/verify?network="sepolia"` verifies an OpenAttestation document on sepolia network
 - `/verify?network="xdcapothem"` verifies an OpenAttestation document on xdcapothem network
-- `/verify?network="hedera"` verifies an OpenAttestation document on hedera network
 - `/verify?network="stability"` verifies an OpenAttestation document on stability network
 
 ```
