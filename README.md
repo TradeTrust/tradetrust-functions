@@ -1,5 +1,7 @@
 # TradeTrust functions
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d1d7e5ae-2010-4f42-bcf0-9e9b6b6f7b33/deploy-status)](https://app.netlify.com/sites/tradetrust-functions/deploys)
+
 API endpoints to use.
 
 ## ⚠️ Reminder
@@ -49,9 +51,10 @@ Endpoint: https://tradetrust-functions.netlify.app/.netlify/functions/verify
 POST
 
 - `/verify` verifies an OpenAttestation document on mainnet network
-- `/verify?network="maticmum"` verifies an OpenAttestation document on maticmum network
+- `/verify?network="amoy"` verifies an OpenAttestation document on amoy network
 - `/verify?network="sepolia"` verifies an OpenAttestation document on sepolia network
 - `/verify?network="xdcapothem"` verifies an OpenAttestation document on xdcapothem network
+- `/verify?network="stability"` verifies an OpenAttestation document on stability network
 
 ```
 // POST data example
@@ -72,3 +75,10 @@ POST
 #### Notes
 
 The dummy value in `API_KEY` should work for local development purposes. For production `API_KEY` value, refer to netlify env variables at dashboard.
+
+#### Network specific configurations
+
+The next environment variables are required for verifying documents on some of the networks. They are used through the `@tradetrust-tt/tradetrust-utils` package.
+
+- INFURA_API_KEY: [Infura API key](https://www.infura.io/), used for verifying Polygon Amoy network
+- STABILITY_API_KEY: [Stability API key](https://portal.stabilityprotocol.com), used for verifying documents on the Stability network
