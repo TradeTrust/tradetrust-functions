@@ -5,12 +5,13 @@
   "main": "index.js",
   "dependencies": {
     "@govtechsg/oa-encryption": "^1.3.5",
-    "@tradetrust-tt/tt-verify": "^8.2.0",
-    "@tradetrust-tt/tradetrust-utils": "^1.6.1",
     "@netlify/functions": "^2.0.2",
+    "@tradetrust-tt/tradetrust-utils": "^2.1.1",
+    "@tradetrust-tt/tt-verify": "^9.3.0",
     "aws-sdk": "^2.1463.0",
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
     "express": "^4.18.2",
     "http-errors": "^2.0.0",
@@ -18,19 +19,19 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@types/jest": "^29.1.2",
+    "@types/jest": "^29.5.14",
     "@types/node": "^18.8.5",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
     "concurrently": "^7.4.0",
     "eslint": "^8.25.0",
-    "jest": "^29.1.2",
-    "netlify-cli": "^16.4.2",
+    "jest": "^29.7.0",
+    "netlify-cli": "^17.38.0",
     "s3rver": "^3.7.1",
     "supertest": "^6.3.0",
-    "ts-jest": "^29.0.3",
+    "ts-jest": "^29.2.5",
     "typescript": "^4.8.4",
-    "wait-on": "^6.0.1"
+    "wait-on": "^8.0.1"
   },
   "scripts": {
     "lint": "eslint ./netlify/**/*.ts",
@@ -51,5 +52,9 @@
   "bugs": {
     "url": "https://github.com/TradeTrust/tradetrust-functions/issues"
   },
-  "homepage": "https://github.com/TradeTrust/tradetrust-functions#readme"
+  "homepage": "https://github.com/TradeTrust/tradetrust-functions#readme",
+  "engines": {
+    "npm": ">=8.x",
+    "node": ">=18.x"
+  }
 }

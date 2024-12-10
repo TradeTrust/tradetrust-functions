@@ -1,12 +1,9 @@
 import supertest from "supertest";
-import documentAmoyV2 from "../fixtures/v2/document-amoy.json";
-import documentAmoyV3 from "../fixtures/v3/document-amoy.json";
-import documentXDCApothemV2 from "../fixtures/v2/document-xdcapothem.json";
-import documentXDCApothemV3 from "../fixtures/v3/document-xdcapothem.json";
-import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
-import documentSepoliaV3 from "../fixtures/v3/document-sepolia.json";
-import documentSepoliaNoNetworkV2 from "../fixtures/v2/document-sepolia-no-network.json";
-import documentSepoliaNoNetworkV3 from "../fixtures/v3/document-sepolia-no-network.json";
+import documentAstronV2 from "../fixtures/v2/document-astron.json";
+import documentAstronV3 from "../fixtures/v3/document-astron.json";
+import documentAstronNoNetworkV2 from "../fixtures/v2/document-astron-no-network.json";
+import documentAstronNoNetworkV3 from "../fixtures/v3/document-astron-no-network.json";
+
 import {
   ERROR_MESSAGE,
   DOCUMENT_STORAGE_ERROR_MESSAGE,
@@ -14,19 +11,15 @@ import {
 
 const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
-const postDataAmoyV2 = { document: documentAmoyV2 };
-const postDataAmoyV3 = { document: documentAmoyV3 };
-const postDataXDCApothemV2 = { document: documentXDCApothemV2 };
-const postDataXDCApothemV3 = { document: documentXDCApothemV3 };
-const postDataSepoliaV2 = { document: documentSepoliaV2 };
-const postDataSepoliaV3 = { document: documentSepoliaV3 };
+const postDataAstronV2 = { document: documentAstronV2 };
+const postDataAstronV3 = { document: documentAstronV3 };
 
 describe("POST /", () => {
-  it("should store encrypted v2 amoy document", async () => {
+  it("should store encrypted v2 astron document", async () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
-      .send(postDataAmoyV2)
+      .send(postDataAstronV2)
       .expect(200);
 
     expect(response.body).toHaveProperty("id");
@@ -35,35 +28,11 @@ describe("POST /", () => {
     expect(Object.keys(response.body).length).toBe(3);
   });
 
-  it("should store encrypted v2 sepolia document", async () => {
+  it("should store encrypted v3 astron document", async () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
-      .send(postDataSepoliaV2)
-      .expect(200);
-
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("key");
-    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
-    expect(Object.keys(response.body).length).toBe(3);
-  });
-  it("should store encrypted v2 xdcapothem document", async () => {
-    const response = await request
-      .post("/")
-      .set("x-api-key", process.env.API_KEY)
-      .send(postDataXDCApothemV2)
-      .expect(200);
-
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("key");
-    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
-    expect(Object.keys(response.body).length).toBe(3);
-  });
-  it("should store encrypted v3 sepolia document", async () => {
-    const response = await request
-      .post("/")
-      .set("x-api-key", process.env.API_KEY)
-      .send(postDataSepoliaV3)
+      .send(postDataAstronV3)
       .expect(200);
 
     expect(response.body).toHaveProperty("id");
@@ -72,30 +41,6 @@ describe("POST /", () => {
     expect(Object.keys(response.body).length).toBe(3);
   });
 
-  it("should store encrypted v3 amoy document", async () => {
-    const response = await request
-      .post("/")
-      .set("x-api-key", process.env.API_KEY)
-      .send(postDataAmoyV3)
-      .expect(200);
-
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("key");
-    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
-    expect(Object.keys(response.body).length).toBe(3);
-  });
-  it("should store encrypted v3 xdcapothem document", async () => {
-    const response = await request
-      .post("/")
-      .set("x-api-key", process.env.API_KEY)
-      .send(postDataXDCApothemV3)
-      .expect(200);
-
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("key");
-    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
-    expect(Object.keys(response.body).length).toBe(3);
-  });
   it("should throw error when document is not compliant to OA schema", async () => {
     const response = await request
       .post("/")
@@ -113,7 +58,7 @@ describe("POST /", () => {
       .post("/")
       .set("x-api-key", process.env.API_KEY)
       .send({
-        document: documentSepoliaNoNetworkV2,
+        document: documentAstronNoNetworkV2,
       })
       .expect(400);
 
@@ -126,7 +71,7 @@ describe("POST /", () => {
       .post("/")
       .set("x-api-key", process.env.API_KEY)
       .send({
-        document: documentSepoliaNoNetworkV3,
+        document: documentAstronNoNetworkV3,
       })
       .expect(400);
 
@@ -154,7 +99,7 @@ describe("GET /:id", () => {
     const postResponse = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
-      .send(postDataSepoliaV2)
+      .send(postDataAstronV2)
       .expect(200);
 
     const getResponse = await request
@@ -188,7 +133,7 @@ describe("POST /:id", () => {
     const response = await request
       .post(`/${queueResponse.body.id}`)
       .set("x-api-key", process.env.API_KEY)
-      .send(postDataSepoliaV2)
+      .send(postDataAstronV2)
       .expect(200);
 
     expect(response.body).toHaveProperty("id", queueResponse.body.id); // important to check!

@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { providers } from "ethers";
 import {
   CHAIN_ID,
@@ -5,20 +6,14 @@ import {
   chainInfo,
 } from "@tradetrust-tt/tradetrust-utils/constants/supportedChains";
 
-export const ALLOWED_ORIGINS =
-  process.env.NODE_ENV === "test"
-    ? [
-        "http://127.0.0.1:3000",
-        "http://localhost:3000",
-        "https://creator.tradetrust.io",
-        "https://dev.tradetrust.io",
-        "https://tradetrust.io",
-      ]
-    : [
-        "https://creator.tradetrust.io",
-        "https://dev.tradetrust.io",
-        "https://tradetrust.io",
-      ];
+export const ALLOWED_ORIGINS = [
+  "http://127.0.0.1:3000",
+  "http://localhost:3000",
+  "https://creator.tradetrust.io",
+  "https://dev.tradetrust.io",
+  "https://tradetrust.io",
+  "https://www.tradetrust.io",
+];
 
 export enum ERROR_MESSAGE {
   CORS_UNALLOWED = "The CORS policy for this site does not allow access from the specified Origin.",
@@ -64,9 +59,9 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
     ...SUPPORTED_CHAINS[CHAIN_ID.matic],
     provider: infuraProvider("matic"),
   },
-  [CHAIN_ID.maticmum]: {
-    ...SUPPORTED_CHAINS[CHAIN_ID.maticmum],
-    provider: infuraProvider("maticmum"),
+  [CHAIN_ID.amoy]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.amoy],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.amoy].rpcUrl),
   },
   [CHAIN_ID.sepolia]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
@@ -79,5 +74,19 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
   [CHAIN_ID.xdcapothem]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.xdcapothem],
     provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.xdcapothem].rpcUrl),
+  },
+  [CHAIN_ID.stabilitytestnet]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet],
+    provider: jsonRpcProvider(
+      SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl,
+    ),
+  },
+  [CHAIN_ID.stability]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.stability],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.stability].rpcUrl),
+  },
+  [CHAIN_ID.astron]: {
+    ...SUPPORTED_CHAINS[CHAIN_ID.astron],
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.astron].rpcUrl),
   },
 };
