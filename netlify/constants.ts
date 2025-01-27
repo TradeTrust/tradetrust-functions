@@ -13,6 +13,7 @@ export const ALLOWED_ORIGINS = [
   "https://dev.tradetrust.io",
   "https://tradetrust.io",
   "https://www.tradetrust.io",
+  "https://deploy-preview-353--tradetrust-creator.netlify.app",
 ];
 
 export enum ERROR_MESSAGE {
