@@ -10,10 +10,13 @@
     "@tradetrust-tt/tt-verify": "^9.3.0",
     "aws-sdk": "^2.1692.0",
     "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "csrf-sync": "^4.0.3",
     "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
     "express": "^4.21.2",
+    "express-session": "^1.18.1",
     "http-errors": "^2.0.0",
     "serverless-http": "^3.0.3",
     "uuid": "^9.0.1"

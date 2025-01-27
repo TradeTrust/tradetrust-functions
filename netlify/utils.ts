@@ -17,6 +17,7 @@ import {
   ERROR_MESSAGE,
   SUPPORTED_NETWORKS,
 } from "./constants";
+import { ethers } from "ethers";
 
 // https://github.com/expressjs/cors#configuring-cors-w-dynamic-origin
 export const corsOrigin = (origin, callback) => {
@@ -80,11 +81,30 @@ export const validateDocument = async ({
     throw new createError(400, ERROR_MESSAGE.NETWORK_UNSUPPORTED);
   }
 
+  let provider: ethers.providers.Provider;
+
+  if (network === "amoy") {
+    try {
+      // Attempt to use the primary provider
+      const defaultProvider = supportedNetwork.provider();
+      // Perform a synchronous check to validate the provider
+      await defaultProvider.getNetwork(); // This throws if the provider is unreachable
+      provider = defaultProvider;
+    } catch (error) {
+      // console.error("Primary provider failed for 'amoy', using backup provider:", error);
+      // Use the backup provider for 'amoy'
+      provider = new ethers.providers.JsonRpcProvider(
+        "https://rpc-amoy.polygon.technology"
+      );
+    }
+  } else {
+    // For other networks, use the default provider
+    provider = supportedNetwork.provider();
+  }
+
   const verify = verificationBuilder(
     [...openAttestationVerifiers, openAttestationDidIdentityProof],
-    {
-      provider: supportedNetwork.provider(),
-    },
+    { provider },
   );
 
   const fragments = await verify(document);

@@ -6,6 +6,9 @@ const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
 const postData = { document: documentAstron };
 
+const csrfToken = "mock-csrf-token"; // Mocked CSRF token
+const csrfTokenCookie = `csrfToken=${csrfToken}; HttpOnly; Path=/; SameSite=Strict`; // Mocked CSRF cookie
+
 describe("API key check", () => {
   it("should fail with 400 when API key is not provided", async () => {
     const response = await request.post("/").send(postData).expect(400);
@@ -36,6 +39,8 @@ describe("cors", () => {
     await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .set("Origin", "https://creator.tradetrust.io")
       .send(postData)
       .expect(200);
@@ -45,6 +50,8 @@ describe("cors", () => {
     await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .set("Origin", "https://dev.tradetrust.io")
       .send(postData)
       .expect(200);
@@ -54,6 +61,8 @@ describe("cors", () => {
     await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .set("Origin", "https://tradetrust.io")
       .send(postData)
       .expect(200);
@@ -62,6 +71,8 @@ describe("cors", () => {
     await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .set("Origin", "https://www.tradetrust.io")
       .send(postData)
       .expect(200);
