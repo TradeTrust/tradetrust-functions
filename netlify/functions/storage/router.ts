@@ -31,15 +31,15 @@ const csrfSyncProtection = csrfSync({
 });
 
 // Route to generate and send CSRF token to the client
-router.get('/csrf-token', (req, res) => {
+router.get("/csrf-token", (req, res) => {
   // Generate CSRF token using csrfSyncProtection
   const token = csrfSyncProtection.generateToken(req);
 
   // Set the CSRF token in the response cookie (for automatic sending by the browser)
-  res.cookie('csrfToken', token, {
+  res.cookie("csrfToken", token, {
     httpOnly: true, // Ensure the cookie is not accessible via JavaScript
     secure: true, // Use secure cookies (only sent over HTTPS)
-    sameSite: 'Strict', // Prevent the cookie from being sent in cross-site requests
+    sameSite: "Strict", // Prevent the cookie from being sent in cross-site requests
     maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
   });
 
@@ -50,7 +50,11 @@ router.get('/csrf-token', (req, res) => {
 });
 
 // Middleware to validate the CSRF token on each request
-const csrfValidationMiddleware = (req: Request, res: Response, next: NextFunction) => {
+const csrfValidationMiddleware = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
   // Extract the CSRF token from the request header
   const tokenFromRequest = req.headers["x-csrf-token"]?.toString();
 
@@ -58,41 +62,55 @@ const csrfValidationMiddleware = (req: Request, res: Response, next: NextFunctio
   const tokenFromCookie = req.cookies.csrfToken;
 
   // Check if either token is missing or they don't match
-  if (!tokenFromRequest || !tokenFromCookie || tokenFromRequest !== tokenFromCookie) {
-    return res.status(403).json({ error: "Invalid or missing CSRF token" });  // Reject request if tokens don't match
+  if (
+    !tokenFromRequest ||
+    !tokenFromCookie ||
+    tokenFromRequest !== tokenFromCookie
+  ) {
+    return res.status(403).json({ error: "Invalid or missing CSRF token" }); // Reject request if tokens don't match
   }
 
   next();
 };
 
 // Protected routes with CSRF validation for posting documents
-router.post("/", checkApiKey, csrfValidationMiddleware, async (req: Request, res: Response) => {
-  const {
-    body: { document },
-  } = req;
+router.post(
+  "/",
+  checkApiKey,
+  csrfValidationMiddleware,
+  async (req: Request, res: Response) => {
+    const {
+      body: { document },
+    } = req;
 
-  try {
-    const result = await uploadDocument(document);
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
+    try {
+      const result = await uploadDocument(document);
+      res.status(200).json(result);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  },
+);
 
 // Protected routes with CSRF validation for posting documents to a specific ID
-router.post("/:id", checkApiKey, csrfValidationMiddleware, async (req: Request, res: Response) => {
-  const {
-    body: { document },
-    params: { id },
-  } = req;
+router.post(
+  "/:id",
+  checkApiKey,
+  csrfValidationMiddleware,
+  async (req: Request, res: Response) => {
+    const {
+      body: { document },
+      params: { id },
+    } = req;
 
-  try {
-    const result = await uploadDocumentAtId(document, id);
-    res.status(200).json(result);
-  } catch (err) {
-    res.status(400).json(err);
-  }
-});
+    try {
+      const result = await uploadDocumentAtId(document, id);
+      res.status(200).json(result);
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  },
+);
 
 router.get("/queue", checkApiKey, async (req: Request, res: Response) => {
   try {

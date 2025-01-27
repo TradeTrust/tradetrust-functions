@@ -13,7 +13,9 @@ const app = express();
 app.use(cors({ origin: corsOrigin, credentials: true }));
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: MAX_REQUEST_BODY_SIZE }));
-app.use(bodyParser.urlencoded({ limit: MAX_REQUEST_BODY_SIZE, extended: true }));
+app.use(
+  bodyParser.urlencoded({ limit: MAX_REQUEST_BODY_SIZE, extended: true }),
+);
 app.use(
   session({
     secret: process.env.SESSION_SECRET,
@@ -25,7 +27,7 @@ app.use(
       sameSite: "Strict", // CSRF protection: only send the cookie to same-site requests, preventing cross-site request forgery
       maxAge: 1000 * 60 * 60, // Cookie expiration time: 1 hour
     },
-  })
+  }),
 );
 app.use("/.netlify/functions/storage", router);
 app.disable("x-powered-by");
