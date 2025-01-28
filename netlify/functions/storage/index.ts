@@ -24,7 +24,7 @@ app.use(
     cookie: {
       secure: true, // Ensure the cookie is only sent over HTTPS connections
       httpOnly: true, // Make sure the cookie is not accessible via JavaScript (adds protection against XSS attacks)
-      sameSite: "Strict", // CSRF protection: only send the cookie to same-site requests, preventing cross-site request forgery
+      sameSite: "None", // To allow cross-origin cookies
       maxAge: 1000 * 60 * 60, // Cookie expiration time: 1 hour
     },
   }),

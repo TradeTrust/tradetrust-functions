@@ -39,7 +39,7 @@ router.get("/csrf-token", (req, res) => {
   res.cookie("csrfToken", token, {
     httpOnly: true, // Ensure the cookie is not accessible via JavaScript
     secure: true, // Use secure cookies (only sent over HTTPS)
-    sameSite: "Strict", // Prevent the cookie from being sent in cross-site requests
+    sameSite: "None", // To allow cross-origin cookies
     maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
   });
 
