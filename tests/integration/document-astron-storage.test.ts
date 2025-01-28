@@ -14,11 +14,16 @@ const request = supertest(API_ENDPOINT);
 const postDataAstronV2 = { document: documentAstronV2 };
 const postDataAstronV3 = { document: documentAstronV3 };
 
+const csrfToken = "mock-csrf-token"; // Mocked CSRF token
+const csrfTokenCookie = `csrfToken=${csrfToken}; HttpOnly; Path=/; SameSite=Strict`; // Mocked CSRF cookie
+
 describe("POST /", () => {
   it("should store encrypted v2 astron document", async () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .send(postDataAstronV2)
       .expect(200);
 
@@ -32,6 +37,8 @@ describe("POST /", () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .send(postDataAstronV3)
       .expect(200);
 
@@ -45,6 +52,8 @@ describe("POST /", () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .send({
         document: { foo: "bar" },
       })
@@ -57,6 +66,8 @@ describe("POST /", () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .send({
         document: documentAstronNoNetworkV2,
       })
@@ -70,6 +81,8 @@ describe("POST /", () => {
     const response = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .send({
         document: documentAstronNoNetworkV3,
       })
@@ -99,6 +112,8 @@ describe("GET /:id", () => {
     const postResponse = await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .send(postDataAstronV2)
       .expect(200);
 
@@ -133,6 +148,8 @@ describe("POST /:id", () => {
     const response = await request
       .post(`/${queueResponse.body.id}`)
       .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
       .send(postDataAstronV2)
       .expect(200);
 
