@@ -24,7 +24,7 @@ describe("POST /", () => {
       .send(postDataMainnetV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
   it("should not verify a astron document by default", async () => {
@@ -38,7 +38,7 @@ describe("POST /", () => {
       .send(postDataAstronV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
   it("should verify a v3 astron document with astron network query", async () => {
@@ -48,7 +48,7 @@ describe("POST /", () => {
       .send(postDataAstronV3)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
   it("should not verify a astron document with unsupported network query", async () => {
@@ -58,7 +58,7 @@ describe("POST /", () => {
       .send(postDataAstronV2)
       .expect(400);
     expect(response.body.message).toStrictEqual(
-      ERROR_MESSAGE.NETWORK_UNSUPPORTED,
+      ERROR_MESSAGE.NETWORK_UNSUPPORTED
     );
   });
   it("should verify a astron document", async () => {
@@ -68,7 +68,7 @@ describe("POST /", () => {
       .send(postDataAstronV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
 });

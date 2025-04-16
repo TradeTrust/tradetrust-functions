@@ -1,34 +1,34 @@
 {
-    "version": "https://schema.openattestation.com/2.0/schema.json",
-    "data": {
-      "id": "f23742cf-f15f-4431-a638-9022b076d1b8:string:53b75bbe",
-      "$template": {
-        "name": "34714346-0d37-4969-a7ad-4dbe7cc1d34f:string:GOVTECH_DEMO",
-        "type": "fc730abc-f2c9-47a8-a7d4-078adf1e5fdf:string:EMBEDDED_RENDERER",
-        "url": "2602bd8f-e42e-4082-ab2f-61520db4940d:string:https://demo-renderer.opencerts.io"
-      },
-      "issuers": [
-        {
-          "name": "238eda39-5c23-41a3-9751-01c8686daad8:string:caict astron testnet",
-          "documentStore": "d8cc3ef4-add8-4c7a-862b-6bfc673bb175:string:0xdAEe89A37fEEBCBFAc94aBA63Fb163808dAc38Fb",
-          "identityProof": {
-            "type": "55dcaa4f-0f2a-4e88-a433-952010bdf92b:string:DNS-TXT",
-            "location": "57a548ff-5999-45c4-9e10-2cb3e16493d8:string:dev-astronlayer2.bitfactory.cn"
-          }
-        }
-      ],
-      "network": {
-        "chain": "0fa99e10-1dff-4f08-80df-426e308b635a:string:ASTRONTESTNET",
-        "chainId": "b4356cf7-a521-4cdb-9441-6fb259c0093a:string:21002"
-      },
-      "recipient": {
-        "name": "9c3ef4f1-9483-4253-8336-ff3b763fdab8:string:caict"
-      }
+  "version": "https://schema.openattestation.com/2.0/schema.json",
+  "data": {
+    "id": "f23742cf-f15f-4431-a638-9022b076d1b8:string:53b75bbe",
+    "$template": {
+      "name": "34714346-0d37-4969-a7ad-4dbe7cc1d34f:string:GOVTECH_DEMO",
+      "type": "fc730abc-f2c9-47a8-a7d4-078adf1e5fdf:string:EMBEDDED_RENDERER",
+      "url": "2602bd8f-e42e-4082-ab2f-61520db4940d:string:https://demo-renderer.opencerts.io"
     },
-    "signature": {
-      "type": "SHA3MerkleProof",
-      "targetHash": "69d203d87c0c94c739f6e61efe001d0c6563898bb891f998c2e06dc04e9713a8",
-      "proof": [],
-      "merkleRoot": "69d203d87c0c94c739f6e61efe001d0c6563898bb891f998c2e06dc04e9713a8"
+    "issuers": [
+      {
+        "name": "238eda39-5c23-41a3-9751-01c8686daad8:string:caict astron testnet",
+        "documentStore": "d8cc3ef4-add8-4c7a-862b-6bfc673bb175:string:0xdAEe89A37fEEBCBFAc94aBA63Fb163808dAc38Fb",
+        "identityProof": {
+          "type": "55dcaa4f-0f2a-4e88-a433-952010bdf92b:string:DNS-TXT",
+          "location": "57a548ff-5999-45c4-9e10-2cb3e16493d8:string:dev-astronlayer2.bitfactory.cn"
+        }
+      }
+    ],
+    "network": {
+      "chain": "0fa99e10-1dff-4f08-80df-426e308b635a:string:ASTRONTESTNET",
+      "chainId": "b4356cf7-a521-4cdb-9441-6fb259c0093a:string:21002"
+    },
+    "recipient": {
+      "name": "9c3ef4f1-9483-4253-8336-ff3b763fdab8:string:caict"
     }
+  },
+  "signature": {
+    "type": "SHA3MerkleProof",
+    "targetHash": "69d203d87c0c94c739f6e61efe001d0c6563898bb891f998c2e06dc04e9713a8",
+    "proof": [],
+    "merkleRoot": "69d203d87c0c94c739f6e61efe001d0c6563898bb891f998c2e06dc04e9713a8"
   }
+}

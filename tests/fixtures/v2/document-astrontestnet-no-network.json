@@ -1,31 +1,30 @@
 {
-    "version": "https://schema.openattestation.com/2.0/schema.json",
-    "data": {
-      "id": "2051ac44-8def-4cba-97a4-0b509394477b:string:53b75bbe",
-      "$template": {
-        "name": "db617e38-25d1-4f2c-87b4-28053e133898:string:GOVTECH_DEMO",
-        "type": "0559a211-b89e-4041-ace7-910bc87f1baf:string:EMBEDDED_RENDERER",
-        "url": "462c7994-afb8-4390-b612-6dbfc9d3cd36:string:https://demo-renderer.opencerts.io"
-      },
-      "issuers": [
-        {
-          "name": "bee020fb-1d59-4df9-a522-ec5a207f4178:string:caict astron testnet",
-          "documentStore": "c8c443ae-8030-4d1e-979d-0df7eecb9ea9:string:0xdAEe89A37fEEBCBFAc94aBA63Fb163808dAc38Fb",
-          "identityProof": {
-            "type": "31085736-219a-4d15-ad74-6c0a1a9262a2:string:DNS-TXT",
-            "location": "729015df-6486-4c5c-ad52-4a78494d3ab7:string:dev-astronlayer2.bitfactory.cn"
-          }
-        }
-      ],
-      "recipient": {
-        "name": "623f4217-d8b7-4614-affc-42df4a1e3732:string:caict"
-      }
+  "version": "https://schema.openattestation.com/2.0/schema.json",
+  "data": {
+    "id": "2051ac44-8def-4cba-97a4-0b509394477b:string:53b75bbe",
+    "$template": {
+      "name": "db617e38-25d1-4f2c-87b4-28053e133898:string:GOVTECH_DEMO",
+      "type": "0559a211-b89e-4041-ace7-910bc87f1baf:string:EMBEDDED_RENDERER",
+      "url": "462c7994-afb8-4390-b612-6dbfc9d3cd36:string:https://demo-renderer.opencerts.io"
     },
-    "signature": {
-      "type": "SHA3MerkleProof",
-      "targetHash": "46411723e307c83e1172ceb83da0f14ba34bef026547a499d2c9527e3864a5f1",
-      "proof": [],
-      "merkleRoot": "46411723e307c83e1172ceb83da0f14ba34bef026547a499d2c9527e3864a5f1"
+    "issuers": [
+      {
+        "name": "bee020fb-1d59-4df9-a522-ec5a207f4178:string:caict astron testnet",
+        "documentStore": "c8c443ae-8030-4d1e-979d-0df7eecb9ea9:string:0xdAEe89A37fEEBCBFAc94aBA63Fb163808dAc38Fb",
+        "identityProof": {
+          "type": "31085736-219a-4d15-ad74-6c0a1a9262a2:string:DNS-TXT",
+          "location": "729015df-6486-4c5c-ad52-4a78494d3ab7:string:dev-astronlayer2.bitfactory.cn"
+        }
+      }
+    ],
+    "recipient": {
+      "name": "623f4217-d8b7-4614-affc-42df4a1e3732:string:caict"
     }
+  },
+  "signature": {
+    "type": "SHA3MerkleProof",
+    "targetHash": "46411723e307c83e1172ceb83da0f14ba34bef026547a499d2c9527e3864a5f1",
+    "proof": [],
+    "merkleRoot": "46411723e307c83e1172ceb83da0f14ba34bef026547a499d2c9527e3864a5f1"
   }
-  
+}
