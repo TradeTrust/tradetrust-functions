@@ -14,7 +14,7 @@ app.use(cors({ origin: corsOrigin, credentials: true }));
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: MAX_REQUEST_BODY_SIZE }));
 app.use(
-  bodyParser.urlencoded({ limit: MAX_REQUEST_BODY_SIZE, extended: true })
+  bodyParser.urlencoded({ limit: MAX_REQUEST_BODY_SIZE, extended: true }),
 );
 app.use(
   session({
@@ -27,7 +27,7 @@ app.use(
       sameSite: "None", // To allow cross-origin cookies
       maxAge: 1000 * 60 * 60, // Cookie expiration time: 1 hour
     },
-  })
+  }),
 );
 app.use("/.netlify/functions/storage", router);
 app.disable("x-powered-by");

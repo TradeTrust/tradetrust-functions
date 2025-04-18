@@ -40,12 +40,12 @@ export const checkApiKey = (req, res, next) => {
 
 const getSupportedNetwork = (network: networkName) => {
   return Object.values(SUPPORTED_NETWORKS).find(
-    (item) => item.name === network
+    (item) => item.name === network,
   );
 };
 
 export const validateNetwork = async (
-  document: WrappedDocument<OpenAttestationDocument>
+  document: WrappedDocument<OpenAttestationDocument>,
 ) => {
   if (utils.isWrappedV2Document(document)) {
     const { network } = utils.getData(document);
@@ -94,7 +94,7 @@ export const validateDocument = async ({
       // console.error("Primary provider failed for 'amoy', using backup provider:", error);
       // Use the backup provider for 'amoy'
       provider = new ethers.providers.JsonRpcProvider(
-        "https://rpc-amoy.polygon.technology"
+        "https://rpc-amoy.polygon.technology",
       );
     }
   } else {
@@ -104,7 +104,7 @@ export const validateDocument = async ({
 
   const verify = verificationBuilder(
     [...openAttestationVerifiers, openAttestationDidIdentityProof],
-    { provider }
+    { provider },
   );
 
   const fragments = await verify(document);
