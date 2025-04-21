@@ -1,144 +1,74 @@
 import supertest from "supertest";
+import documentMainnetV2 from "../fixtures/v2/document-mainnet.json";
 import documentAstronV2 from "../fixtures/v2/document-astrontestnet.json";
 import documentAstronV3 from "../fixtures/v3/document-astrontestnet.json";
-import documentAstronNoNetworkV2 from "../fixtures/v2/document-astrontestnet-no-network.json";
-import documentAstronNoNetworkV3 from "../fixtures/v3/document-astrontestnet-no-network.json";
+import { ERROR_MESSAGE } from "../../netlify/constants";
 
-import {
-  ERROR_MESSAGE,
-  DOCUMENT_STORAGE_ERROR_MESSAGE,
-} from "../../netlify/constants";
+const RESPONSE_VERIFY_SUCCESS_SUMMARY = {
+  all: true,
+  documentStatus: true,
+  documentIntegrity: true,
+  issuerIdentity: true,
+};
 
-const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
+const API_ENDPOINT = "http://localhost:9999/.netlify/functions/verify";
 const request = supertest(API_ENDPOINT);
+const postDataMainnetV2 = { document: documentMainnetV2 };
 const postDataAstronV2 = { document: documentAstronV2 };
 const postDataAstronV3 = { document: documentAstronV3 };
 
 describe("POST /", () => {
-  it("should store encrypted v2 astrontestnet document", async () => {
+  it("should verify a mainnet document by default", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
+      .send(postDataMainnetV2)
+      .expect(200);
+    expect(response.body.summary).toStrictEqual(
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+    );
+  });
+  it("should not verify a astrontestnet document by default", async () => {
+    const response = await request.post("/").send(postDataAstronV2).expect(400);
+    expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR);
+  });
+  it("should verify a v2 astrontestnet document with astrontestnet network query", async () => {
+    const response = await request
+      .post("/")
+      .query({ network: "astrontestnet" })
       .send(postDataAstronV2)
       .expect(200);
-
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("key");
-    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
-    expect(Object.keys(response.body).length).toBe(3);
+    expect(response.body.summary).toStrictEqual(
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+    );
   });
-
-  it("should store encrypted v3 astrontestnet document", async () => {
+  it("should verify a v3 astrontestnet document with astrontestnet network query", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
+      .query({ network: "astrontestnet" })
       .send(postDataAstronV3)
       .expect(200);
-
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("key");
-    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
-    expect(Object.keys(response.body).length).toBe(3);
-  });
-
-  it("should throw error when document is not compliant to OA schema", async () => {
-    const response = await request
-      .post("/")
-      .set("x-api-key", process.env.API_KEY)
-      .send({
-        document: { foo: "bar" },
-      })
-      .expect(400);
-
-    expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_SCHEMA_INVALID);
-  });
-
-  it("should throw error when v2 document's network field does not exists", async () => {
-    const response = await request
-      .post("/")
-      .set("x-api-key", process.env.API_KEY)
-      .send({
-        document: documentAstronNoNetworkV2,
-      })
-      .expect(400);
-
-    expect(response.body.message).toBe(
-      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND,
+    expect(response.body.summary).toStrictEqual(
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
     );
   });
-  it("should throw error when v3 document's network field does not exists", async () => {
+  it("should not verify a astrontestnet document with unsupported network query", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
-      .send({
-        document: documentAstronNoNetworkV3,
-      })
+      .query({ network: "foo" })
+      .send(postDataAstronV2)
       .expect(400);
-
-    expect(response.body.message).toBe(
-      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND,
+    expect(response.body.message).toStrictEqual(
+      ERROR_MESSAGE.NETWORK_UNSUPPORTED,
     );
   });
-});
-
-describe("GET /queue", () => {
-  it("should retrieve s3 object id + oa encryption key", async () => {
+  it("should verify a astrontestnet document", async () => {
     const response = await request
-      .get("/queue")
-      .set("x-api-key", process.env.API_KEY)
-      .expect(200);
-
-    expect(response.body).toHaveProperty("id");
-    expect(response.body).toHaveProperty("key");
-    expect(Object.keys(response.body).length).toBe(2);
-  });
-});
-
-describe("GET /:id", () => {
-  it("should retrieve encrypted document without key", async () => {
-    const postResponse = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
+      .query({ network: "astrontestnet" })
       .send(postDataAstronV2)
       .expect(200);
-
-    const getResponse = await request
-      .get(`/${postResponse.body.id}`)
-      .expect(200);
-
-    expect(getResponse.body).toHaveProperty("cipherText");
-    expect(getResponse.body).toHaveProperty("iv");
-    expect(getResponse.body).toHaveProperty("tag");
-    expect(getResponse.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
-    expect(getResponse.body).not.toHaveProperty("key"); // important to check!
-    expect(Object.keys(getResponse.body).length).toBe(4);
-  });
-
-  it("should fail if id is not found in s3 objects", async () => {
-    const response = await request.get("/abc").expect(400);
-
-    expect(response.body.message).toBe(
-      DOCUMENT_STORAGE_ERROR_MESSAGE.KEY_NOT_EXISTS,
+    expect(response.body.summary).toStrictEqual(
+      RESPONSE_VERIFY_SUCCESS_SUMMARY,
     );
-  });
-});
-
-describe("POST /:id", () => {
-  it("store a new encrypted document, replacing specified id from previous queue while using the retrieved decrypt key", async () => {
-    const queueResponse = await request
-      .get("/queue")
-      .set("x-api-key", process.env.API_KEY)
-      .expect(200);
-
-    const response = await request
-      .post(`/${queueResponse.body.id}`)
-      .set("x-api-key", process.env.API_KEY)
-      .send(postDataAstronV2)
-      .expect(200);
-
-    expect(response.body).toHaveProperty("id", queueResponse.body.id); // important to check!
-    expect(response.body).toHaveProperty("key", queueResponse.body.key); // important to check!
-    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
-    expect(Object.keys(response.body).length).toBe(3);
   });
 });
