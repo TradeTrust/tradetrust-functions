@@ -1,4 +1,4 @@
-import { CHAIN_ID } from "@tradetrust-tt/tradetrust-utils/constants/supportedChains";
+import { CHAIN_ID } from "@trustvc/trustvc";
 import { v4 as uuid } from "uuid";
 import { generateEncryptionKey } from "@govtechsg/oa-encryption";
 import {

@@ -1,10 +1,6 @@
 import "dotenv/config";
 import { providers } from "ethers";
-import {
-  CHAIN_ID,
-  SUPPORTED_CHAINS,
-  chainInfo,
-} from "@tradetrust-tt/tradetrust-utils/constants/supportedChains";
+import { SUPPORTED_CHAINS, CHAIN_ID, chainInfo } from "@trustvc/trustvc";
 
 export const ALLOWED_ORIGINS = [
   "http://127.0.0.1:3000",
@@ -79,7 +75,7 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
   [CHAIN_ID.stabilitytestnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet],
     provider: jsonRpcProvider(
-      SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl,
+      SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl
     ),
   },
   [CHAIN_ID.stability]: {

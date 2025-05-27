@@ -1,16 +1,19 @@
 import {
+  isValid,
   openAttestationVerifiers,
   openAttestationDidIdentityProof,
   verificationBuilder,
-  isValid,
-} from "@tradetrust-tt/tt-verify";
-import {
   WrappedDocument,
   OpenAttestationDocument,
-  utils,
-} from "@tradetrust-tt/tradetrust";
+  networkName,
+  isWrappedV2Document,
+  getDataV2,
+  isWrappedV3Document,
+  vc,
+  getDocumentData,
+} from "@trustvc/trustvc";
+
 import { encryptString } from "@govtechsg/oa-encryption";
-import { networkName } from "@tradetrust-tt/tradetrust-utils/constants/network";
 import createError from "http-errors";
 import {
   ALLOWED_ORIGINS,
@@ -40,22 +43,29 @@ export const checkApiKey = (req, res, next) => {
 
 const getSupportedNetwork = (network: networkName) => {
   return Object.values(SUPPORTED_NETWORKS).find(
-    (item) => item.name === network,
+    (item) => item.name === network
   );
 };
 
 export const validateNetwork = async (
-  document: WrappedDocument<OpenAttestationDocument>,
+  document: WrappedDocument<OpenAttestationDocument>
 ) => {
-  if (utils.isWrappedV2Document(document)) {
-    const { network } = utils.getData(document);
+  if (vc.isSignedDocument(document)) {
+    const { network } = getDocumentData(document);
+    if (!network) {
+      throw new createError(400, ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND);
+    } else {
+      return network;
+    }
+  } else if (isWrappedV2Document(document)) {
+    const { network } = getDataV2(document);
 
     if (!network) {
       throw new createError(400, ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND);
     } else {
       return network;
     }
-  } else if (utils.isWrappedV3Document(document)) {
+  } else if (isWrappedV3Document(document)) {
     const { network } = document;
 
     if (!network) {
@@ -94,7 +104,7 @@ export const validateDocument = async ({
       // console.error("Primary provider failed for 'amoy', using backup provider:", error);
       // Use the backup provider for 'amoy'
       provider = new ethers.providers.JsonRpcProvider(
-        "https://rpc-amoy.polygon.technology",
+        "https://rpc-amoy.polygon.technology"
       );
     }
   } else {
@@ -104,7 +114,7 @@ export const validateDocument = async ({
 
   const verify = verificationBuilder(
     [...openAttestationVerifiers, openAttestationDidIdentityProof],
-    { provider },
+    { provider }
   );
 
   const fragments = await verify(document);
