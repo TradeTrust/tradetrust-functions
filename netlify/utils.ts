@@ -1,8 +1,5 @@
 import {
   isValid,
-  openAttestationVerifiers,
-  openAttestationDidIdentityProof,
-  verificationBuilder,
   WrappedDocument,
   OpenAttestationDocument,
   networkName,

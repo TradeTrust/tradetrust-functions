@@ -21,7 +21,7 @@ describe("POST /", () => {
   it("should store encrypted v2 astron document", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
+      .set("x-api-key", process.env.API_KEY as string)
       .set("x-csrf-token", csrfToken)
       .set("cookie", csrfTokenCookie)
       .send(postDataAstronV2)
@@ -36,7 +36,7 @@ describe("POST /", () => {
   it("should store encrypted v3 astron document", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
+      .set("x-api-key", process.env.API_KEY as string)
       .set("x-csrf-token", csrfToken)
       .set("cookie", csrfTokenCookie)
       .send(postDataAstronV3)
@@ -74,7 +74,7 @@ describe("POST /", () => {
       .expect(400);
 
     expect(response.body.message).toBe(
-      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND,
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
     );
   });
   it("should throw error when v3 document's network field does not exists", async () => {
@@ -89,7 +89,7 @@ describe("POST /", () => {
       .expect(400);
 
     expect(response.body.message).toBe(
-      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND,
+      ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND
     );
   });
 });
@@ -133,7 +133,7 @@ describe("GET /:id", () => {
     const response = await request.get("/abc").expect(400);
 
     expect(response.body.message).toBe(
-      DOCUMENT_STORAGE_ERROR_MESSAGE.KEY_NOT_EXISTS,
+      DOCUMENT_STORAGE_ERROR_MESSAGE.KEY_NOT_EXISTS
     );
   });
 });
