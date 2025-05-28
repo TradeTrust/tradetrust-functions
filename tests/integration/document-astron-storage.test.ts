@@ -21,7 +21,7 @@ describe("POST /", () => {
   it("should store encrypted v2 astron document", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY as string)
+      .set("x-api-key", process.env.API_KEY)
       .set("x-csrf-token", csrfToken)
       .set("cookie", csrfTokenCookie)
       .send(postDataAstronV2)
@@ -36,7 +36,7 @@ describe("POST /", () => {
   it("should store encrypted v3 astron document", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY as string)
+      .set("x-api-key", process.env.API_KEY)
       .set("x-csrf-token", csrfToken)
       .set("cookie", csrfTokenCookie)
       .send(postDataAstronV3)

@@ -30,7 +30,7 @@ describe("POST /", () => {
       .send(postDataMainnnetV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
   it("should not verify a sepolia document by default", async () => {
@@ -47,7 +47,7 @@ describe("POST /", () => {
       .send(postDataSepoliaV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
   it("should verify a v3 sepolia document with xdcapothem network query", async () => {
@@ -57,7 +57,7 @@ describe("POST /", () => {
       .send(postDataXDCApothemV3)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
   it("should verify a v3 sepolia document with sepolia network query", async () => {
@@ -67,7 +67,7 @@ describe("POST /", () => {
       .send(postDataSepoliaV3)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
   it("should not verify a sepolia document with unsupported network query", async () => {
@@ -77,7 +77,7 @@ describe("POST /", () => {
       .send(postDataSepoliaV2)
       .expect(400);
     expect(response.body.message).toStrictEqual(
-      ERROR_MESSAGE.NETWORK_UNSUPPORTED,
+      ERROR_MESSAGE.NETWORK_UNSUPPORTED
     );
   });
   it("should verify a amoy document", async () => {
@@ -87,7 +87,7 @@ describe("POST /", () => {
       .send(postDataAmoyV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
   it("should verify a xdcapothem document", async () => {
@@ -97,7 +97,7 @@ describe("POST /", () => {
       .send(postDataXDCApothemV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
   it("should verify a sepolia document", async () => {
@@ -107,7 +107,7 @@ describe("POST /", () => {
       .send(postDataSepoliaV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
-      RESPONSE_VERIFY_SUCCESS_SUMMARY,
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
 });
