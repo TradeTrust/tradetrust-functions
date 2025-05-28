@@ -26,12 +26,11 @@ export const corsOrigin = (
   callback: (err: Error | null, allow?: boolean) => void
 ) => {
   if (!origin) return callback(null, true); // allow requests with no origin, like mobile apps or curl requests
-
   if (ALLOWED_ORIGIN_REGEX.test(origin)) {
     return callback(null, true);
   } else if (
     LOCALHOST_ORIGINS.includes(origin) &&
-    process.env.NODE_ENV === "local"
+    process.env.NODE_ENV === "test"
   ) {
     return callback(null, true);
   } else {
