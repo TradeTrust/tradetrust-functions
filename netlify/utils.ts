@@ -14,17 +14,25 @@ import {
 import { encryptString } from "@govtechsg/oa-encryption";
 import createError from "http-errors";
 import {
-  ALLOWED_ORIGINS,
+  ALLOWED_ORIGIN_REGEX,
+  LOCALHOST_ORIGINS,
   ERROR_MESSAGE,
   SUPPORTED_NETWORKS,
 } from "./constants";
-import { ethers } from "ethers";
 
 // https://github.com/expressjs/cors#configuring-cors-w-dynamic-origin
-export const corsOrigin = (origin, callback) => {
+export const corsOrigin = (
+  origin: string | undefined,
+  callback: (err: Error | null, allow?: boolean) => void
+) => {
   if (!origin) return callback(null, true); // allow requests with no origin, like mobile apps or curl requests
 
-  if (ALLOWED_ORIGINS.includes(origin)) {
+  if (ALLOWED_ORIGIN_REGEX.test(origin)) {
+    return callback(null, true);
+  } else if (
+    LOCALHOST_ORIGINS.includes(origin) &&
+    process.env.NODE_ENV === "local"
+  ) {
     return callback(null, true);
   } else {
     return callback(new Error(ERROR_MESSAGE.CORS_UNALLOWED), false);

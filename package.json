@@ -41,7 +41,7 @@
     "local:clean": "npx rimraf ./tmp/test-bucket",
     "local:s3": "s3rver -d ./tmp --configure-bucket test-bucket",
     "test": "API_KEY=testkey jest",
-    "test:api": "wait-on tcp:9999 tcp:4568 && npm run test",
+    "test:api": "wait-on tcp:5080 tcp:4568 && npm run test",
     "test:ci": "concurrently -k -s first \"npm:test:serve\" \"npm:local:s3\" \"npm:test:api\"",
     "test:serve": "API_KEY=testkey NODE_ENV=test TT_AWS_BUCKET_NAME=test-bucket SESSION_SECRET=testsecret netlify functions:serve",
     "start": "npm run local:clean && concurrently \"npm:test:serve\" \"npm:local:s3\""

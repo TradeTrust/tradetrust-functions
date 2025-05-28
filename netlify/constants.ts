@@ -2,14 +2,10 @@ import "dotenv/config";
 import { providers } from "ethers";
 import { SUPPORTED_CHAINS, CHAIN_ID, chainInfo } from "@trustvc/trustvc";
 
-export const ALLOWED_ORIGINS = [
+export const ALLOWED_ORIGIN_REGEX = /^https:\/\/.*\.tradetrust\.io$/;
+export const LOCALHOST_ORIGINS = [
   "http://127.0.0.1:3000",
   "http://localhost:3000",
-  "https://creator.tradetrust.io",
-  "https://dev.tradetrust.io",
-  "https://tradetrust.io",
-  "https://www.tradetrust.io",
-  "https://ref.tradetrust.io",
 ];
 
 export enum ERROR_MESSAGE {
