@@ -1,8 +1,5 @@
 import {
   isValid,
-  openAttestationVerifiers,
-  openAttestationDidIdentityProof,
-  verificationBuilder,
   WrappedDocument,
   OpenAttestationDocument,
   networkName,
@@ -11,6 +8,7 @@ import {
   isWrappedV3Document,
   vc,
   getDocumentData,
+  verifyDocument,
 } from "@trustvc/trustvc";
 
 import { encryptString } from "@govtechsg/oa-encryption";
@@ -112,12 +110,7 @@ export const validateDocument = async ({
     provider = supportedNetwork.provider();
   }
 
-  const verify = verificationBuilder(
-    [...openAttestationVerifiers, openAttestationDidIdentityProof],
-    { provider }
-  );
-
-  const fragments = await verify(document);
+  const fragments = await verifyDocument(document);
 
   if (!isValid(fragments)) {
     throw new createError(400, ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR);

@@ -1,12 +1,10 @@
 {
   "compilerOptions": {
-    "target": "ES2022",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "strict": true,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true
-  }
+    "target": "es2022",
+    "module": "es2022",
+    "moduleResolution": "node",
+    "moduleDetection": "force",
+    "esModuleInterop": true
+  },
+  "type": "NodeNext"
 }
