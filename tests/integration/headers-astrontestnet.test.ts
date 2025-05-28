@@ -2,7 +2,7 @@ import supertest from "supertest";
 import documentAstron from "../fixtures/v2/document-astrontestnet.json";
 import { ERROR_MESSAGE } from "../../netlify/constants";
 
-const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
+const API_ENDPOINT = "http://localhost:5080/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
 const postData = { document: documentAstron };
 

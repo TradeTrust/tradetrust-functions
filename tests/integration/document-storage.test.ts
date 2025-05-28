@@ -12,7 +12,7 @@ import {
   DOCUMENT_STORAGE_ERROR_MESSAGE,
 } from "../../netlify/constants";
 
-const API_ENDPOINT = "http://localhost:9999/.netlify/functions/storage";
+const API_ENDPOINT = "http://localhost:5080/.netlify/functions/storage";
 const request = supertest(API_ENDPOINT);
 const postDataAmoyV2 = { document: documentAmoyV2 };
 const postDataAmoyV3 = { document: documentAmoyV3 };

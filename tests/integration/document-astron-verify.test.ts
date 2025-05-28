@@ -11,7 +11,7 @@ const RESPONSE_VERIFY_SUCCESS_SUMMARY = {
   issuerIdentity: true,
 };
 
-const API_ENDPOINT = "http://localhost:9999/.netlify/functions/verify";
+const API_ENDPOINT = "http://localhost:5080/.netlify/functions/verify";
 const request = supertest(API_ENDPOINT);
 const postDataMainnetV2 = { document: documentMainnetV2 };
 const postDataAstronV2 = { document: documentAstronV2 };
