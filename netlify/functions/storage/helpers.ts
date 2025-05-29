@@ -21,7 +21,6 @@ export const getDocument = async (id: string) => {
 
 export const uploadDocument = async (document) => {
   const { chainId } = await validateNetwork(document);
-
   await validateDocument({
     document,
     network: SUPPORTED_NETWORKS[chainId as CHAIN_ID].name,

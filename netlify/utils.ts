@@ -52,10 +52,10 @@ const getSupportedNetwork = (network: networkName) => {
   );
 };
 
-export const validateNetwork = async (
+export const validateNetwork = (
   document: WrappedDocument<OpenAttestationDocument>
 ) => {
-  if (vc.isSignedDocument(document)) {
+  if (vc.isSignedDocument(document) || vc.isRawDocument(document)) {
     const { network } = getDocumentData(document);
     if (!network) {
       throw new createError(400, ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND);
@@ -64,7 +64,6 @@ export const validateNetwork = async (
     }
   } else if (isWrappedV2Document(document)) {
     const { network } = getDataV2(document);
-
     if (!network) {
       throw new createError(400, ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND);
     } else {
@@ -91,17 +90,16 @@ export const validateDocument = async ({
   network: networkName;
 }) => {
   const supportedNetwork = getSupportedNetwork(network);
-
   if (!supportedNetwork) {
     throw new createError(400, ERROR_MESSAGE.NETWORK_UNSUPPORTED);
   }
 
-  const fragments = await verifyDocument(document);
-
+  const fragments = await verifyDocument(document, {
+    rpcProviderUrl: supportedNetwork.rpcUrl as string,
+  });
   if (!isValid(fragments)) {
     throw new createError(400, ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR);
   }
-
   return fragments;
 };
 

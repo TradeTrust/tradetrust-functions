@@ -82,7 +82,6 @@ router.post(
     const {
       body: { document },
     } = req;
-
     try {
       const result = await uploadDocument(document);
       res.status(200).json(result);

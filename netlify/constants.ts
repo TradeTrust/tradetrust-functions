@@ -2,7 +2,9 @@ import "dotenv/config";
 import { providers } from "ethers";
 import { SUPPORTED_CHAINS, CHAIN_ID, chainInfo } from "@trustvc/trustvc";
 
-export const ALLOWED_ORIGIN_REGEX = /^https:\/\/.*\.tradetrust\.io$/;
+export const ALLOWED_ORIGIN_REGEX =
+  /^https:\/\/(([a-zA-Z0-9-]+\.)*tradetrust\.io|([a-zA-Z0-9-]+\.)*tradetrust-website\.netlify\.app)$/;
+
 export const LOCALHOST_ORIGINS = [
   "http://127.0.0.1:3000",
   "http://localhost:3000",
@@ -42,7 +44,7 @@ type supportedNetworks = Record<
 export const SUPPORTED_NETWORKS: supportedNetworks = {
   [CHAIN_ID.local]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.local],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.local].rpcUrl || ""),
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.local].rpcUrl),
   },
   [CHAIN_ID.mainnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.mainnet],
@@ -54,7 +56,7 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
   },
   [CHAIN_ID.amoy]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.amoy],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.amoy].rpcUrl || ""),
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.amoy].rpcUrl),
   },
   [CHAIN_ID.sepolia]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.sepolia],
@@ -62,34 +64,28 @@ export const SUPPORTED_NETWORKS: supportedNetworks = {
   },
   [CHAIN_ID.xdc]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.xdc],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.xdc].rpcUrl || ""),
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.xdc].rpcUrl),
   },
   [CHAIN_ID.xdcapothem]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.xdcapothem],
-    provider: jsonRpcProvider(
-      SUPPORTED_CHAINS[CHAIN_ID.xdcapothem].rpcUrl || ""
-    ),
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.xdcapothem].rpcUrl),
   },
   [CHAIN_ID.stabilitytestnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet],
     provider: jsonRpcProvider(
-      SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl || ""
+      SUPPORTED_CHAINS[CHAIN_ID.stabilitytestnet].rpcUrl
     ),
   },
   [CHAIN_ID.stability]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.stability],
-    provider: jsonRpcProvider(
-      SUPPORTED_CHAINS[CHAIN_ID.stability].rpcUrl || ""
-    ),
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.stability].rpcUrl),
   },
   [CHAIN_ID.astron]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.astron],
-    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.astron].rpcUrl || ""),
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.astron].rpcUrl),
   },
   [CHAIN_ID.astrontestnet]: {
     ...SUPPORTED_CHAINS[CHAIN_ID.astrontestnet],
-    provider: jsonRpcProvider(
-      SUPPORTED_CHAINS[CHAIN_ID.astrontestnet].rpcUrl || ""
-    ),
+    provider: jsonRpcProvider(SUPPORTED_CHAINS[CHAIN_ID.astrontestnet].rpcUrl),
   },
 };
