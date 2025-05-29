@@ -1,0 +1,44 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://trustvc.io/context/warehouse-receipt.json",
+    "https://trustvc.io/context/render-method-context.json",
+    "https://trustvc.io/context/transferable-records-context.json",
+    "https://trustvc.io/context/qrcode-context.json",
+    "https://w3id.org/security/bbs/v1"
+  ],
+  "renderMethod": [
+    {
+      "type": "EMBEDDED_RENDERER",
+      "templateName": "WAREHOUSE_RECEIPT",
+      "id": "https://generic-templates.tradetrust.io"
+    }
+  ],
+  "credentialSubject": {
+    "type": ["WarehouseReceipt"]
+  },
+  "type": ["VerifiableCredential"],
+  "qrCode": {
+    "type": "TrustVCQRCode",
+    "uri": "https://actions.tradetrust.io?q=%7B%22type%22%3A%22DOCUMENT%22%2C%22payload%22%3A%7B%22uri%22%3A%22https%3A%2F%2Ftradetrust-functions.netlify.app%2F.netlify%2Ffunctions%2Fstorage%2F91d7de05-8087-4b8c-9cd3-07ff898389d7%22%2C%22key%22%3A%22d2dcadab04741893cefed85d6a3f881813a59ce792feb40c72f00f5a62d1f5aa%22%2C%22permittedActions%22%3A%5B%22STORE%22%5D%2C%22redirect%22%3A%22https%3A%2F%2Fdev.tradetrust.io%2F%22%2C%22chainId%22%3A%2220180427%22%7D%7D"
+  },
+  "credentialStatus": {
+    "type": "TransferableRecords",
+    "tokenNetwork": {
+      "chain": "FREE",
+      "chainId": 20180427
+    },
+    "tokenRegistry": "0x3E3C1cAa42123d450Aa197bc56C74f465f541fC0",
+    "tokenId": "90db7fd54aba5487c2f8118aeaea46fc2109869b3bc1387d6a83b150fd634e33"
+  },
+  "issuer": "did:web:trustvc.github.io:did:1",
+  "issuanceDate": "2025-05-29T08:30:13.553Z",
+  "id": "urn:bnid:_:01971b3e-a163-7668-b255-87fbaedbf6db",
+  "proof": {
+    "type": "BbsBlsSignature2020",
+    "created": "2025-05-29T08:52:58Z",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "j7H5y/YtGVtDhrcIfXSF7qFaFi1cX9sNHOv6/6zGnmbJax3fD4Kz3fe8nu3Uak+lN8UrJCZiXnnsupsnifu6MHl7PyEY7T0vsBj1gEGO+xsr4aQqmXOvantYLchcxDH1Fl87AeE8RFr29pmkGxxI1A==",
+    "verificationMethod": "did:web:trustvc.github.io:did:1#keys-1"
+  }
+}

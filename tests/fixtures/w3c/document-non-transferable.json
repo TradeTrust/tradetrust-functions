@@ -1,0 +1,34 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1",
+    "https://trustvc.io/context/invoice.json",
+    "https://trustvc.io/context/render-method-context.json",
+    "https://trustvc.io/context/qrcode-context.json",
+    "https://w3id.org/security/bbs/v1"
+  ],
+  "renderMethod": [
+    {
+      "type": "EMBEDDED_RENDERER",
+      "templateName": "INVOICE",
+      "id": "https://generic-templates.tradetrust.io"
+    }
+  ],
+  "credentialSubject": {
+    "type": ["Invoice"]
+  },
+  "type": ["VerifiableCredential"],
+  "qrCode": {
+    "type": "TrustVCQRCode",
+    "uri": "https://actions.tradetrust.io?q=%7B%22type%22%3A%22DOCUMENT%22%2C%22payload%22%3A%7B%22uri%22%3A%22https%3A%2F%2Ftradetrust-functions.netlify.app%2F.netlify%2Ffunctions%2Fstorage%2F0c1561ad-93bd-4708-a465-448b47f8556f%22%2C%22key%22%3A%22307d27689969d9a166bfcf2f35f46cf17df0fd3060974aba1ce4585a1b11e7ee%22%2C%22permittedActions%22%3A%5B%22STORE%22%5D%2C%22redirect%22%3A%22https%3A%2F%2Fdev.tradetrust.io%2F%22%2C%22chainId%22%3A%2220180427%22%7D%7D"
+  },
+  "issuer": "did:web:trustvc.github.io:did:1",
+  "issuanceDate": "2025-05-29T09:02:37.003Z",
+  "id": "urn:bnid:_:01971b4a-07f1-7ee1-b2c3-23bf089f54ea",
+  "proof": {
+    "type": "BbsBlsSignature2020",
+    "created": "2025-05-29T09:05:26Z",
+    "proofPurpose": "assertionMethod",
+    "proofValue": "iXWU/s4A/bnIeCO4JHZqvUFfFSGa6TyYxb0KfNEgdbdivwP9FtrBy8JpZVx1rdrWWeDPNvgkh386htZ/wyL4fOXBu5oimRG9zbg/Fx84jc8rvBx9TRXoAOBLnV+hwbIi0lZbyhQBgwup2GaYz+Luiw==",
+    "verificationMethod": "did:web:trustvc.github.io:did:1#keys-1"
+  }
+}

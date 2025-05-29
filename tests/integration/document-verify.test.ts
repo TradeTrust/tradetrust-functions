@@ -5,6 +5,8 @@ import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
 import documentSepoliaV3 from "../fixtures/v3/document-sepolia.json";
 import documentXDCApothemV2 from "../fixtures/v2/document-xdcapothem.json";
 import documentXDCApothemV3 from "../fixtures/v3/document-xdcapothem.json";
+import w3cTransferableDocument from "../fixtures/w3c/document-tr.json";
+import w3cNonTransferableDocument from "../fixtures/w3c/document-non-transferable.json";
 import { ERROR_MESSAGE } from "../../netlify/constants";
 
 const RESPONSE_VERIFY_SUCCESS_SUMMARY = {
@@ -22,6 +24,8 @@ const postDataSepoliaV2 = { document: documentSepoliaV2 };
 const postDataSepoliaV3 = { document: documentSepoliaV3 };
 const postDataXDCApothemV2 = { document: documentXDCApothemV2 };
 const postDataXDCApothemV3 = { document: documentXDCApothemV3 };
+const postDataW3cTransferable = { document: w3cTransferableDocument };
+const postDataW3cNonTransferable = { document: w3cNonTransferableDocument };
 
 describe("POST /", () => {
   it("should verify a mainnet document by default", async () => {
@@ -105,6 +109,25 @@ describe("POST /", () => {
       .post("/")
       .query({ network: "sepolia" })
       .send(postDataSepoliaV2)
+      .expect(200);
+    expect(response.body.summary).toStrictEqual(
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
+    );
+  });
+  it("should verify a stabilitytestnet w3c document", async () => {
+    const response = await request
+      .post("/")
+      .query({ network: "stabilitytestnet" })
+      .send(postDataW3cTransferable)
+      .expect(200);
+    expect(response.body.summary).toStrictEqual(
+      RESPONSE_VERIFY_SUCCESS_SUMMARY
+    );
+  });
+  it("should verify a w3c non-transferable document", async () => {
+    const response = await request
+      .post("/")
+      .send(postDataW3cNonTransferable)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
       RESPONSE_VERIFY_SUCCESS_SUMMARY

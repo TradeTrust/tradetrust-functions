@@ -7,6 +7,8 @@ import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
 import documentSepoliaV3 from "../fixtures/v3/document-sepolia.json";
 import documentSepoliaNoNetworkV2 from "../fixtures/v2/document-sepolia-no-network.json";
 import documentSepoliaNoNetworkV3 from "../fixtures/v3/document-sepolia-no-network.json";
+import w3cTransferableDocument from "../fixtures/w3c/document-tr.json";
+import w3cNonTransferableDocument from "../fixtures/w3c/document-non-transferable.json";
 import {
   ERROR_MESSAGE,
   DOCUMENT_STORAGE_ERROR_MESSAGE,
@@ -20,6 +22,8 @@ const postDataXDCApothemV2 = { document: documentXDCApothemV2 };
 const postDataXDCApothemV3 = { document: documentXDCApothemV3 };
 const postDataSepoliaV2 = { document: documentSepoliaV2 };
 const postDataSepoliaV3 = { document: documentSepoliaV3 };
+const postDataW3cTransferable = { document: w3cTransferableDocument };
+const postDataW3cNonTransferable = { document: w3cNonTransferableDocument };
 
 const csrfToken = "mock-csrf-token"; // Mocked CSRF token
 const csrfTokenCookie = `csrfToken=${csrfToken}; HttpOnly; Path=/; SameSite=Strict`; // Mocked CSRF cookie
@@ -111,6 +115,37 @@ describe("POST /", () => {
     expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
     expect(Object.keys(response.body).length).toBe(3);
   });
+
+  it("should store encrypted w3c stabilityTestnet transferable document", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
+      .send(postDataW3cTransferable)
+      .expect(200);
+
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("key");
+    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
+    expect(Object.keys(response.body).length).toBe(3);
+  });
+
+  it("should store encrypted w3c stabilityTestnet non-transferable document", async () => {
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
+      .send(postDataW3cNonTransferable)
+      .expect(200);
+
+    expect(response.body).toHaveProperty("id");
+    expect(response.body).toHaveProperty("key");
+    expect(response.body).toHaveProperty("type", "OPEN-ATTESTATION-TYPE-1");
+    expect(Object.keys(response.body).length).toBe(3);
+  });
+
   it("should throw error when document is not compliant to OA schema", async () => {
     const response = await request
       .post("/")
