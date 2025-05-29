@@ -7,8 +7,13 @@ import {
   getDataV2,
   isWrappedV3Document,
   vc,
-  getDocumentData,
   verifyDocument,
+  isRawV3Document,
+  SignedVerifiableCredential,
+  isTransferableRecord,
+  RawVerifiableCredential,
+  WrappedOrSignedOpenAttestationDocument,
+  VerificationFragment,
 } from "@trustvc/trustvc";
 
 import { encryptString } from "@govtechsg/oa-encryption";
@@ -52,15 +57,30 @@ const getSupportedNetwork = (network: networkName) => {
   );
 };
 
+export const getDocumentData = (
+  document: OpenAttestationDocument | SignedVerifiableCredential
+): any => {
+  if (isRawV3Document(document) || vc.isSignedDocument(document)) {
+    return document.credentialSubject;
+  } else {
+    return document;
+  }
+};
+
 export const validateNetwork = (
-  document: WrappedDocument<OpenAttestationDocument>
+  document: SignedVerifiableCredential | WrappedOrSignedOpenAttestationDocument
 ) => {
   if (vc.isSignedDocument(document) || vc.isRawDocument(document)) {
-    const { network } = getDocumentData(document);
-    if (!network) {
-      throw new createError(400, ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND);
+    if (isTransferableRecord(document)) {
+      const {
+        credentialStatus: { tokenNetwork },
+      } = (document as RawVerifiableCredential) ?? {};
+      if (!tokenNetwork) {
+        throw new createError(400, ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND);
+      }
+      return tokenNetwork;
     } else {
-      return network;
+      return {};
     }
   } else if (isWrappedV2Document(document)) {
     const { network } = getDataV2(document);
@@ -87,16 +107,20 @@ export const validateDocument = async ({
   network,
 }: {
   document: WrappedDocument<OpenAttestationDocument>;
-  network: networkName;
+  network: networkName | undefined;
 }) => {
-  const supportedNetwork = getSupportedNetwork(network);
-  if (!supportedNetwork) {
-    throw new createError(400, ERROR_MESSAGE.NETWORK_UNSUPPORTED);
+  let fragments: VerificationFragment[];
+  if (network) {
+    const supportedNetwork = getSupportedNetwork(network);
+    if (!supportedNetwork) {
+      throw new createError(400, ERROR_MESSAGE.NETWORK_UNSUPPORTED);
+    }
+    fragments = await verifyDocument(document, {
+      rpcProviderUrl: supportedNetwork.rpcUrl as string,
+    });
+  } else {
+    fragments = await verifyDocument(document); // for non-transferable
   }
-
-  const fragments = await verifyDocument(document, {
-    rpcProviderUrl: supportedNetwork.rpcUrl as string,
-  });
   if (!isValid(fragments)) {
     throw new createError(400, ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR);
   }

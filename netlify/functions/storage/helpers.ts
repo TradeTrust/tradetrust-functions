@@ -23,14 +23,12 @@ export const uploadDocument = async (document) => {
   const { chainId } = await validateNetwork(document);
   await validateDocument({
     document,
-    network: SUPPORTED_NETWORKS[chainId as CHAIN_ID].name,
+    network: SUPPORTED_NETWORKS[chainId as CHAIN_ID]?.name,
   });
-
   const { encryptedDocument, encryptedDocumentKey } =
     await getEncryptedDocument({
       str: JSON.stringify(document),
     });
-
   const id = uuid();
   await s3Put({
     Bucket: process.env.TT_AWS_BUCKET_NAME,
