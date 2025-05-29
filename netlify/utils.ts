@@ -1,29 +1,37 @@
 import {
-  openAttestationVerifiers,
-  openAttestationDidIdentityProof,
-  verificationBuilder,
   isValid,
-} from "@tradetrust-tt/tt-verify";
-import {
   WrappedDocument,
   OpenAttestationDocument,
-  utils,
-} from "@tradetrust-tt/tradetrust";
+  networkName,
+  isWrappedV2Document,
+  getDataV2,
+  isWrappedV3Document,
+  vc,
+  getDocumentData,
+  verifyDocument,
+} from "@trustvc/trustvc";
+
 import { encryptString } from "@govtechsg/oa-encryption";
-import { networkName } from "@tradetrust-tt/tradetrust-utils/constants/network";
 import createError from "http-errors";
 import {
-  ALLOWED_ORIGINS,
+  ALLOWED_ORIGIN_REGEX,
+  LOCALHOST_ORIGINS,
   ERROR_MESSAGE,
   SUPPORTED_NETWORKS,
 } from "./constants";
-import { ethers } from "ethers";
 
 // https://github.com/expressjs/cors#configuring-cors-w-dynamic-origin
-export const corsOrigin = (origin, callback) => {
+export const corsOrigin = (
+  origin: string | undefined,
+  callback: (err: Error | null, allow?: boolean) => void
+) => {
   if (!origin) return callback(null, true); // allow requests with no origin, like mobile apps or curl requests
-
-  if (ALLOWED_ORIGINS.includes(origin)) {
+  if (ALLOWED_ORIGIN_REGEX.test(origin)) {
+    return callback(null, true);
+  } else if (
+    LOCALHOST_ORIGINS.includes(origin) &&
+    process.env.NODE_ENV === "test"
+  ) {
     return callback(null, true);
   } else {
     return callback(new Error(ERROR_MESSAGE.CORS_UNALLOWED), false);
@@ -40,22 +48,28 @@ export const checkApiKey = (req, res, next) => {
 
 const getSupportedNetwork = (network: networkName) => {
   return Object.values(SUPPORTED_NETWORKS).find(
-    (item) => item.name === network,
+    (item) => item.name === network
   );
 };
 
-export const validateNetwork = async (
-  document: WrappedDocument<OpenAttestationDocument>,
+export const validateNetwork = (
+  document: WrappedDocument<OpenAttestationDocument>
 ) => {
-  if (utils.isWrappedV2Document(document)) {
-    const { network } = utils.getData(document);
-
+  if (vc.isSignedDocument(document) || vc.isRawDocument(document)) {
+    const { network } = getDocumentData(document);
     if (!network) {
       throw new createError(400, ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND);
     } else {
       return network;
     }
-  } else if (utils.isWrappedV3Document(document)) {
+  } else if (isWrappedV2Document(document)) {
+    const { network } = getDataV2(document);
+    if (!network) {
+      throw new createError(400, ERROR_MESSAGE.DOCUMENT_NETWORK_NOT_FOUND);
+    } else {
+      return network;
+    }
+  } else if (isWrappedV3Document(document)) {
     const { network } = document;
 
     if (!network) {
@@ -76,43 +90,16 @@ export const validateDocument = async ({
   network: networkName;
 }) => {
   const supportedNetwork = getSupportedNetwork(network);
-
   if (!supportedNetwork) {
     throw new createError(400, ERROR_MESSAGE.NETWORK_UNSUPPORTED);
   }
 
-  let provider: ethers.providers.Provider;
-
-  if (network === "amoy") {
-    try {
-      // Attempt to use the primary provider
-      const defaultProvider = supportedNetwork.provider();
-      // Perform a synchronous check to validate the provider
-      await defaultProvider.getNetwork(); // This throws if the provider is unreachable
-      provider = defaultProvider;
-    } catch (error) {
-      // console.error("Primary provider failed for 'amoy', using backup provider:", error);
-      // Use the backup provider for 'amoy'
-      provider = new ethers.providers.JsonRpcProvider(
-        "https://rpc-amoy.polygon.technology",
-      );
-    }
-  } else {
-    // For other networks, use the default provider
-    provider = supportedNetwork.provider();
-  }
-
-  const verify = verificationBuilder(
-    [...openAttestationVerifiers, openAttestationDidIdentityProof],
-    { provider },
-  );
-
-  const fragments = await verify(document);
-
+  const fragments = await verifyDocument(document, {
+    rpcProviderUrl: supportedNetwork.rpcUrl as string,
+  });
   if (!isValid(fragments)) {
     throw new createError(400, ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR);
   }
-
   return fragments;
 };
 

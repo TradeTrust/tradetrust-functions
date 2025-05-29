@@ -6,8 +6,7 @@
   "dependencies": {
     "@govtechsg/oa-encryption": "^1.3.5",
     "@netlify/functions": "^2.8.2",
-    "@tradetrust-tt/tradetrust-utils": "^2.3.0",
-    "@tradetrust-tt/tt-verify": "^9.4.0",
+    "@trustvc/trustvc": "^1.4.11",
     "aws-sdk": "^2.1692.0",
     "body-parser": "^1.20.3",
     "cookie-parser": "^1.4.7",
@@ -24,6 +23,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@types/node": "^18.8.5",
+    "@types/supertest": "^6.0.3",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
     "concurrently": "^7.4.0",
@@ -41,7 +41,7 @@
     "local:clean": "npx rimraf ./tmp/test-bucket",
     "local:s3": "s3rver -d ./tmp --configure-bucket test-bucket",
     "test": "API_KEY=testkey jest",
-    "test:api": "wait-on tcp:9999 tcp:4568 && npm run test",
+    "test:api": "wait-on tcp:5080 tcp:4568 && npm run test",
     "test:ci": "concurrently -k -s first \"npm:test:serve\" \"npm:local:s3\" \"npm:test:api\"",
     "test:serve": "API_KEY=testkey NODE_ENV=test TT_AWS_BUCKET_NAME=test-bucket SESSION_SECRET=testsecret netlify functions:serve",
     "start": "npm run local:clean && concurrently \"npm:test:serve\" \"npm:local:s3\""

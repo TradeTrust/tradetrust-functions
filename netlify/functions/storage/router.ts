@@ -53,7 +53,7 @@ router.get("/csrf-token", (req, res) => {
 const csrfValidationMiddleware = (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   // Extract the CSRF token from the request header
   const tokenFromRequest = req.headers["x-csrf-token"]?.toString();
@@ -82,14 +82,13 @@ router.post(
     const {
       body: { document },
     } = req;
-
     try {
       const result = await uploadDocument(document);
       res.status(200).json(result);
     } catch (err) {
       res.status(400).json(err);
     }
-  },
+  }
 );
 
 // Protected routes with CSRF validation for posting documents to a specific ID
@@ -109,7 +108,7 @@ router.post(
     } catch (err) {
       res.status(400).json(err);
     }
-  },
+  }
 );
 
 router.get("/queue", checkApiKey, async (req: Request, res: Response) => {

@@ -1,4 +1,4 @@
-import { CHAIN_ID } from "@tradetrust-tt/tradetrust-utils/constants/supportedChains";
+import { CHAIN_ID } from "@trustvc/trustvc";
 import { v4 as uuid } from "uuid";
 import { generateEncryptionKey } from "@govtechsg/oa-encryption";
 import {
@@ -21,7 +21,6 @@ export const getDocument = async (id: string) => {
 
 export const uploadDocument = async (document) => {
   const { chainId } = await validateNetwork(document);
-
   await validateDocument({
     document,
     network: SUPPORTED_NETWORKS[chainId as CHAIN_ID].name,

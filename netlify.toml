@@ -1,0 +1,6 @@
+[functions]
+  external_node_modules = ["ky-universal", "ky", "core-js/fn/object/entries", "@tradetrust-tt/tradetrust-utils", "@trustvc/w3c-context", "@trustvc/w3c-vc"]
+  node_bundler = "esbuild"
+
+[dev]
+  functionsPort = 5080
