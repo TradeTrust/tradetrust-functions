@@ -29,6 +29,7 @@ const csrfSyncProtection = csrfSync({
 
   size: 32, // Token size for CSRF protection (default is 32)
 });
+const isProduction = process.env.NODE_ENV === 'production';
 
 // Route to generate and send CSRF token to the client
 router.get("/csrf-token", (req, res) => {
@@ -38,7 +39,7 @@ router.get("/csrf-token", (req, res) => {
   // Set the CSRF token in the response cookie (for automatic sending by the browser)
   res.cookie("csrfToken", token, {
     httpOnly: true, // Ensure the cookie is not accessible via JavaScript
-    secure: true, // Use secure cookies (only sent over HTTPS)
+    secure: isProduction, // Use secure cookies (only sent over HTTPS)
     sameSite: "None", // To allow cross-origin cookies
     maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
   });
