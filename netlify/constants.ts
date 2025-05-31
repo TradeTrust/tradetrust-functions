@@ -11,6 +11,8 @@ export const ALLOWED_ORIGINS = [
   "http://localhost:5173",
   "https://blockpeer.finance",
   "https://verifier.blockpeer.finnace",
+  "http://110.235.233.252",
+  "http://127.0.0.1"
 ];
 
 export enum ERROR_MESSAGE {
