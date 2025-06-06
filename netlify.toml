@@ -4,3 +4,8 @@
 
 [dev]
   functionsPort = 5080
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
