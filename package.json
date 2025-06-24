@@ -57,7 +57,7 @@
   },
   "homepage": "https://github.com/TradeTrust/tradetrust-functions#readme",
   "engines": {
-    "npm": ">=8.x",
-    "node": ">=18.x"
+    "npm": ">=10.x",
+    "node": ">=20.x"
   }
 }
