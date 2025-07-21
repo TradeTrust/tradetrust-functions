@@ -1,9 +1,15 @@
 name: Github Actions
+
 on:
   push:
     branches:
       - master
   pull_request:
+
+permissions:
+  contents: read # For checkout
+  actions: read # For accessing action outputs
+
 jobs:
   test:
     runs-on: ubuntu-latest
