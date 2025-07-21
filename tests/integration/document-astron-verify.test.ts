@@ -27,12 +27,10 @@ describe("POST /", () => {
       RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
-
   it("should not verify a astron document by default", async () => {
     const response = await request.post("/").send(postDataAstronV2).expect(400);
     expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR);
   });
-
   it("should verify a v2 astron document with astron network query", async () => {
     const response = await request
       .post("/")
@@ -43,7 +41,6 @@ describe("POST /", () => {
       RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
-
   it("should verify a v3 astron document with astron network query", async () => {
     const response = await request
       .post("/")
@@ -54,7 +51,6 @@ describe("POST /", () => {
       RESPONSE_VERIFY_SUCCESS_SUMMARY
     );
   });
-
   it("should not verify a astron document with unsupported network query", async () => {
     const response = await request
       .post("/")
@@ -65,7 +61,6 @@ describe("POST /", () => {
       ERROR_MESSAGE.NETWORK_UNSUPPORTED
     );
   });
-
   it("should verify a astron document", async () => {
     const response = await request
       .post("/")
