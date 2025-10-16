@@ -3,9 +3,9 @@ module.exports = {
   testEnvironment: "node",
   testTimeout: 30000,
   moduleNameMapper: {
-    "^cborg$": "<rootDir>/node_modules/cborg/cborg.js"
+    "^cborg$": "<rootDir>/node_modules/cborg/cborg.js",
   },
   transformIgnorePatterns: [
-    "node_modules/(?!(@digitalbazaar|base64url-universal|base58-universal|cborg)/)"
+    "node_modules/(?!(@digitalbazaar|base64url-universal|base58-universal|cborg)/)",
   ],
 };
