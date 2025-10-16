@@ -1,4 +1,4 @@
-/** @type {import('ts-jest/dist/types').InitialOptionsTsJest} */
+/** @type {import('@jest/types').Config.InitialOptions} */
 module.exports = {
   testEnvironment: "node",
   testTimeout: 30000,
