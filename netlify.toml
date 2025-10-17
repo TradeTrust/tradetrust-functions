@@ -1,5 +1,5 @@
 [functions]
-  external_node_modules = ["ky-universal", "ky", "core-js", "@trustvc/w3c-context", "@trustvc/w3c-vc"]
+  external_node_modules = ["ky-universal", "ky", "core-js", "@trustvc/w3c-context", "@trustvc/w3c-vc", "@digitalbazaar/bls12-381-multikey", "@digitalbazaar/ecdsa-multikey"]
   node_bundler = "esbuild"
 
 [dev]
