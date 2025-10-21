@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import { checkApiKey } from "../../utils";
+import { checkApiKey, originReferrerGuard } from "../../utils";
 import {
   uploadDocument,
   uploadDocumentAtId,
@@ -30,16 +30,36 @@ const csrfSyncProtection = csrfSync({
   size: 32, // Token size for CSRF protection (default is 32)
 });
 
+
+// Middleware to ensure an active authenticated session exists
+const requireAuthenticatedSession = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const sess: any = (req as any).session;
+  if (sess && sess.isAuthenticated === true) {
+    return next();
+  }
+  return res.status(401).json({ error: "Authentication required" });
+};
+
 // Route to generate and send CSRF token to the client
-router.get("/csrf-token", (req, res) => {
+router.get(
+  "/csrf-token",
+  originReferrerGuard,
+  requireAuthenticatedSession,
+  (req, res) => {
   // Generate CSRF token using csrfSyncProtection
   const token = csrfSyncProtection.generateToken(req);
 
   // Set the CSRF token in the response cookie (for automatic sending by the browser)
   res.cookie("csrfToken", token, {
     httpOnly: true, // Ensure the cookie is not accessible via JavaScript
-    secure: true, // Use secure cookies (only sent over HTTPS)
-    sameSite: "None", // To allow cross-origin cookies
+    secure: process.env.NODE_ENV === "production", // Only secure in production
+    sameSite:
+      process.env.CROSS_SITE_COOKIES === "true" ? "none" : "lax", // Prefer Lax; use None only when cross-site is required
+    path: "/.netlify/functions/storage", // Scope to storage function path
     maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
   });
 
@@ -47,7 +67,8 @@ router.get("/csrf-token", (req, res) => {
   res.json({
     csrfToken: token,
   });
-});
+}
+);
 
 // Middleware to validate the CSRF token on each request
 const csrfValidationMiddleware = (
@@ -76,6 +97,7 @@ const csrfValidationMiddleware = (
 // Protected routes with CSRF validation for posting documents
 router.post(
   "/",
+  originReferrerGuard,
   checkApiKey,
   csrfValidationMiddleware,
   async (req: Request, res: Response) => {
@@ -94,6 +116,7 @@ router.post(
 // Protected routes with CSRF validation for posting documents to a specific ID
 router.post(
   "/:id",
+  originReferrerGuard,
   checkApiKey,
   csrfValidationMiddleware,
   async (req: Request, res: Response) => {

@@ -15,6 +15,7 @@ import {
   WrappedOrSignedOpenAttestationDocument,
   VerificationFragment,
 } from "@trustvc/trustvc";
+import { Request, Response, NextFunction } from "express";
 
 import { encryptString } from "@govtechsg/oa-encryption";
 import createError from "http-errors";
@@ -48,6 +49,56 @@ export const checkApiKey = (req, res, next) => {
   if (apiKey !== process.env.API_KEY) {
     return res.status(400).send(ERROR_MESSAGE.API_KEY_INVALID);
   }
+  next();
+};
+
+// Middleware to validate Origin/Referer for unsafe methods
+export const isTrustedOrigin = (candidate: string | undefined) => {
+  if (!candidate) return false;
+  let origin: string;
+  try {
+    origin = candidate.includes("://") ? new URL(candidate).origin : candidate;
+  } catch {
+    return false;
+  }
+  if (ALLOWED_ORIGIN_REGEX.test(origin)) return true;
+  if (
+    LOCALHOST_ORIGINS.includes(origin) &&
+    process.env.NODE_ENV === "test"
+  )
+    return true;
+  return false;
+};
+
+export const originReferrerGuard = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const originHeader = (req.headers.origin as string | undefined) || undefined;
+  const refererHeader =
+    (req.headers.referer as string | undefined) || undefined;
+
+  let candidateOrigin = originHeader;
+  if (!candidateOrigin && refererHeader) {
+    try {
+      candidateOrigin = new URL(refererHeader).origin;
+    } catch {
+      candidateOrigin = undefined;
+    }
+  }
+
+  if (!candidateOrigin) {
+    // Allow M2M (non-browser) requests without Origin/Referer only if API key is valid
+    const apiKey = req.headers["x-api-key"] as string | undefined;
+    if (apiKey && apiKey === process.env.API_KEY) return next();
+    return res.status(403).json({ error: "Missing Origin/Referer" });
+  }
+
+  if (!isTrustedOrigin(candidateOrigin)) {
+    return res.status(403).json({ error: "Untrusted Origin/Referer" });
+  }
+
   next();
 };
 
