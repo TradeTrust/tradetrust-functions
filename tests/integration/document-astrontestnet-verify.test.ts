@@ -21,6 +21,7 @@ describe("POST /", () => {
   it("should verify a mainnet document by default", async () => {
     const response = await request
       .post("/")
+      .set("x-api-key", process.env.API_KEY)
       .send(postDataMainnetV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
@@ -28,12 +29,13 @@ describe("POST /", () => {
     );
   });
   it("should not verify a astrontestnet document by default", async () => {
-    const response = await request.post("/").send(postDataAstronV2).expect(400);
+    const response = await request.post("/").set("x-api-key", process.env.API_KEY).send(postDataAstronV2).expect(400);
     expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR);
   });
   it("should verify a v2 astrontestnet document with astrontestnet network query", async () => {
     const response = await request
       .post("/")
+      .set("x-api-key", process.env.API_KEY)
       .query({ network: "astrontestnet" })
       .send(postDataAstronV2)
       .expect(200);
@@ -44,6 +46,7 @@ describe("POST /", () => {
   it("should verify a v3 astrontestnet document with astrontestnet network query", async () => {
     const response = await request
       .post("/")
+      .set("x-api-key", process.env.API_KEY)
       .query({ network: "astrontestnet" })
       .send(postDataAstronV3)
       .expect(200);
@@ -54,6 +57,7 @@ describe("POST /", () => {
   it("should not verify a astrontestnet document with unsupported network query", async () => {
     const response = await request
       .post("/")
+      .set("x-api-key", process.env.API_KEY)
       .query({ network: "foo" })
       .send(postDataAstronV2)
       .expect(400);
@@ -64,6 +68,7 @@ describe("POST /", () => {
   it("should verify a astrontestnet document", async () => {
     const response = await request
       .post("/")
+      .set("x-api-key", process.env.API_KEY)
       .query({ network: "astrontestnet" })
       .send(postDataAstronV2)
       .expect(200);

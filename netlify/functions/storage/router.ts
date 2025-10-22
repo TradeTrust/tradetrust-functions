@@ -8,15 +8,6 @@ import {
 } from "./helpers";
 import { csrfSync } from "csrf-sync";
 
-// Type definition for authenticated session
-interface AuthenticatedSession {
-  isAuthenticated: boolean;
-}
-
-// Extend Request interface to include session
-interface RequestWithSession extends Request {
-  session?: AuthenticatedSession;
-}
 
 const router = express.Router();
 
@@ -40,25 +31,13 @@ const csrfSyncProtection = csrfSync({
   size: 32, // Token size for CSRF protection (default is 32)
 });
 
-// Middleware to ensure an active authenticated session exists
-const requireAuthenticatedSession = (
-  req: RequestWithSession,
-  res: Response,
-  next: NextFunction
-) => {
-  const sess = req.session;
-  if (sess && sess.isAuthenticated === true) {
-    return next();
-  }
-  return res.status(401).json({ error: "Authentication required" });
-};
 
 // Route to generate and send CSRF token to the client
 router.get(
   "/csrf-token",
   originReferrerGuard,
-  requireAuthenticatedSession,
-  (req: RequestWithSession, res: Response) => {
+  checkApiKey,
+  (req: Request, res: Response) => {
     // Generate CSRF token using csrfSyncProtection
     const token = csrfSyncProtection.generateToken(req);
 
@@ -84,6 +63,16 @@ const csrfValidationMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  // Check if this is an M2M request (no Origin/Referer headers)
+  const originHeader = req.headers.origin as string | undefined;
+  const refererHeader = req.headers.referer as string | undefined;
+  const apiKey = req.headers["x-api-key"] as string | undefined;
+
+  // If no Origin/Referer and valid API key, skip CSRF validation (M2M request)
+  if (!originHeader && !refererHeader && apiKey === process.env.API_KEY) {
+    return next();
+  }
+
   // Extract the CSRF token from the request header
   const tokenFromRequest = req.headers["x-csrf-token"]?.toString();
 
@@ -105,8 +94,8 @@ const csrfValidationMiddleware = (
 // Protected routes with CSRF validation for posting documents
 router.post(
   "/",
-  originReferrerGuard,
   checkApiKey,
+  originReferrerGuard,
   csrfValidationMiddleware,
   async (req: Request, res: Response) => {
     const {
@@ -124,8 +113,8 @@ router.post(
 // Protected routes with CSRF validation for posting documents to a specific ID
 router.post(
   "/:id",
-  originReferrerGuard,
   checkApiKey,
+  originReferrerGuard,
   csrfValidationMiddleware,
   async (req: Request, res: Response) => {
     const {
