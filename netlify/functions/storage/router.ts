@@ -8,7 +8,6 @@ import {
 } from "./helpers";
 import { csrfSync } from "csrf-sync";
 
-
 const router = express.Router();
 
 // Initialize csrfSyncProtection with necessary options for CSRF token handling
@@ -30,7 +29,6 @@ const csrfSyncProtection = csrfSync({
 
   size: 32, // Token size for CSRF protection (default is 32)
 });
-
 
 // Route to generate and send CSRF token to the client
 router.get(

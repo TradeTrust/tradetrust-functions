@@ -29,7 +29,11 @@ describe("POST /", () => {
     );
   });
   it("should not verify a astron document by default", async () => {
-    const response = await request.post("/").set("x-api-key", process.env.API_KEY).send(postDataAstronV2).expect(400);
+    const response = await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .send(postDataAstronV2)
+      .expect(400);
     expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR);
   });
   it("should verify a v2 astron document with astron network query", async () => {
