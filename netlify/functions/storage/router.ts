@@ -8,6 +8,16 @@ import {
 } from "./helpers";
 import { csrfSync } from "csrf-sync";
 
+// Type definition for authenticated session
+interface AuthenticatedSession {
+  isAuthenticated: boolean;
+}
+
+// Extend Request interface to include session
+interface RequestWithSession extends Request {
+  session?: AuthenticatedSession;
+}
+
 const router = express.Router();
 
 // Initialize csrfSyncProtection with necessary options for CSRF token handling
@@ -33,11 +43,11 @@ const csrfSyncProtection = csrfSync({
 
 // Middleware to ensure an active authenticated session exists
 const requireAuthenticatedSession = (
-  req: Request,
+  req: RequestWithSession,
   res: Response,
   next: NextFunction
 ) => {
-  const sess: any = (req as any).session;
+  const sess = req.session;
   if (sess && sess.isAuthenticated === true) {
     return next();
   }
@@ -49,7 +59,7 @@ router.get(
   "/csrf-token",
   originReferrerGuard,
   requireAuthenticatedSession,
-  (req, res) => {
+  (req: RequestWithSession, res: Response) => {
   // Generate CSRF token using csrfSyncProtection
   const token = csrfSyncProtection.generateToken(req);
 
