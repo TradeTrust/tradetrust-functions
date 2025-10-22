@@ -40,7 +40,6 @@ const csrfSyncProtection = csrfSync({
   size: 32, // Token size for CSRF protection (default is 32)
 });
 
-
 // Middleware to ensure an active authenticated session exists
 const requireAuthenticatedSession = (
   req: RequestWithSession,
@@ -60,24 +59,23 @@ router.get(
   originReferrerGuard,
   requireAuthenticatedSession,
   (req: RequestWithSession, res: Response) => {
-  // Generate CSRF token using csrfSyncProtection
-  const token = csrfSyncProtection.generateToken(req);
+    // Generate CSRF token using csrfSyncProtection
+    const token = csrfSyncProtection.generateToken(req);
 
-  // Set the CSRF token in the response cookie (for automatic sending by the browser)
-  res.cookie("csrfToken", token, {
-    httpOnly: true, // Ensure the cookie is not accessible via JavaScript
-    secure: process.env.NODE_ENV === "production", // Only secure in production
-    sameSite:
-      process.env.CROSS_SITE_COOKIES === "true" ? "none" : "lax", // Prefer Lax; use None only when cross-site is required
-    path: "/.netlify/functions/storage", // Scope to storage function path
-    maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
-  });
+    // Set the CSRF token in the response cookie (for automatic sending by the browser)
+    res.cookie("csrfToken", token, {
+      httpOnly: true, // Ensure the cookie is not accessible via JavaScript
+      secure: process.env.NODE_ENV === "production", // Only secure in production
+      sameSite: process.env.CROSS_SITE_COOKIES === "true" ? "none" : "lax", // Prefer Lax; use None only when cross-site is required
+      path: "/.netlify/functions/storage", // Scope to storage function path
+      maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
+    });
 
-  // Send the CSRF token in the response JSON body as well
-  res.json({
-    csrfToken: token,
-  });
-}
+    // Send the CSRF token in the response JSON body as well
+    res.json({
+      csrfToken: token,
+    });
+  }
 );
 
 // Middleware to validate the CSRF token on each request

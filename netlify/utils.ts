@@ -62,10 +62,7 @@ export const isTrustedOrigin = (candidate: string | undefined) => {
     return false;
   }
   if (ALLOWED_ORIGIN_REGEX.test(origin)) return true;
-  if (
-    LOCALHOST_ORIGINS.includes(origin) &&
-    process.env.NODE_ENV === "test"
-  )
+  if (LOCALHOST_ORIGINS.includes(origin) && process.env.NODE_ENV === "test")
     return true;
   return false;
 };
