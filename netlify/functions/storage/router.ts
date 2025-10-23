@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
-import { checkApiKey } from "../../utils";
+import { checkApiKey, originReferrerGuard } from "../../utils";
 import {
   uploadDocument,
   uploadDocumentAtId,
@@ -31,23 +31,29 @@ const csrfSyncProtection = csrfSync({
 });
 
 // Route to generate and send CSRF token to the client
-router.get("/csrf-token", (req, res) => {
-  // Generate CSRF token using csrfSyncProtection
-  const token = csrfSyncProtection.generateToken(req);
+router.get(
+  "/csrf-token",
+  originReferrerGuard,
+  checkApiKey,
+  (req: Request, res: Response) => {
+    // Generate CSRF token using csrfSyncProtection
+    const token = csrfSyncProtection.generateToken(req);
 
-  // Set the CSRF token in the response cookie (for automatic sending by the browser)
-  res.cookie("csrfToken", token, {
-    httpOnly: true, // Ensure the cookie is not accessible via JavaScript
-    secure: true, // Use secure cookies (only sent over HTTPS)
-    sameSite: "None", // To allow cross-origin cookies
-    maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
-  });
+    // Set the CSRF token in the response cookie (for automatic sending by the browser)
+    res.cookie("csrfToken", token, {
+      httpOnly: true, // Ensure the cookie is not accessible via JavaScript
+      secure: process.env.NODE_ENV === "production", // Only secure in production
+      sameSite: process.env.CROSS_SITE_COOKIES === "true" ? "none" : "lax", // Prefer Lax; use None only when cross-site is required
+      path: "/.netlify/functions/storage", // Scope to storage function path
+      maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
+    });
 
-  // Send the CSRF token in the response JSON body as well
-  res.json({
-    csrfToken: token,
-  });
-});
+    // Send the CSRF token in the response JSON body as well
+    res.json({
+      csrfToken: token,
+    });
+  }
+);
 
 // Middleware to validate the CSRF token on each request
 const csrfValidationMiddleware = (
@@ -55,6 +61,16 @@ const csrfValidationMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
+  // Check if this is an M2M request (no Origin/Referer headers)
+  const originHeader = req.headers.origin as string | undefined;
+  const refererHeader = req.headers.referer as string | undefined;
+  const apiKey = req.headers["x-api-key"] as string | undefined;
+
+  // If no Origin/Referer and valid API key, skip CSRF validation (M2M request)
+  if (!originHeader && !refererHeader && apiKey === process.env.API_KEY) {
+    return next();
+  }
+
   // Extract the CSRF token from the request header
   const tokenFromRequest = req.headers["x-csrf-token"]?.toString();
 
@@ -77,6 +93,7 @@ const csrfValidationMiddleware = (
 router.post(
   "/",
   checkApiKey,
+  originReferrerGuard,
   csrfValidationMiddleware,
   async (req: Request, res: Response) => {
     const {
@@ -95,6 +112,7 @@ router.post(
 router.post(
   "/:id",
   checkApiKey,
+  originReferrerGuard,
   csrfValidationMiddleware,
   async (req: Request, res: Response) => {
     const {
