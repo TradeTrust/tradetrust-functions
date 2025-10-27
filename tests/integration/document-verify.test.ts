@@ -31,7 +31,6 @@ describe("POST /", () => {
   it("should verify a mainnet document by default", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .send(postDataMainnnetV2)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
@@ -41,7 +40,6 @@ describe("POST /", () => {
   it("should not verify a sepolia document by default", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .send(postDataSepoliaV2)
       .expect(400);
     expect(response.body.message).toBe(ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR);
@@ -49,7 +47,6 @@ describe("POST /", () => {
   it("should verify a v2 sepolia document with sepolia network query", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .query({ network: "sepolia" })
       .send(postDataSepoliaV2)
       .expect(200);
@@ -60,7 +57,6 @@ describe("POST /", () => {
   it("should verify a v3 sepolia document with xdcapothem network query", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .query({ network: "xdcapothem" })
       .send(postDataXDCApothemV3)
       .expect(200);
@@ -71,7 +67,6 @@ describe("POST /", () => {
   it("should verify a v3 sepolia document with sepolia network query", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .query({ network: "sepolia" })
       .send(postDataSepoliaV3)
       .expect(200);
@@ -82,7 +77,6 @@ describe("POST /", () => {
   it("should not verify a sepolia document with unsupported network query", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .query({ network: "foo" })
       .send(postDataSepoliaV2)
       .expect(400);
@@ -93,7 +87,6 @@ describe("POST /", () => {
   it("should verify a amoy document", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .query({ network: "amoy" })
       .send(postDataAmoyV2)
       .expect(200);
@@ -104,7 +97,6 @@ describe("POST /", () => {
   it("should verify a xdcapothem document", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .query({ network: "xdcapothem" })
       .send(postDataXDCApothemV2)
       .expect(200);
@@ -115,7 +107,6 @@ describe("POST /", () => {
   it("should verify a sepolia document", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .query({ network: "sepolia" })
       .send(postDataSepoliaV2)
       .expect(200);
@@ -126,7 +117,6 @@ describe("POST /", () => {
   it("should verify a stabilitytestnet w3c document", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .query({ network: "stabilitytestnet" })
       .send(postDataW3cTransferable)
       .expect(200);
@@ -137,7 +127,6 @@ describe("POST /", () => {
   it("should verify a w3c non-transferable document", async () => {
     const response = await request
       .post("/")
-      .set("x-api-key", process.env.API_KEY)
       .send(postDataW3cNonTransferable)
       .expect(200);
     expect(response.body.summary).toStrictEqual(
