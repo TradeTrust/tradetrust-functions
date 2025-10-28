@@ -1,10 +1,10 @@
 import express, { Request, Response } from "express";
-import { validateDocument } from "../../utils";
+import { validateDocument, originReferrerGuard } from "../../utils";
 import { isValid, networkName } from "@trustvc/trustvc";
 
 const router = express.Router();
 
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", originReferrerGuard, async (req: Request, res: Response) => {
   const {
     body: { document },
     query: { network = "mainnet" },
