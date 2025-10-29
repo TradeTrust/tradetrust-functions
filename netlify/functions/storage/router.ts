@@ -42,8 +42,8 @@ router.get(
     // Set the CSRF token in the response cookie (for automatic sending by the browser)
     res.cookie("csrfToken", token, {
       httpOnly: true, // Ensure the cookie is not accessible via JavaScript
-      secure: process.env.NODE_ENV === "production", // Only secure in production
-      sameSite: process.env.CROSS_SITE_COOKIES === "true" ? "none" : "lax", // Prefer Lax; use None only when cross-site is required
+      secure: true, // Use secure cookies (only sent over HTTPS)
+      sameSite: "None", // To allow cross-origin cookies
       path: "/.netlify/functions/storage", // Scope to storage function path
       maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
     });
