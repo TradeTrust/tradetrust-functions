@@ -1,0 +1,42 @@
+
+> tradetrust-functions@1.0.0 test:ci
+> concurrently -k -s first "npm:test:serve" "npm:local:s3" "npm:test:api"
+
+[test:api] 
+[test:api] > tradetrust-functions@1.0.0 test:api
+[test:api] > wait-on tcp:5080 tcp:4568 && npm run test
+[test:api] 
+[local:s3] 
+[local:s3] > tradetrust-functions@1.0.0 local:s3
+[local:s3] > s3rver -d ./tmp --configure-bucket test-bucket
+[local:s3] 
+[test:serve] 
+[test:serve] > tradetrust-functions@1.0.0 test:serve
+[test:serve] > API_KEY=testkey NODE_ENV=test TT_AWS_BUCKET_NAME=test-bucket SESSION_SECRET=testsecret netlify functions:serve
+[test:serve] 
+[local:s3] [33mwarn[39m: the bucket "test-bucket" already exists
+[local:s3] node:events:502
+[local:s3]       throw er; // Unhandled 'error' event
+[local:s3]       ^
+[local:s3] 
+[local:s3] Error: listen EADDRINUSE: address already in use ::1:4568
+[local:s3]     at Server.setupListenHandle [as _listen2] (node:net:1908:16)
+[local:s3]     at listenInCluster (node:net:1965:12)
+[local:s3]     at GetAddrInfoReqWrap.doListen [as callback] (node:net:2139:7)
+[local:s3]     at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:111:8)
+[local:s3] Emitted 'error' event on Server instance at:
+[local:s3]     at emitErrorNT (node:net:1944:8)
+[local:s3]     at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+[local:s3]   code: 'EADDRINUSE',
+[local:s3]   errno: -48,
+[local:s3]   syscall: 'listen',
+[local:s3]   address: '::1',
+[local:s3]   port: 4568
+[local:s3] }
+[local:s3] 
+[local:s3] Node.js v20.19.1
+[local:s3] npm run local:s3 exited with code 1
+--> Sending SIGTERM to other processes..
+[test:serve] npm run test:serve exited with code SIGTERM
+--> Sending SIGTERM to other processes..
+[test:api] npm run test:api exited with code SIGTERM

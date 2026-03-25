@@ -25,7 +25,7 @@
     "@babel/preset-env": "^7.28.3",
     "@babel/preset-typescript": "^7.27.1",
     "@types/jest": "^29.5.14",
-    "@types/node": "^18.8.5",
+    "@types/node": "^22.0.0",
     "@types/supertest": "^6.0.3",
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
@@ -62,6 +62,7 @@
   "homepage": "https://github.com/TradeTrust/tradetrust-functions#readme",
   "engines": {
     "npm": ">=10.x",
-    "node": ">=20.x"
-  }
+    "node": ">=22.x"
+  },
+  "packageManager": "yarn@4.9.2+sha512.1fc009bc09d13cfd0e19efa44cbfc2b9cf6ca61482725eb35bbc5e257e093ebf4130db6dfe15d604ff4b79efd8e1e8e99b25fa7d0a6197c9f9826358d4d65c3c"
 }
