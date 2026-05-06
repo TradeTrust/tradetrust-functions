@@ -10,6 +10,11 @@ import { router } from "./router";
 
 const app = express();
 
+// since we are using serverless-http, we need to vary the Origin header
+app.use((_req: any, res: any, next: any) => {
+  res.vary("Origin");
+  next();
+});
 app.use(cors({ origin: corsOrigin, credentials: true }));
 app.use(cookieParser());
 app.use(bodyParser.json({ limit: MAX_REQUEST_BODY_SIZE }));

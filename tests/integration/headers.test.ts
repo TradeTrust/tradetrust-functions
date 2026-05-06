@@ -77,4 +77,14 @@ describe("cors", () => {
       .send(postData)
       .expect(200);
   });
+  it("should pass with 200 when origin is TradeTrust production website", async () => {
+    await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
+      .set("Origin", "https://ref.tradetrust.io")
+      .send(postData)
+      .expect(200);
+  });
 });
