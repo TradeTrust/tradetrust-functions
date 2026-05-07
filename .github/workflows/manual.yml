@@ -24,7 +24,7 @@ jobs:
         with:
           node-version: "22.x"
       - name: Install node dependancies
-        run: npm i
+        run: npm ci
       - name: Check Snyk
         continue-on-error: true
         uses: snyk/actions/node@master
