@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import documentSepolia from "../fixtures/v2/document-sepolia.json";
+import documentSepolia from "../fixtures/v3/document-sepolia.json";
 import { ERROR_MESSAGE } from "../../netlify/constants";
 
 const API_ENDPOINT = "http://localhost:5080/.netlify/functions/storage";

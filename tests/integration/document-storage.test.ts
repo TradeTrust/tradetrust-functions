@@ -3,7 +3,7 @@ import documentAmoyV2 from "../fixtures/v2/document-amoy.json";
 import documentAmoyV3 from "../fixtures/v3/document-amoy.json";
 import documentXDCApothemV2 from "../fixtures/v2/document-xdcapothem.json";
 import documentXDCApothemV3 from "../fixtures/v3/document-xdcapothem.json";
-import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
+import documentSepoliaV2 from "../fixtures/v3/document-sepolia.json";
 import documentSepoliaV3 from "../fixtures/v3/document-sepolia.json";
 import documentSepoliaNoNetworkV2 from "../fixtures/v2/document-sepolia-no-network.json";
 import documentSepoliaNoNetworkV3 from "../fixtures/v3/document-sepolia-no-network.json";
