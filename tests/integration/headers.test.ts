@@ -77,7 +77,7 @@ describe("cors", () => {
       .send(postData)
       .expect(200);
   });
-  it("should pass with 200 when origin is TradeTrust production website", async () => {
+  it("should pass with 200 when origin is https://ref.tradetrust.io", async () => {
     await request
       .post("/")
       .set("x-api-key", process.env.API_KEY)
