@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import documentSepolia from "../fixtures/v2/document-sepolia.json";
+import documentSepolia from "../fixtures/v3/document-sepolia.json";
 import { ERROR_MESSAGE } from "../../netlify/constants";
 
 const API_ENDPOINT = "http://localhost:5080/.netlify/functions/storage";
@@ -74,6 +74,16 @@ describe("cors", () => {
       .set("x-csrf-token", csrfToken)
       .set("cookie", csrfTokenCookie)
       .set("Origin", "https://www.tradetrust.io")
+      .send(postData)
+      .expect(200);
+  });
+  it("should pass with 200 when origin is https://ref.tradetrust.io", async () => {
+    await request
+      .post("/")
+      .set("x-api-key", process.env.API_KEY)
+      .set("x-csrf-token", csrfToken)
+      .set("cookie", csrfTokenCookie)
+      .set("Origin", "https://ref.tradetrust.io")
       .send(postData)
       .expect(200);
   });

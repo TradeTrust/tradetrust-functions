@@ -1,7 +1,6 @@
 import supertest from "supertest";
 import documentMainnetV2 from "../fixtures/v2/document-mainnet.json";
 import documentAmoyV2 from "../fixtures/v2/document-amoy.json";
-import documentSepoliaV2 from "../fixtures/v2/document-sepolia.json";
 import documentSepoliaV3 from "../fixtures/v3/document-sepolia.json";
 import documentXDCApothemV2 from "../fixtures/v2/document-xdcapothem.json";
 import documentXDCApothemV3 from "../fixtures/v3/document-xdcapothem.json";
@@ -20,7 +19,7 @@ const API_ENDPOINT = "http://localhost:5080/.netlify/functions/verify";
 const request = supertest(API_ENDPOINT);
 const postDataMainnnetV2 = { document: documentMainnetV2 };
 const postDataAmoyV2 = { document: documentAmoyV2 };
-const postDataSepoliaV2 = { document: documentSepoliaV2 };
+const postDataSepoliaV2 = { document: documentSepoliaV3 };
 const postDataSepoliaV3 = { document: documentSepoliaV3 };
 const postDataXDCApothemV2 = { document: documentXDCApothemV2 };
 const postDataXDCApothemV3 = { document: documentXDCApothemV3 };
