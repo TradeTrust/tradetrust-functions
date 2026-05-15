@@ -44,8 +44,12 @@ describe("csrf-token 304 CORS regression", () => {
 
     // Extract the Set-Cookie header so the second request returns the same token
     // (same body → same ETag → would trigger 304 without the fix)
-    const setCookieHeaders: string[] = [].concat(first.headers["set-cookie"] ?? []);
-    const csrfCookie = setCookieHeaders.find((c) => c.startsWith("csrfToken="))?.split(";")[0];
+    const setCookieHeaders: string[] = [].concat(
+      first.headers["set-cookie"] ?? []
+    );
+    const csrfCookie = setCookieHeaders
+      .find((c) => c.startsWith("csrfToken="))
+      ?.split(";")[0];
     expect(csrfCookie).toBeDefined();
 
     // Use the real ETag if present; otherwise simulate a stale browser-cached value.
