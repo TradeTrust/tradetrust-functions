@@ -36,5 +36,8 @@ app.use(
 );
 app.use("/.netlify/functions/storage", router);
 app.disable("x-powered-by");
+// Disable ETag generation — a 304 response omits CORS headers, breaking cross-origin requests.
+// The storage function has no routes where ETag-based caching is beneficial.
+app.set("etag", false);
 
 export const handler = serverless(app);

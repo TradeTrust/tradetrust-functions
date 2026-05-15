@@ -38,7 +38,7 @@ router.get(
   (req: Request, res: Response) => {
     // Generate CSRF token using csrfSyncProtection
     const token = csrfSyncProtection.generateToken(req);
-    delete req.headers["if-none-match"];
+
     // Set the CSRF token in the response cookie (for automatic sending by the browser)
     res.cookie("csrfToken", token, {
       httpOnly: true, // Ensure the cookie is not accessible via JavaScript
@@ -47,7 +47,9 @@ router.get(
       path: "/.netlify/functions/storage", // Scope to storage function path
       maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
     });
+
     res.set("Cache-Control", "no-store");
+
     // Send the CSRF token in the response JSON body as well
     res.json({
       csrfToken: token,

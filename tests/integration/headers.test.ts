@@ -41,7 +41,6 @@ describe("csrf-token 304 CORS regression", () => {
       .expect(200);
 
     const etag = first.headers["etag"];
-    expect(etag).toBeDefined();
 
     // Extract the Set-Cookie header so the second request returns the same token
     // (same body → same ETag → would trigger 304 without the fix)
@@ -49,12 +48,16 @@ describe("csrf-token 304 CORS regression", () => {
     const csrfCookie = setCookieHeaders.find((c) => c.startsWith("csrfToken="))?.split(";")[0];
     expect(csrfCookie).toBeDefined();
 
+    // Use the real ETag if present; otherwise simulate a stale browser-cached value.
+    // Either way the server must return 200 — never 304.
+    const ifNoneMatch = etag ?? 'W/"stale-browser-cached-etag"';
+
     // Second request — simulate the browser replaying its cached ETag plus the cookie
     const second = await request
       .get("/csrf-token")
       .set("x-api-key", process.env.API_KEY)
       .set("Origin", origin)
-      .set("if-none-match", etag)
+      .set("if-none-match", ifNoneMatch)
       .set("Cookie", csrfCookie);
 
     // Must never return 304 — that response omits access-control-allow-origin
