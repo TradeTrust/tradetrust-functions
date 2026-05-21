@@ -48,6 +48,8 @@ router.get(
       maxAge: 1000 * 60 * 60, // Cookie will expire in 1 hour
     });
 
+    res.set("Cache-Control", "no-store");
+
     // Send the CSRF token in the response JSON body as well
     res.json({
       csrfToken: token,

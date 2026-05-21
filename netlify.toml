@@ -9,3 +9,8 @@
 [[headers]]
   for = "/*"
   [headers.values]
+
+[[headers]]
+  for = "/.netlify/functions/storage/csrf-token"
+  [headers.values]
+    Cache-Control = "no-store"
