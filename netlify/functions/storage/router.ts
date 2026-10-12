@@ -118,15 +118,23 @@ router.post(
   csrfValidationMiddleware,
   async (req: Request, res: Response) => {
     const {
-      body: { document },
+      body: { document, key },
       params: { id },
     } = req;
 
     try {
-      const result = await uploadDocumentAtId(document, id);
+      const result = await uploadDocumentAtId(document, id, key);
       res.status(200).json(result);
     } catch (err) {
-      res.status(400).json(err);
+      const status =
+        typeof err === "object" &&
+        err !== null &&
+        "status" in err &&
+        typeof (err as { status?: unknown }).status === "number"
+          ? (err as { status: number }).status
+          : 400;
+      const message = err instanceof Error ? err.message : "Document invalid.";
+      res.status(status).json({ message });
     }
   }
 );

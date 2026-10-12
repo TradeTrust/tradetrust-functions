@@ -6,9 +6,9 @@ import {
   validateDocument,
   getEncryptedDocument,
 } from "../../utils";
-import { s3Put } from "../../services/s3";
+import { s3Get, s3Put } from "../../services/s3";
 import { SUPPORTED_NETWORKS } from "../../constants";
-import { s3Get } from "../../services/s3";
+import { assertUnusedReservation } from "./reservationAuth";
 
 export const getDocument = async (id: string) => {
   const document = await s3Get({
@@ -43,7 +43,11 @@ export const uploadDocument = async (document) => {
   };
 };
 
-export const uploadDocumentAtId = async (document, documentId: string) => {
+export const uploadDocumentAtId = async (
+  document,
+  documentId: string,
+  reservationKey?: unknown
+) => {
   const { chainId } = await validateNetwork(document);
 
   await validateDocument({
@@ -51,7 +55,8 @@ export const uploadDocumentAtId = async (document, documentId: string) => {
     network: SUPPORTED_NETWORKS[chainId as CHAIN_ID]?.name,
   });
 
-  const { key: existingKey } = await getDocument(documentId);
+  const stored = await getDocument(documentId);
+  const existingKey = assertUnusedReservation(stored, reservationKey);
   const { encryptedDocument, encryptedDocumentKey } =
     await getEncryptedDocument({
       str: JSON.stringify(document),

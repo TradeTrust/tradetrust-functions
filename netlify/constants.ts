@@ -52,6 +52,9 @@ export enum ERROR_MESSAGE {
   DOCUMENT_SCHEMA_INVALID = "Document is not OA compliant.",
   DOCUMENT_NETWORK_NOT_FOUND = "Document network not found.",
   NETWORK_UNSUPPORTED = "Network is unsupported.",
+  DOCUMENT_ALREADY_EXISTS = "A document is already stored for this identifier.",
+  RESERVATION_REQUIRED = "Writes are accepted only for an unused reservation.",
+  RESERVATION_PROOF_INVALID = "Reservation key is missing or invalid.",
 }
 
 export enum DOCUMENT_STORAGE_ERROR_MESSAGE {

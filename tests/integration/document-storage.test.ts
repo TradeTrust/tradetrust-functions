@@ -247,7 +247,7 @@ describe("POST /:id", () => {
       .set("x-api-key", process.env.API_KEY)
       .set("x-csrf-token", csrfToken)
       .set("cookie", csrfTokenCookie)
-      .send(postDataSepoliaV2)
+      .send({ ...postDataSepoliaV2, key: queueResponse.body.key })
       .expect(200);
 
     expect(response.body).toHaveProperty("id", queueResponse.body.id); // important to check!
