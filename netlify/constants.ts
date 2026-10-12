@@ -2,8 +2,42 @@ import "dotenv/config";
 import { providers } from "ethers";
 import { SUPPORTED_CHAINS, CHAIN_ID, chainInfo } from "@trustvc/trustvc";
 
-export const ALLOWED_ORIGIN_REGEX =
-  /^https:\/\/(([a-zA-Z0-9-]+\.)*tradetrust\.io|([a-zA-Z0-9-.])*tradetrust-website\.netlify\.app)/;
+const DNS_LABEL = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
+const TRUSTED_APEX_HOST = "tradetrust.io";
+const NETLIFY_SITE_HOST = "tradetrust-website.netlify.app";
+// Netlify branch deploys and deploy previews use one label, then "--", then the site host.
+const NETLIFY_PREVIEW_HOST =
+  /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?--tradetrust-website\.netlify\.app$/;
+
+const isDnsHostname = (hostname: string): boolean =>
+  hostname.split(".").every((label) => DNS_LABEL.test(label));
+
+const isHostOrSubdomain = (hostname: string, apex: string): boolean =>
+  hostname === apex ||
+  (hostname.endsWith(`.${apex}`) && isDnsHostname(hostname));
+
+// Shared by credentialed CORS and the Origin/Referer guard.
+// tradetrust.io must be the apex or a dot-separated subdomain.
+// The Netlify site must be that exact host, or a single-label preview
+// (deploy-preview-1--tradetrust-website.netlify.app). A trusted name glued
+// onto another domain, or a free-host name that merely contains it, does not match.
+export const isAllowedBrowserOrigin = (origin: string): boolean => {
+  let parsed: URL;
+  try {
+    parsed = new URL(origin);
+  } catch {
+    return false;
+  }
+  if (parsed.protocol !== "https:") return false;
+  if (parsed.username !== "" || parsed.password !== "") return false;
+  if (parsed.port !== "") return false;
+  if (parsed.origin !== origin) return false;
+
+  const hostname = parsed.hostname;
+  if (isHostOrSubdomain(hostname, TRUSTED_APEX_HOST)) return true;
+  if (hostname === NETLIFY_SITE_HOST) return true;
+  return NETLIFY_PREVIEW_HOST.test(hostname) && isDnsHostname(hostname);
+};
 
 export const LOCALHOST_ORIGINS = [
   "http://127.0.0.1:3000",
