@@ -125,8 +125,8 @@ router.post(
     try {
       const result = await uploadDocumentAtId(document, id);
       res.status(200).json(result);
-    } catch (err) {
-      res.status(400).json(err);
+    } catch (err: any) {
+      res.status(err.status || 400).json({ message: err.message });
     }
   }
 );
