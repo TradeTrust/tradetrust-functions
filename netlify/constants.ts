@@ -2,8 +2,9 @@ import "dotenv/config";
 import { providers } from "ethers";
 import { SUPPORTED_CHAINS, CHAIN_ID, chainInfo } from "@trustvc/trustvc";
 
+// tradetrust.io (and its subdomains), or the website Netlify host including branch deploys (name--site).
 export const ALLOWED_ORIGIN_REGEX =
-  /^https:\/\/(([a-zA-Z0-9-]+\.)*tradetrust\.io|([a-zA-Z0-9-.])*tradetrust-website\.netlify\.app)/;
+  /^https:\/\/(?:(?:[a-zA-Z0-9-]+\.)*tradetrust\.io|(?:[a-zA-Z0-9-]+--)?tradetrust-website\.netlify\.app)$/;
 
 export const LOCALHOST_ORIGINS = [
   "http://127.0.0.1:3000",
