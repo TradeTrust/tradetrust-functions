@@ -21,6 +21,7 @@ export enum ERROR_MESSAGE {
   NETWORK_UNSUPPORTED = "Network is unsupported.",
   DOCUMENT_ALREADY_EXISTS = "A document is already stored for this identifier.",
   RESERVATION_REQUIRED = "Writes are accepted only for an unused reservation.",
+  RESERVATION_SECRET_MISSING = "Storage reservation is not configured.",
 }
 
 export enum DOCUMENT_STORAGE_ERROR_MESSAGE {

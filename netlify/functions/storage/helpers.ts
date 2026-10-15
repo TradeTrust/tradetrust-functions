@@ -1,15 +1,13 @@
 import { CHAIN_ID } from "@trustvc/trustvc";
 import { v4 as uuid } from "uuid";
-import { generateEncryptionKey } from "@govtechsg/oa-encryption";
 import {
   validateNetwork,
   validateDocument,
   getEncryptedDocument,
 } from "../../utils";
-import { s3Put } from "../../services/s3";
+import { s3Get, s3GetIfExists, s3Put } from "../../services/s3";
 import { SUPPORTED_NETWORKS } from "../../constants";
-import { s3Get } from "../../services/s3";
-import { assertUnusedReservation } from "./reservationGuard";
+import { keyForUpload, reservationKeyFor } from "./reservationKey";
 
 export const getDocument = async (id: string) => {
   const document = await s3Get({
@@ -45,8 +43,11 @@ export const uploadDocument = async (document) => {
 };
 
 export const uploadDocumentAtId = async (document, documentId: string) => {
-  const stored = await getDocument(documentId);
-  const existingKey = assertUnusedReservation(stored);
+  const stored = await s3GetIfExists({
+    Bucket: process.env.TT_AWS_BUCKET_NAME,
+    Key: documentId,
+  });
+  const existingKey = keyForUpload(stored, documentId);
 
   const { chainId } = await validateNetwork(document);
 
@@ -73,17 +74,9 @@ export const uploadDocumentAtId = async (document, documentId: string) => {
   };
 };
 
+// One call per document. A batch issues many of these before signing and upload.
+// The key is derived from the id, so nothing is stored until the document is uploaded.
 export const getQueueNumber = async () => {
   const id = uuid();
-  const encryptionKey = generateEncryptionKey();
-
-  await s3Put({
-    Bucket: process.env.TT_AWS_BUCKET_NAME,
-    Key: id,
-    Body: JSON.stringify({
-      key: encryptionKey,
-    }),
-  });
-
-  return { key: encryptionKey, id };
+  return { key: reservationKeyFor(id), id };
 };

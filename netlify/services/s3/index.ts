@@ -35,5 +35,26 @@ export const s3Get = (params: S3.Types.GetObjectRequest) =>
       throw new createError(400, err.message);
     });
 
+export const s3GetIfExists = (params: S3.Types.GetObjectRequest) =>
+  s3
+    .getObject(params)
+    .promise()
+    .then((results) => {
+      if (results && results.Body) {
+        return JSON.parse(results.Body.toString());
+      }
+      return null;
+    })
+    .catch((err) => {
+      if (
+        err.code === "NoSuchKey" ||
+        err.code === "NotFound" ||
+        err.statusCode === 404
+      ) {
+        return null;
+      }
+      throw new createError(400, err.message);
+    });
+
 export const s3Remove = (params: S3.Types.DeleteObjectRequest) =>
   s3.deleteObject(params).promise();
