@@ -1,8 +1,10 @@
 import { decryptString, encryptString } from "@govtechsg/oa-encryption";
 import { ERROR_MESSAGE } from "../../netlify/constants";
 import {
+  isConditionalWriteConflict,
   keyForUpload,
   reservationKeyFor,
+  writeHeadersForObserved,
 } from "../../netlify/functions/storage/reservationKey";
 
 const SECRET = "test-reservation-secret";
@@ -72,5 +74,39 @@ describe("keyForUpload", () => {
         "document-id"
       )
     ).toThrow(ERROR_MESSAGE.DOCUMENT_ALREADY_EXISTS);
+  });
+});
+
+describe("writeHeadersForObserved", () => {
+  it("creates the object only when the key is still absent", () => {
+    expect(writeHeadersForObserved(null)).toEqual({ "If-None-Match": "*" });
+  });
+
+  it("replaces only the reservation version that was read", () => {
+    expect(writeHeadersForObserved({ etag: '"legacy-etag"' })).toEqual({
+      "If-Match": '"legacy-etag"',
+    });
+  });
+
+  it("refuses a present object that has no version to match", () => {
+    expect(() => writeHeadersForObserved({ etag: "" })).toThrow(
+      ERROR_MESSAGE.DOCUMENT_ALREADY_EXISTS
+    );
+  });
+});
+
+describe("isConditionalWriteConflict", () => {
+  it("recognises a lost compare-and-swap", () => {
+    expect(isConditionalWriteConflict({ statusCode: 412 })).toBe(true);
+    expect(
+      isConditionalWriteConflict({ code: "PreconditionFailed" })
+    ).toBe(true);
+    expect(
+      isConditionalWriteConflict({ code: "ConditionalRequestConflict" })
+    ).toBe(true);
+    expect(isConditionalWriteConflict({ statusCode: 409, code: "NoSuchKey" })).toBe(
+      false
+    );
+    expect(isConditionalWriteConflict(null)).toBe(false);
   });
 });

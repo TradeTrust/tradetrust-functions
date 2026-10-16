@@ -5,9 +5,13 @@ import {
   validateDocument,
   getEncryptedDocument,
 } from "../../utils";
-import { s3Get, s3GetIfExists, s3Put } from "../../services/s3";
+import { s3Get, s3GetIfExists, s3Put, s3PutConditional } from "../../services/s3";
 import { SUPPORTED_NETWORKS } from "../../constants";
-import { keyForUpload, reservationKeyFor } from "./reservationKey";
+import {
+  keyForUpload,
+  reservationKeyFor,
+  writeHeadersForObserved,
+} from "./reservationKey";
 
 export const getDocument = async (id: string) => {
   const document = await s3Get({
@@ -43,11 +47,11 @@ export const uploadDocument = async (document) => {
 };
 
 export const uploadDocumentAtId = async (document, documentId: string) => {
-  const stored = await s3GetIfExists({
+  const observed = await s3GetIfExists({
     Bucket: process.env.TT_AWS_BUCKET_NAME,
     Key: documentId,
   });
-  const existingKey = keyForUpload(stored, documentId);
+  const existingKey = keyForUpload(observed?.body, documentId);
 
   const { chainId } = await validateNetwork(document);
 
@@ -61,11 +65,16 @@ export const uploadDocumentAtId = async (document, documentId: string) => {
       existingKey,
     });
 
-  await s3Put({
-    Bucket: process.env.TT_AWS_BUCKET_NAME,
-    Key: documentId,
-    Body: JSON.stringify({ document: encryptedDocument }),
-  });
+  await s3PutConditional(
+    {
+      Bucket: process.env.TT_AWS_BUCKET_NAME,
+      Key: documentId,
+      Body: JSON.stringify({ document: encryptedDocument }),
+    },
+    writeHeadersForObserved(
+      observed == null ? null : { etag: observed.etag }
+    )
+  );
 
   return {
     id: documentId,
