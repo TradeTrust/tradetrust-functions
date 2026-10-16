@@ -10,11 +10,7 @@ export type StoredObject = {
 export const assertUnusedReservation = (
   stored: StoredObject | null | undefined
 ): string => {
-  if (
-    stored != null &&
-    typeof stored === "object" &&
-    stored.document != null
-  ) {
+  if (stored != null && typeof stored === "object" && stored.document != null) {
     throw createError(409, ERROR_MESSAGE.DOCUMENT_ALREADY_EXISTS);
   }
 

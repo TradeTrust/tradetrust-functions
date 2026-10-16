@@ -9,7 +9,7 @@ const s3Prototype = Object.getPrototypeOf(
 const getObjectResult = (value: unknown) =>
   ({
     promise: async () => value,
-  }) as unknown as AWS.Request<AWS.S3.GetObjectOutput, AWS.AWSError>;
+  } as unknown as AWS.Request<AWS.S3.GetObjectOutput, AWS.AWSError>);
 
 describe("s3GetIfExists", () => {
   afterEach(() => {

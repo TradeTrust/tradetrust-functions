@@ -5,7 +5,12 @@ import {
   validateDocument,
   getEncryptedDocument,
 } from "../../utils";
-import { s3Get, s3GetIfExists, s3Put, s3PutConditional } from "../../services/s3";
+import {
+  s3Get,
+  s3GetIfExists,
+  s3Put,
+  s3PutConditional,
+} from "../../services/s3";
 import { SUPPORTED_NETWORKS } from "../../constants";
 import {
   keyForUpload,
@@ -71,9 +76,7 @@ export const uploadDocumentAtId = async (document, documentId: string) => {
       Key: documentId,
       Body: JSON.stringify({ document: encryptedDocument }),
     },
-    writeHeadersForObserved(
-      observed == null ? null : { etag: observed.etag }
-    )
+    writeHeadersForObserved(observed == null ? null : { etag: observed.etag })
   );
 
   return {

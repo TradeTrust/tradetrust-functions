@@ -62,9 +62,9 @@ describe("keyForUpload", () => {
   });
 
   it("keeps the key from a reservation that was stored earlier", () => {
-    expect(
-      keyForUpload({ key: "legacy-reservation-key" }, "document-id")
-    ).toBe("legacy-reservation-key");
+    expect(keyForUpload({ key: "legacy-reservation-key" }, "document-id")).toBe(
+      "legacy-reservation-key"
+    );
   });
 
   it("rejects a slot that already holds a document", () => {
@@ -98,15 +98,15 @@ describe("writeHeadersForObserved", () => {
 describe("isConditionalWriteConflict", () => {
   it("recognises a lost compare-and-swap", () => {
     expect(isConditionalWriteConflict({ statusCode: 412 })).toBe(true);
-    expect(
-      isConditionalWriteConflict({ code: "PreconditionFailed" })
-    ).toBe(true);
+    expect(isConditionalWriteConflict({ code: "PreconditionFailed" })).toBe(
+      true
+    );
     expect(
       isConditionalWriteConflict({ code: "ConditionalRequestConflict" })
     ).toBe(true);
-    expect(isConditionalWriteConflict({ statusCode: 409, code: "NoSuchKey" })).toBe(
-      false
-    );
+    expect(
+      isConditionalWriteConflict({ statusCode: 409, code: "NoSuchKey" })
+    ).toBe(false);
     expect(isConditionalWriteConflict(null)).toBe(false);
   });
 });

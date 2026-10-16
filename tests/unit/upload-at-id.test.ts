@@ -58,7 +58,10 @@ describe("uploadDocumentAtId", () => {
 
   it("does not write when a document is already stored", async () => {
     getIfExists.mockResolvedValue({
-      body: { key: "legacy-reservation-key", document: { cipherText: "stored" } },
+      body: {
+        key: "legacy-reservation-key",
+        document: { cipherText: "stored" },
+      },
       etag: '"stored-etag"',
     });
 
