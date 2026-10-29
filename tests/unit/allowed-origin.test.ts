@@ -19,6 +19,22 @@ describe("ALLOWED_ORIGIN_REGEX", () => {
     ).toBe(true);
   });
 
+  it("allows the reference-implementation and tradetrust-dev Netlify sites", () => {
+    expect(
+      ALLOWED_ORIGIN_REGEX.test(
+        "https://dev--reference-implementation.netlify.app"
+      )
+    ).toBe(true);
+    expect(
+      ALLOWED_ORIGIN_REGEX.test("https://tradetrust-dev.netlify.app")
+    ).toBe(true);
+    expect(
+      ALLOWED_ORIGIN_REGEX.test(
+        "https://dev--reference-implementation.netlify.app.evil.com"
+      )
+    ).toBe(false);
+  });
+
   it("rejects a trusted name glued to another host or an unrelated Netlify site", () => {
     expect(ALLOWED_ORIGIN_REGEX.test("https://tradetrust.io.evil.com")).toBe(
       false
