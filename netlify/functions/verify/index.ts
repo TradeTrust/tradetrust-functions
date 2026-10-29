@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import serverless from "serverless-http";
 import bodyParser from "body-parser";
-import { corsOrigin } from "../../utils";
+import { corsOrigin, errorHandler } from "../../utils";
 import { MAX_REQUEST_BODY_SIZE } from "../../constants";
 import { router } from "./router";
 
@@ -19,6 +19,7 @@ app.use(
   bodyParser.urlencoded({ limit: MAX_REQUEST_BODY_SIZE, extended: true })
 );
 app.use("/.netlify/functions/verify", router);
+app.use(errorHandler);
 app.disable("x-powered-by");
 
 export const handler = serverless(app);

@@ -2,8 +2,9 @@ import "dotenv/config";
 import { providers } from "ethers";
 import { SUPPORTED_CHAINS, CHAIN_ID, chainInfo } from "@trustvc/trustvc";
 
+// tradetrust.io (and its subdomains), or a TradeTrust Netlify site including branch deploys (name--site).
 export const ALLOWED_ORIGIN_REGEX =
-  /^https:\/\/(([a-zA-Z0-9-]+\.)*tradetrust\.io|([a-zA-Z0-9-.])*tradetrust-website\.netlify\.app)/;
+  /^https:\/\/(?:(?:[a-zA-Z0-9-]+\.)*tradetrust\.io|(?:[a-zA-Z0-9-]+--)?(?:tradetrust-website|reference-implementation|tradetrust-dev)\.netlify\.app)$/;
 
 export const LOCALHOST_ORIGINS = [
   "http://127.0.0.1:3000",
@@ -18,6 +19,9 @@ export enum ERROR_MESSAGE {
   DOCUMENT_SCHEMA_INVALID = "Document is not OA compliant.",
   DOCUMENT_NETWORK_NOT_FOUND = "Document network not found.",
   NETWORK_UNSUPPORTED = "Network is unsupported.",
+  DOCUMENT_ALREADY_EXISTS = "A document is already stored for this identifier.",
+  RESERVATION_REQUIRED = "Writes are accepted only for an unused reservation.",
+  RESERVATION_SECRET_MISSING = "Storage reservation is not configured.",
 }
 
 export enum DOCUMENT_STORAGE_ERROR_MESSAGE {

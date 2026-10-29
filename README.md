@@ -74,7 +74,7 @@ POST
 
 #### Notes
 
-The dummy value in `API_KEY` should work for local development purposes. For production `API_KEY` value, refer to netlify env variables at dashboard.
+The dummy value in `API_KEY` should work for local development purposes. For production `API_KEY` and `STORAGE_RESERVATION_SECRET`, refer to netlify env variables at dashboard. `STORAGE_RESERVATION_SECRET` is a server-side secret used to derive storage reservation keys. Set it before deploying the queue change. To rotate it, move the old value to `STORAGE_RESERVATION_SECRET_PREVIOUS` and keep it there until every reservation issued under it has been uploaded.
 
 #### Network specific configurations
 

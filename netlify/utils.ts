@@ -40,8 +40,37 @@ export const corsOrigin = (
   ) {
     return callback(null, true);
   } else {
-    return callback(new Error(ERROR_MESSAGE.CORS_UNALLOWED), false);
+    return callback(createError(403, ERROR_MESSAGE.CORS_UNALLOWED), false);
   }
+};
+
+// Final error handler: replaces Express's default, which renders the stack trace.
+export const errorHandler = (
+  err: {
+    status?: number;
+    expose?: boolean;
+    message?: string;
+    name?: string;
+    stack?: string;
+  },
+  _req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (res.headersSent) return next(err);
+  const status = err.status && err.status >= 400 ? err.status : 500;
+  if (status >= 500) {
+    // Log only the error itself, never the request, so payloads and keys stay out of logs.
+    console.error("Unhandled error:", {
+      status,
+      name: err.name,
+      message: err.message,
+      stack: err.stack,
+    });
+  }
+  const message =
+    err.expose && err.message ? err.message : "Internal Server Error";
+  return res.status(status).json({ error: message });
 };
 
 export const checkApiKey = (req, res, next) => {
