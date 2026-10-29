@@ -17,6 +17,7 @@ jest.mock("../../netlify/utils", () => ({
 
 import { ERROR_MESSAGE } from "../../netlify/constants";
 import { uploadDocumentAtId } from "../../netlify/functions/storage/helpers";
+import { issueReservationId } from "../../netlify/functions/storage/reservationKey";
 import { s3GetIfExists, s3PutConditional } from "../../netlify/services/s3";
 
 const getIfExists = s3GetIfExists as jest.Mock;
@@ -32,13 +33,23 @@ describe("uploadDocumentAtId", () => {
 
   it("writes a missing object only if it is still absent", async () => {
     getIfExists.mockResolvedValue(null);
+    const id = issueReservationId();
 
-    await uploadDocumentAtId({ data: "doc" }, "document-id");
+    await uploadDocumentAtId({ data: "doc" }, id);
 
     expect(putConditional).toHaveBeenCalledWith(
-      expect.objectContaining({ Key: "document-id" }),
+      expect.objectContaining({ Key: id }),
       { "If-None-Match": "*" }
     );
+  });
+
+  it("does not write a missing object for an id /queue did not issue", async () => {
+    getIfExists.mockResolvedValue(null);
+
+    await expect(
+      uploadDocumentAtId({ data: "doc" }, "document-id")
+    ).rejects.toThrow(ERROR_MESSAGE.RESERVATION_REQUIRED);
+    expect(putConditional).not.toHaveBeenCalled();
   });
 
   it("writes a legacy reservation only if that version is unchanged", async () => {

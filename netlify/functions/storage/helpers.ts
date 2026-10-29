@@ -13,6 +13,7 @@ import {
 } from "../../services/s3";
 import { SUPPORTED_NETWORKS } from "../../constants";
 import {
+  issueReservationId,
   keyForUpload,
   reservationKeyFor,
   writeHeadersForObserved,
@@ -89,6 +90,6 @@ export const uploadDocumentAtId = async (document, documentId: string) => {
 // One call per document. A batch issues many of these before signing and upload.
 // The key is derived from the id, so nothing is stored until the document is uploaded.
 export const getQueueNumber = async () => {
-  const id = uuid();
+  const id = issueReservationId();
   return { key: reservationKeyFor(id), id };
 };

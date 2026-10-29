@@ -5,7 +5,10 @@ jest.mock("../../netlify/services/s3", () => ({
 }));
 
 import { getQueueNumber } from "../../netlify/functions/storage/helpers";
-import { reservationKeyFor } from "../../netlify/functions/storage/reservationKey";
+import {
+  isIssuedReservationId,
+  reservationKeyFor,
+} from "../../netlify/functions/storage/reservationKey";
 import { s3Put } from "../../netlify/services/s3";
 
 describe("getQueueNumber", () => {
@@ -17,6 +20,7 @@ describe("getQueueNumber", () => {
   it("returns an id and key without writing an object", async () => {
     const result = await getQueueNumber();
 
+    expect(isIssuedReservationId(result.id)).toBe(true);
     expect(result.key).toBe(reservationKeyFor(result.id));
     expect(s3Put).not.toHaveBeenCalled();
   });

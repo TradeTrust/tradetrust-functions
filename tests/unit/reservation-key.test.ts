@@ -2,6 +2,8 @@ import { decryptString, encryptString } from "@govtechsg/oa-encryption";
 import { ERROR_MESSAGE } from "../../netlify/constants";
 import {
   isConditionalWriteConflict,
+  isIssuedReservationId,
+  issueReservationId,
   keyForUpload,
   reservationKeyFor,
   writeHeadersForObserved,
@@ -47,18 +49,52 @@ describe("reservationKeyFor", () => {
   });
 });
 
+describe("issueReservationId", () => {
+  beforeEach(() => {
+    process.env.STORAGE_RESERVATION_SECRET = SECRET;
+    delete process.env.STORAGE_RESERVATION_SECRET_PREVIOUS;
+  });
+
+  it("issues ids that verify, and rejects forged or tampered ids", () => {
+    const id = issueReservationId();
+    expect(isIssuedReservationId(id)).toBe(true);
+    expect(isIssuedReservationId("document-id")).toBe(false);
+    expect(isIssuedReservationId(id.split(".")[0])).toBe(false);
+    const tampered = id.slice(0, -1) + (id.endsWith("0") ? "1" : "0");
+    expect(isIssuedReservationId(tampered)).toBe(false);
+  });
+
+  it("rejects an id issued under a different secret", () => {
+    const id = issueReservationId();
+    process.env.STORAGE_RESERVATION_SECRET = "another-secret";
+    expect(isIssuedReservationId(id)).toBe(false);
+  });
+});
+
 describe("keyForUpload", () => {
   beforeEach(() => {
     process.env.STORAGE_RESERVATION_SECRET = SECRET;
+    delete process.env.STORAGE_RESERVATION_SECRET_PREVIOUS;
   });
 
-  it("derives a key when nothing is stored yet", () => {
-    expect(keyForUpload(null, "document-id")).toBe(
-      reservationKeyFor("document-id")
+  it("derives the issued key when nothing is stored yet", () => {
+    const id = issueReservationId();
+    expect(keyForUpload(null, id)).toBe(reservationKeyFor(id));
+    expect(keyForUpload(undefined, id)).toBe(reservationKeyFor(id));
+  });
+
+  it("rejects an id that /queue did not issue when nothing is stored", () => {
+    expect(() => keyForUpload(null, "document-id")).toThrow(
+      ERROR_MESSAGE.RESERVATION_REQUIRED
     );
-    expect(keyForUpload(undefined, "document-id")).toBe(
-      reservationKeyFor("document-id")
-    );
+  });
+
+  it("keeps the issued key after the secret rotates", () => {
+    const id = issueReservationId();
+    const issuedKey = reservationKeyFor(id);
+    process.env.STORAGE_RESERVATION_SECRET = "rotated-secret";
+    process.env.STORAGE_RESERVATION_SECRET_PREVIOUS = SECRET;
+    expect(keyForUpload(null, id)).toBe(issuedKey);
   });
 
   it("keeps the key from a reservation that was stored earlier", () => {
