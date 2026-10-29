@@ -35,9 +35,28 @@ describe("CORS rejection and error handler", () => {
     expect(res.headers["access-control-allow-credentials"]).toBe("true");
   });
 
-  it("hides internal error details", async () => {
+  it("hides internal error details from the client but logs them server-side", async () => {
+    const spy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => undefined);
     const res = await request(app).get("/boom");
     expect(res.status).toBe(500);
     expect(res.body).toEqual({ error: "Internal Server Error" });
+    expect(spy).toHaveBeenCalledWith(
+      "Unhandled error:",
+      expect.objectContaining({ status: 500, message: "secret internals" })
+    );
+    spy.mockRestore();
+  });
+
+  it("does not log 4xx errors", async () => {
+    const spy = jest
+      .spyOn(console, "error")
+      .mockImplementation(() => undefined);
+    await request(app)
+      .get("/ok")
+      .set("Origin", "https://tradetrust.io.evil.com");
+    expect(spy).not.toHaveBeenCalled();
+    spy.mockRestore();
   });
 });
