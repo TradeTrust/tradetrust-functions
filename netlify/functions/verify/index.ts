@@ -1,15 +1,15 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import serverless from "serverless-http";
 import bodyParser from "body-parser";
-import { corsOrigin } from "../../utils";
+import { corsOrigin, errorHandler } from "../../utils";
 import { MAX_REQUEST_BODY_SIZE } from "../../constants";
 import { router } from "./router";
 
 const app = express();
 
 // since we are using serverless-http, we need to vary the Origin header
-app.use((_req: any, res: any, next: any) => {
+app.use((_req: Request, res: Response, next: NextFunction) => {
   res.vary("Origin");
   next();
 });
@@ -19,6 +19,7 @@ app.use(
   bodyParser.urlencoded({ limit: MAX_REQUEST_BODY_SIZE, extended: true })
 );
 app.use("/.netlify/functions/verify", router);
+app.use(errorHandler);
 app.disable("x-powered-by");
 
 export const handler = serverless(app);

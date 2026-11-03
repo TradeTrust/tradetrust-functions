@@ -1,17 +1,17 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import session from "express-session";
 import cors from "cors";
 import serverless from "serverless-http";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import { corsOrigin } from "../../utils";
+import { corsOrigin, errorHandler } from "../../utils";
 import { MAX_REQUEST_BODY_SIZE } from "../../constants";
 import { router } from "./router";
 
 const app = express();
 
 // since we are using serverless-http, we need to vary the Origin header
-app.use((_req: any, res: any, next: any) => {
+app.use((_req: Request, res: Response, next: NextFunction) => {
   res.vary("Origin");
   next();
 });
@@ -35,6 +35,7 @@ app.use(
   })
 );
 app.use("/.netlify/functions/storage", router);
+app.use(errorHandler);
 app.disable("x-powered-by");
 // Disable ETag generation — a 304 response omits CORS headers, breaking cross-origin requests.
 // The storage function has no routes where ETag-based caching is beneficial.
