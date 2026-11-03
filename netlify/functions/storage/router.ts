@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import { ERROR_MESSAGE } from "../../constants";
 import { checkApiKey, originReferrerGuard } from "../../utils";
 import {
   uploadDocument,
@@ -10,12 +11,45 @@ import { csrfSync } from "csrf-sync";
 
 const router = express.Router();
 
-const responseStatus = (err: unknown): number => {
-  if (typeof err === "object" && err !== null && "status" in err) {
-    const status = (err as { status: unknown }).status;
-    if (typeof status === "number") return status;
-  }
+const httpErrorStatus = (value: unknown): number | undefined =>
+  typeof value === "number" && value >= 400 && value <= 599 ? value : undefined;
+
+// Explicit HTTP errors, including reservation 403 and 409, keep their status.
+// A storage error rethrown without one, such as from s3PutConditional, uses its
+// 5xx statusCode so clients can retry. Anything else stays a client error.
+export const responseStatus = (err: unknown): number => {
+  if (typeof err !== "object" || err === null) return 400;
+  const candidate = err as { status?: unknown; statusCode?: unknown };
+  const explicit = httpErrorStatus(candidate.status);
+  if (explicit !== undefined) return explicit;
+  const backend = httpErrorStatus(candidate.statusCode);
+  if (backend !== undefined && backend >= 500) return backend;
   return 400;
+};
+
+// http-errors marks client errors as exposed. S3 and other unexpected errors are not.
+const clientSafeMessage = (err: unknown): string | undefined => {
+  if (typeof err !== "object" || err === null) return undefined;
+  const candidate = err as { expose?: unknown; message?: unknown };
+  return candidate.expose === true && typeof candidate.message === "string"
+    ? candidate.message
+    : undefined;
+};
+
+export const uploadErrorResponse = (
+  err: unknown
+): { status: number; message: string; log: boolean } => {
+  const status = responseStatus(err);
+  const safe = clientSafeMessage(err);
+  return {
+    status,
+    log: safe === undefined,
+    message:
+      safe ??
+      (status >= 500
+        ? "Internal Server Error"
+        : ERROR_MESSAGE.DOCUMENT_GENERIC_ERROR),
+  };
 };
 
 // Initialize csrfSyncProtection with necessary options for CSRF token handling
@@ -134,8 +168,16 @@ router.post(
       const result = await uploadDocumentAtId(document, id);
       res.status(200).json(result);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Document invalid.";
-      res.status(responseStatus(err)).json({ message });
+      const failure = uploadErrorResponse(err);
+      if (failure.log) {
+        console.error("Unhandled error:", {
+          status: failure.status,
+          name: err instanceof Error ? err.name : undefined,
+          message: err instanceof Error ? err.message : undefined,
+          stack: err instanceof Error ? err.stack : undefined,
+        });
+      }
+      res.status(failure.status).json({ message: failure.message });
     }
   }
 );
