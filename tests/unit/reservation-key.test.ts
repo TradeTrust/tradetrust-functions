@@ -5,6 +5,7 @@ import {
   isIssuedReservationId,
   issueReservationId,
   keyForUpload,
+  RESERVATION_TTL_SECONDS,
   reservationKeyFor,
   writeHeadersForObserved,
 } from "../../netlify/functions/storage/reservationKey";
@@ -85,6 +86,32 @@ describe("keyForUpload", () => {
 
   it("rejects an id that /queue did not issue when nothing is stored", () => {
     expect(() => keyForUpload(null, "document-id")).toThrow(
+      ERROR_MESSAGE.RESERVATION_REQUIRED
+    );
+  });
+
+  it("rejects an issued id once it has expired", () => {
+    const issuedAt = Date.parse("2026-01-01T00:00:00.000Z");
+    jest.useFakeTimers({ now: issuedAt });
+    try {
+      const id = issueReservationId();
+      jest.setSystemTime(issuedAt + RESERVATION_TTL_SECONDS * 1000 - 1);
+      expect(keyForUpload(null, id)).toBe(reservationKeyFor(id));
+      jest.setSystemTime(issuedAt + RESERVATION_TTL_SECONDS * 1000);
+      expect(isIssuedReservationId(id)).toBe(false);
+      expect(() => keyForUpload(null, id)).toThrow(
+        ERROR_MESSAGE.RESERVATION_EXPIRED
+      );
+    } finally {
+      jest.useRealTimers();
+    }
+  });
+
+  it("rejects an issued id whose expiry was extended", () => {
+    const id = issueReservationId();
+    const [base, expiresAt, tag] = id.split(".");
+    const extended = `${base}.${Number(expiresAt) + 3600}.${tag}`;
+    expect(() => keyForUpload(null, extended)).toThrow(
       ERROR_MESSAGE.RESERVATION_REQUIRED
     );
   });

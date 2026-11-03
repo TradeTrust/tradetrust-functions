@@ -17,7 +17,10 @@ jest.mock("../../netlify/utils", () => ({
 
 import { ERROR_MESSAGE } from "../../netlify/constants";
 import { uploadDocumentAtId } from "../../netlify/functions/storage/helpers";
-import { issueReservationId } from "../../netlify/functions/storage/reservationKey";
+import {
+  issueReservationId,
+  RESERVATION_TTL_SECONDS,
+} from "../../netlify/functions/storage/reservationKey";
 import { s3GetIfExists, s3PutConditional } from "../../netlify/services/s3";
 
 const getIfExists = s3GetIfExists as jest.Mock;
@@ -50,6 +53,23 @@ describe("uploadDocumentAtId", () => {
       uploadDocumentAtId({ data: "doc" }, "document-id")
     ).rejects.toThrow(ERROR_MESSAGE.RESERVATION_REQUIRED);
     expect(putConditional).not.toHaveBeenCalled();
+  });
+
+  it("does not write a missing object after its issued id expires", async () => {
+    const issuedAt = Date.parse("2026-01-01T00:00:00.000Z");
+    jest.useFakeTimers({ now: issuedAt });
+    try {
+      getIfExists.mockResolvedValue(null);
+      const id = issueReservationId();
+      jest.setSystemTime(issuedAt + RESERVATION_TTL_SECONDS * 1000);
+
+      await expect(uploadDocumentAtId({ data: "doc" }, id)).rejects.toThrow(
+        ERROR_MESSAGE.RESERVATION_EXPIRED
+      );
+      expect(putConditional).not.toHaveBeenCalled();
+    } finally {
+      jest.useRealTimers();
+    }
   });
 
   it("writes a legacy reservation only if that version is unchanged", async () => {
