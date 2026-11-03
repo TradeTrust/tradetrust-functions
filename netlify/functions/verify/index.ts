@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import cors from "cors";
 import serverless from "serverless-http";
 import bodyParser from "body-parser";
@@ -9,7 +9,7 @@ import { router } from "./router";
 const app = express();
 
 // since we are using serverless-http, we need to vary the Origin header
-app.use((_req: any, res: any, next: any) => {
+app.use((_req: Request, res: Response, next: NextFunction) => {
   res.vary("Origin");
   next();
 });
